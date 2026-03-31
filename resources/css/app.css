@@ -1,0 +1,288 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Brand color palette: #78a032, #5a7825, #3c5019, #0f1406 */
+/* Headlines use #0f1406 - override utility classes in main content */
+main h1, main h2, main h3, main h4, main h5, main h6 {
+  color: #0f1406 !important;
+}
+
+@media (max-width: 767px) {
+  main {
+    overflow-x: hidden;
+  }
+}
+
+/* Tom Select custom styling for booking sidebar */
+.booking-guests-select .ts-wrapper {
+  display: block;
+}
+.booking-guests-select .ts-wrapper.single .ts-control {
+  padding-left: 2.5rem;
+  border-radius: 0.5rem;
+  border-color: #d1d5db;
+  min-height: 2.5rem;
+}
+.booking-guests-select .ts-wrapper.focus .ts-control {
+  border-color: #78a032;
+  box-shadow: 0 0 0 3px rgba(120, 160, 50, 0.2);
+}
+.booking-guests-select .ts-dropdown {
+  border-radius: 0.5rem;
+  border-color: #d1d5db;
+}
+
+/* Hide the search input – dropdown only, no text input */
+.booking-guests-select .ts-control input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.flatpickr-wrapper {
+  width: 100%;
+}
+
+/* Tour gallery: <640px = 1 col; 640-1023px = simple 2-col (2x2); >=1024px = left large (row span 2) + right nested (top 2 small, bottom 1 wide) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tour-gallery-right {
+    display: contents;
+  }
+}
+@media (min-width: 1024px) {
+  .tour-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    height: 485px;
+  }
+  .tour-gallery-grid > a:first-child {
+    grid-row: span 2;
+  }
+  .tour-gallery-right {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+  }
+  .tour-gallery-right > *:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Prose paragraph spacing (backend rich text editor content) */
+.prose p,
+.prose-sm p,
+.prose-lg p {
+  margin-bottom: 16px;
+}
+.prose p:last-child,
+.prose-sm p:last-child,
+.prose-lg p:last-child {
+  margin-bottom: 0;
+}
+
+/* Blog post content spacing */
+.blog-content p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.blog-content p:first-child {
+  margin-top: 0;
+}
+.blog-content p:last-child {
+  margin-bottom: 0;
+}
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.blog-content h1:first-child,
+.blog-content h2:first-child,
+.blog-content h3:first-child,
+.blog-content h4:first-child,
+.blog-content h5:first-child,
+.blog-content h6:first-child {
+  margin-top: 0;
+}
+.blog-content ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+.blog-content ol {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  list-style-type: decimal;
+}
+.blog-content li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.blog-content blockquote {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+}
+.blog-content img {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.blog-content hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.blog-content pre,
+.blog-content code {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Hide scrollbar for horizontal sliders */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Home page Swipers - ensure proper containment */
+.featured-tours-swiper {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .featured-tours-swiper {
+    overflow: hidden !important;
+  }
+}
+/* Category swipers - overflow visible on mobile for peek effect */
+[class*="category-"][class*="-swiper"] {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  [class*="category-"][class*="-swiper"] {
+    overflow: hidden !important;
+  }
+}
+/* Destinations swiper - overflow visible on mobile for peek effect */
+.destinations-swiper {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .destinations-swiper {
+    overflow: hidden !important;
+  }
+}
+.testimonials-swiper {
+  overflow: unset !important;
+  width: 100%;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .testimonials-swiper {
+    overflow: hidden !important;
+  }
+}
+/* Blog swiper - overflow visible on mobile for peek effect, hidden on desktop */
+.blog-swiper {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .blog-swiper {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .blog-swiper {
+    overflow: hidden !important;
+  }
+}
+
+/* City page swipers (highlights, tours, hotels) - overflow visible on mobile for peek effect */
+.city-highlights-swiper,
+.city-tours-swiper,
+.city-hotels-swiper {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Packages swiper - same as featured tours */
+.packages-swiper {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .packages-swiper {
+    overflow: hidden !important;
+  }
+}
+
+/* Related hotels swiper - overflow visible on mobile, hidden on desktop */
+.related-hotels-swiper {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .related-hotels-swiper {
+    overflow: hidden !important;
+  }
+}
+
+.featured-tours-swiper {
+  padding: 0 5px 20px 5px !important;
+}
+/* Category tour sliders - ensure slides respect Swiper width */
+[class*="category-"][class*="-swiper"] .swiper-slide {
+  box-sizing: border-box;
+  min-width: 0;
+}
+[class*="category-"][class*="-swiper"] .swiper-slide > * {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Testimonials - ensure equal-height cards in swiper */
+.testimonials-swiper .swiper-slide {
+  height: auto;
+}
+
+/* Tour booking calendar – non-bookable days must read as disabled */
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled,
+.flatpickr-calendar .flatpickr-day.prevMonthDay.flatpickr-disabled,
+.flatpickr-calendar .flatpickr-day.nextMonthDay.flatpickr-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  color: #9ca3af !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled:hover {
+  background: transparent !important;
+}

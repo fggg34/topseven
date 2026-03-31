@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Country;
+
+class CountryController extends Controller
+{
+    public function index()
+    {
+        $countries = Country::query()
+            ->withCount(['tours'])
+            ->orderBy('name')
+            ->get();
+
+        return view('pages.countries.index', compact('countries'));
+    }
+
+    public function show(string $slug)
+    {
+        $country = Country::where('slug', $slug)
+            ->with(['highlights', 'tours' => fn ($q) => $q->where('is_active', true)])
+            ->firstOrFail();
+
+        return view('pages.countries.show', compact('country'));
+    }
+}
