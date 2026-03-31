@@ -4,10 +4,6 @@
 
 /* Brand color palette: #78a032, #5a7825, #3c5019, #0f1406 */
 /* Headlines use #0f1406 - override utility classes in main content */
-main h1, main h2, main h3, main h4, main h5, main h6 {
-  color: #0f1406 !important;
-}
-
 @media (max-width: 767px) {
   main {
     overflow-x: hidden;
@@ -228,18 +224,6 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
   overflow: visible !important;
   width: 100%;
   max-width: 100%;
-}
-
-/* Packages swiper - same as featured tours */
-.packages-swiper {
-  overflow: visible !important;
-  width: 100%;
-  max-width: 100%;
-}
-@media (min-width: 768px) {
-  .packages-swiper {
-    overflow: hidden !important;
-  }
 }
 
 /* Related hotels swiper - overflow visible on mobile, hidden on desktop */

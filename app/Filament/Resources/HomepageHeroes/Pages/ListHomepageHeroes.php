@@ -10,10 +10,12 @@ class ListHomepageHeroes extends ListRecords
 {
     protected static string $resource = HomepageHeroResource::class;
 
+    protected static ?string $title = 'Homepage';
+
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()->label('Add slide'),
         ];
     }
 }

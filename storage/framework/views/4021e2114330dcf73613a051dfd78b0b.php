@@ -1,0 +1,1 @@
+<?php echo e($livewireKey); ?>.display-text<?php /**PATH /Users/kevinhitaj/Desktop/Projects/TOP 7 TRAVEL/storage/framework/views/56dd8f189d00a159cae8f632745ff332.blade.php ENDPATH**/ ?>

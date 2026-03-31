@@ -55,6 +55,11 @@ class Settings extends Page
             'seo_og_image' => Setting::get('seo_og_image', ''),
             'seo_default_title' => Setting::get('seo_default_title', ''),
             'seo_default_description' => Setting::get('seo_default_description', ''),
+            'homepage_flash_sale_headline' => Setting::get('homepage_flash_sale_headline', 'Hand-picked tours for your next trip.'),
+            'homepage_flash_sale_highlight' => Setting::get('homepage_flash_sale_highlight', ''),
+            'homepage_flash_sale_cta_label' => Setting::get('homepage_flash_sale_cta_label', 'See offers'),
+            'homepage_flash_sale_cta_url' => Setting::get('homepage_flash_sale_cta_url', '/tours'),
+            'homepage_where_next_heading' => Setting::get('homepage_where_next_heading', 'Where to next?'),
             'nav_menu_items' => $this->getNavMenuItems(),
             'footer_menu_1' => $this->getFooterMenu('footer_menu_1'),
             'footer_menu_2' => $this->getFooterMenu('footer_menu_2'),
@@ -221,6 +226,31 @@ class Settings extends Page
                         \Filament\Forms\Components\TextInput::make('facebook_url')->label('Facebook URL')->url(),
                         \Filament\Forms\Components\TextInput::make('tiktok_url')->label('TikTok URL')->url(),
                         \Filament\Forms\Components\TextInput::make('youtube_url')->label('YouTube URL')->url(),
+                    ])
+                    ->columns(2),
+                \Filament\Schemas\Components\Section::make('Homepage featured tours')
+                    ->description('Headline and CTA for the tour slider directly under the hero. Pick tours on Pages → Homepage → Featured tours; set each tour’s slider dates on that tour’s Overview tab.')
+                    ->schema([
+                        \Filament\Forms\Components\TextInput::make('homepage_flash_sale_headline')
+                            ->label('Headline')
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+                        \Filament\Forms\Components\TextInput::make('homepage_flash_sale_highlight')
+                            ->label('Word to highlight')
+                            ->maxLength(80)
+                            ->helperText('First matching substring in the headline gets a grey background. Leave empty to show plain headline.'),
+                        \Filament\Forms\Components\TextInput::make('homepage_flash_sale_cta_label')
+                            ->label('Button label')
+                            ->maxLength(80),
+                        \Filament\Forms\Components\TextInput::make('homepage_flash_sale_cta_url')
+                            ->label('Button URL')
+                            ->placeholder('/tours')
+                            ->maxLength(2048),
+                        \Filament\Forms\Components\TextInput::make('homepage_where_next_heading')
+                            ->label('“Where to next?” heading')
+                            ->maxLength(255)
+                            ->columnSpanFull()
+                            ->helperText('Shown above the destination grid (below “Why book”). Destinations and trip counts come from active countries in the admin.'),
                     ])
                     ->columns(2),
                 \Filament\Schemas\Components\Section::make('SEO (Default)')

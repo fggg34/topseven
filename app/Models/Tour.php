@@ -50,6 +50,8 @@ class Tour extends Model
         'closed_dates',
         'available_weekdays',
         'default_daily_capacity',
+        'homepage_card_date_from',
+        'homepage_card_date_to',
     ];
 
     protected function casts(): array
@@ -75,6 +77,8 @@ class Tour extends Model
             'closed_dates' => 'array',
             'available_weekdays' => 'array',
             'default_daily_capacity' => 'integer',
+            'homepage_card_date_from' => 'date',
+            'homepage_card_date_to' => 'date',
         ];
     }
 
@@ -83,6 +87,18 @@ class Tour extends Model
         static::saving(function (Tour $tour) {
             if ($tour->isDirty('base_price') && $tour->base_price !== null) {
                 $tour->price = $tour->base_price;
+            }
+
+            if ($tour->homepage_card_date_to && ! $tour->homepage_card_date_from) {
+                $tour->homepage_card_date_from = $tour->homepage_card_date_to;
+            }
+
+            if ($tour->homepage_card_date_from && $tour->homepage_card_date_to
+                && $tour->homepage_card_date_to->lt($tour->homepage_card_date_from)) {
+                [$tour->homepage_card_date_from, $tour->homepage_card_date_to] = [
+                    $tour->homepage_card_date_to,
+                    $tour->homepage_card_date_from,
+                ];
             }
         });
     }
@@ -186,6 +202,36 @@ class Tour extends Model
     public function getAverageRatingAttribute(): ?float
     {
         return (float) $this->approvedReviews()->avg('rating');
+    }
+
+    /**
+     * Localized date range for the homepage featured slider card (e.g. "17 – 19 April 2026").
+     */
+    public function formattedHomepageDateRange(): ?string
+    {
+        if ($this->homepage_card_date_from === null) {
+            return null;
+        }
+
+        $locale = app()->getLocale();
+        $start = $this->homepage_card_date_from->locale($locale);
+        $end = $this->homepage_card_date_to;
+
+        if ($end === null || $start->isSameDay($end)) {
+            return $start->translatedFormat('j F Y');
+        }
+
+        $end = $end->locale($locale);
+
+        if ($start->month === $end->month && $start->year === $end->year) {
+            return $start->translatedFormat('j').' – '.$end->translatedFormat('j').' '.$start->translatedFormat('F Y');
+        }
+
+        if ($start->year === $end->year) {
+            return $start->translatedFormat('j M').' – '.$end->translatedFormat('j M Y');
+        }
+
+        return $start->translatedFormat('j M Y').' – '.$end->translatedFormat('j M Y');
     }
 
     /**

@@ -8,7 +8,6 @@ use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TourController;
-use App\Http\Controllers\TourPackageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -35,7 +34,7 @@ Route::get('/cities/{city}/highlights/{highlight}', function (string $city, stri
 Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])->middleware('throttle:10,1')->name('bookings.store');
 Route::get('/bookings/confirmation/{token}', [\App\Http\Controllers\BookingController::class, 'confirmation'])->name('bookings.confirmation');
 
-Route::get('/packages', [TourPackageController::class, 'index'])->name('tour-packages.index');
+Route::permanentRedirect('/packages', '/tours');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');

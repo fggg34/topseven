@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogPost;
 use App\Models\Country;
 use App\Models\HomepageHero;
-use App\Models\Review;
+use App\Models\HomepageSpotlightTour;
+use App\Models\HomepageWhyBookCard;
+use App\Models\Setting;
 use App\Models\Tour;
-use App\Models\TourCategory;
-use App\Models\TourPackage;
 
 class HomeController extends Controller
 {
     public function __invoke()
     {
-        $hero = HomepageHero::getActive();
+        $heroSlides = HomepageHero::query()
+            ->where('is_active', true)
+            ->orderByDesc('updated_at')
+            ->get();
+
+        $homepageFlashSaleTours = HomepageSpotlightTour::query()
+            ->with([
+                'tour' => fn ($q) => $q
+                    ->where('is_active', true)
+                    ->with(['images', 'countries', 'category']),
+            ])
+            ->orderBy('sort_order')
+            ->get()
+            ->filter(fn (HomepageSpotlightTour $row) => $row->tour !== null)
+            ->values();
         $countries = Country::active()->with(['tours' => fn ($q) => $q->where('is_active', true)->select('id', 'price')])->orderBy('name')->get();
 
         $featuredTours = Tour::where('is_active', true)->where('is_featured', true)
@@ -25,60 +38,24 @@ class HomeController extends Controller
 
         $wishlistedIds = auth()->user()?->wishlistTours()->pluck('tours.id')->toArray() ?? [];
 
-        $destinationCountries = Country::active()
+        $whereNextCountries = Country::active()
             ->whereHas('tours', fn ($q) => $q->where('is_active', true))
             ->withCount(['tours' => fn ($q) => $q->where('is_active', true)])
-            ->with(['tours' => fn ($q) => $q->where('is_active', true)])
             ->orderByDesc('tours_count')
-            ->limit(12)
+            ->limit(10)
             ->get();
 
-        if ($destinationCountries->isEmpty()) {
-            $destinationCountries = Country::active()
-                ->with(['tours' => fn ($q) => $q->where('is_active', true)])
-                ->orderBy('name')
-                ->limit(12)
+        if ($whereNextCountries->isEmpty()) {
+            $whereNextCountries = Country::active()
+                ->withCount(['tours' => fn ($q) => $q->where('is_active', true)])
+                ->orderByDesc('tours_count')
+                ->limit(10)
                 ->get();
         }
 
-        $categories = TourCategory::orderBy('sort_order')->get();
+        $whyBookHeading = Setting::get('homepage_why_book_heading', 'Why thousands book with us.');
+        $whyBookCards = HomepageWhyBookCard::query()->orderBy('sort_order')->get();
 
-        $homepageCategories = TourCategory::whereIn('slug', ['day-tours', 'multi-day-tours'])
-            ->orderBy('sort_order')
-            ->with(['tours' => fn ($q) => $q->where('is_active', true)->with(['images', 'approvedReviews', 'category'])->orderBy('sort_order')->limit(12)])
-            ->get();
-
-        if ($homepageCategories->count() < 2) {
-            $homepageCategories = TourCategory::orderBy('sort_order')
-                ->limit(2)
-                ->with(['tours' => fn ($q) => $q->where('is_active', true)->with(['images', 'approvedReviews', 'category'])->orderBy('sort_order')->limit(12)])
-                ->get();
-        }
-
-        $homepageCategories = $homepageCategories
-            ->filter(fn (TourCategory $category) => $category->tours->isNotEmpty())
-            ->values();
-
-        $latestPosts = BlogPost::where('is_published', true)
-            ->whereNotNull('published_at')
-            ->orderByDesc('published_at')
-            ->limit(4)
-            ->get();
-
-        $testimonials = Review::where('is_approved', true)
-            ->whereNotNull('comment')
-            ->where('comment', '!=', '')
-            ->with('user')
-            ->latest()
-            ->limit(12)
-            ->get();
-
-        $totalReviews = Review::where('is_approved', true)->count();
-
-        $tourPackages = TourPackage::visibleOnHome()
-            ->orderBy('sort_order')
-            ->get();
-
-        return view('pages.home', compact('hero', 'countries', 'featuredTours', 'wishlistedIds', 'destinationCountries', 'categories', 'homepageCategories', 'latestPosts', 'testimonials', 'totalReviews', 'tourPackages'));
+        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards'));
     }
 }

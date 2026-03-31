@@ -18,6 +18,7 @@ class HomepageHeroSeeder extends Seeder
                 'banner_image' => null,
                 'banner_video' => null,
                 'cta_text' => null,
+                'cta_url' => null,
                 'is_active' => true,
             ]
         );

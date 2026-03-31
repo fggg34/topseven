@@ -32,7 +32,7 @@
 
     @yield('hero')
 
-    <main>
+    <main @class(['pt-24 md:pt-[5.75rem]' => ! request()->routeIs('home')])>
         @yield('content')
     </main>
 

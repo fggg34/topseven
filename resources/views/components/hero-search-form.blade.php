@@ -3,33 +3,49 @@
 @php
     $initialCountry = request('country') ?: request('city');
     $initialDate = request('date');
+    if ($initialDate && is_string($initialDate)) {
+        try {
+            $initialDate = \Carbon\Carbon::parse($initialDate)->startOfMonth()->format('Y-m-d');
+        } catch (\Throwable) {
+            $initialDate = '';
+        }
+    }
     $initialAdults = max(1, (int) request('adults', 2));
     $countriesData = $countries->map(fn ($c) => ['slug' => $c->slug, 'name' => $c->name, 'label' => $c->country ?? ''])->values()->toArray();
+    $monthOptions = [];
+    $monthCursor = now()->startOfMonth();
+    for ($i = 0; $i < 18; $i++) {
+        $d = $monthCursor->copy()->addMonths($i);
+        $monthOptions[] = [
+            'value' => $d->format('Y-m-01'),
+            'label' => $d->format('F Y'),
+        ];
+    }
 @endphp
 
-<div class="w-full max-w-4xl mx-auto" x-data="heroSearchForm({
+<div class="w-full max-w-[720px] mx-auto" x-data="heroSearchForm({
     action: @js($action),
     countries: @js($countriesData),
+    monthOptions: @js($monthOptions),
     initialCountry: @js($initialCountry),
     initialDate: @js($initialDate),
-    initialAdults: {{ $initialAdults }},
 })" x-init="init()">
     <form :action="action" method="GET" class="w-full" @submit="submitForm">
         <input type="hidden" name="country" :value="selectedCountry">
         <input type="hidden" name="date" :value="selectedDate">
-        <input type="hidden" name="adults" :value="adults">
+        <input type="hidden" name="adults" value="{{ $initialAdults }}">
 
-        <div class="bg-white rounded-lg shadow-lg border border-gray-100 flex flex-col md:flex-row md:items-stretch md:h-[79px]">
+        <div class="bg-white/95 backdrop-blur-sm rounded-full shadow-lg flex items-stretch min-h-14 md:min-h-16 lg:min-h-[4.25rem] pl-1.5 pr-1.5 relative">
 
-            {{-- Where to? --}}
-            <div class="flex-1 min-w-0 relative flex items-center min-h-[75px] max-h-[75px]">
-                <div class="px-5 py-2 flex flex-col justify-center min-w-0 cursor-pointer w-full h-full" @click="countryOpen = !countryOpen; dateOpen = false; adultsOpen = false">
-                    <div class="text-xs font-semibold text-gray-900 mb-0.5">Where to?</div>
-                    <div class="text-sm text-gray-400" x-text="selectedCountryName || 'Country, keywords, or tour code'"></div>
+            {{-- Destination --}}
+            <div class="relative flex-1 min-w-0 flex items-center">
+                <div class="flex items-center gap-2.5 lg:gap-3 px-4 lg:px-6 cursor-pointer w-full min-h-[3.5rem] md:min-h-16 lg:min-h-[4.25rem]" @click="countryOpen = !countryOpen; monthOpen = false">
+                    <svg class="w-5 h-5 lg:w-6 lg:h-6 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span class="text-base lg:text-lg text-gray-600 truncate font-medium" x-text="selectedCountryName || 'Destination'"></span>
                 </div>
                 <div x-show="countryOpen" x-cloak @click.outside="countryOpen = false"
                     x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                    class="absolute left-0 right-0 top-full mt-1 z-50 bg-white rounded-lg shadow-xl border border-gray-200" style="display: none;">
+                    class="absolute left-0 right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-xl border border-gray-200" style="display: none;">
                     <div class="max-h-64 overflow-y-auto py-1.5">
                         <button type="button" @click="selectCountry(null); countryOpen = false"
                             class="w-full flex items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 text-gray-700">
@@ -40,7 +56,6 @@
                                 class="w-full flex items-center justify-between px-4 py-2.5 text-left text-sm hover:bg-gray-50"
                                 :class="selectedCountry === c.slug ? 'bg-lime-50 text-lime-600' : 'text-gray-700'">
                                 <span x-text="c.name"></span>
-                                <span class="text-gray-400 text-xs ml-2" x-text="c.label"></span>
                             </button>
                         </template>
                     </div>
@@ -48,65 +63,37 @@
             </div>
 
             {{-- Divider --}}
-            <div class="hidden md:block w-px bg-gray-200 self-stretch my-2"></div>
-            <div class="md:hidden border-t border-gray-100"></div>
+            <div class="w-px self-stretch my-2.5 lg:my-3 bg-gray-200 flex-shrink-0"></div>
 
-            {{-- When --}}
-            <div class="flex-1 min-w-0 relative flex items-center min-h-[75px] max-h-[75px]" style="display: block;">
-                <div class="px-5 py-2 flex flex-col justify-center min-w-0 cursor-pointer w-full h-full" @click="(dateOpen && fp) ? fp.close() : (fp && fp.open()); countryOpen = false; adultsOpen = false">
-                    <div class="text-xs font-semibold text-gray-900 mb-0.5">When</div>
-                    <div class="text-sm text-gray-400" x-text="selectedDate ? formatDate(selectedDate) : 'Any day'"></div>
+            {{-- When (month picker, aligned like destination) --}}
+            <div class="relative flex-1 min-w-0 flex items-center">
+                <div class="flex items-center gap-2.5 lg:gap-3 px-4 lg:px-6 cursor-pointer w-full min-h-[3.5rem] md:min-h-16 lg:min-h-[4.25rem]" @click="monthOpen = !monthOpen; countryOpen = false">
+                    <svg class="w-5 h-5 lg:w-6 lg:h-6 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span class="text-base lg:text-lg text-gray-600 truncate font-medium" x-text="selectedMonthLabel || 'When'"></span>
                 </div>
-                <input type="text" x-ref="dateInput" placeholder="Any day" readonly class="sr-only" aria-label="Select date">
-                <div x-show="dateOpen" x-cloak x-ref="dateContainer" class="absolute left-0 top-full mt-1 z-50 min-w-[280px]" style="display: none;"></div>
-            </div>
-
-            {{-- Divider --}}
-            <div class="hidden md:block w-px bg-gray-200 self-stretch my-2"></div>
-            <div class="md:hidden border-t border-gray-100"></div>
-
-            {{-- Guests / Adults --}}
-            <div class="flex-1 min-w-0 relative flex items-center min-h-[75px] max-h-[75px]" style="display: block;">
-                <div class="px-5 py-2 flex flex-col justify-center min-w-0 cursor-pointer w-full h-full" @click="adultsOpen = !adultsOpen; countryOpen = false; dateOpen = false">
-                    <div class="text-xs font-semibold text-gray-900 mb-0.5">Guests</div>
-                    <div class="text-sm text-gray-400" x-text="adults + ' Adult' + (adults !== 1 ? 's' : '')"></div>
-                </div>
-                {{-- Adults popup --}}
-                <div x-show="adultsOpen" x-cloak
+                <div x-show="monthOpen" x-cloak @click.outside="monthOpen = false"
                     x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                    class="fixed inset-0 z-50 flex items-center justify-center p-4 md:block md:relative md:inset-auto md:p-0"
-                    @click.self="adultsOpen = false" style="display: none;">
-                    <div class="absolute inset-0 bg-black/50 md:hidden" @click="adultsOpen = false"></div>
-                    <div class="relative bg-white rounded-lg shadow-xl border border-gray-200 max-w-sm w-full p-5 md:absolute md:left-0 md:right-auto md:top-full md:mt-1 md:min-w-[240px]"
-                        x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-base font-bold text-gray-900">Adults</h3>
-                            <button type="button" @click="adultsOpen = false" class="rounded-full p-1.5 text-gray-400 hover:bg-gray-100 md:hidden">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                            </button>
-                        </div>
-                        <div class="flex items-center gap-3 rounded-md border border-gray-200 p-2.5">
-                            <button type="button" @click="if(adults > 1) adults--"
-                                class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 font-medium text-lg transition">−</button>
-                            <span class="flex-1 text-center text-lg font-semibold text-gray-900" x-text="adults"></span>
-                            <button type="button" @click="if(adults < 99) adults++"
-                                class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 font-medium text-lg transition">+</button>
-                        </div>
-                        <button type="button" @click="adultsOpen = false"
-                            class="mt-3 w-full py-2 bg-brand-btn text-white text-sm font-medium rounded-md hover:bg-brand-btn-hover md:hidden transition-colors">
-                            Done
+                    class="absolute left-0 right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-xl border border-gray-200" style="display: none;">
+                    <div class="max-h-64 overflow-y-auto py-1.5">
+                        <button type="button" @click="selectMonth(''); monthOpen = false"
+                            class="w-full flex items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 text-gray-700">
+                            Any month
                         </button>
+                        <template x-for="m in monthOptions" :key="m.value">
+                            <button type="button" @click="selectMonth(m.value); monthOpen = false"
+                                class="w-full flex items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50"
+                                :class="selectedDate === m.value ? 'bg-lime-50 text-lime-600' : 'text-gray-700'">
+                                <span x-text="m.label"></span>
+                            </button>
+                        </template>
                     </div>
                 </div>
             </div>
 
-            {{-- Show Tours button --}}
-            <div class="flex items-center p-2 pr-5 min-h-[75px] max-h-[75px]">
-                <button type="submit" class="w-full md:w-auto md:min-w-[140px] px-6 py-3 bg-brand-btn hover:bg-brand-btn-hover text-white font-semibold rounded-md transition-colors flex items-center justify-center gap-2 text-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    Show Tours
-                </button>
-            </div>
+            {{-- Search button --}}
+            <button type="submit" class="flex-shrink-0 self-center w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition-colors" aria-label="Search">
+                <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
 
         </div>
     </form>

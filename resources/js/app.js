@@ -5,11 +5,12 @@ import collapse from '@alpinejs/collapse';
 import flatpickr from 'flatpickr';
 import TomSelect from 'tom-select';
 import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'tom-select/dist/css/tom-select.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 Alpine.plugin(collapse);
 window.Alpine = Alpine;
@@ -17,6 +18,8 @@ window.flatpickr = flatpickr;
 window.TomSelect = TomSelect;
 window.Swiper = Swiper;
 window.SwiperNavigation = Navigation;
+window.SwiperPagination = Pagination;
+window.SwiperAutoplay = Autoplay;
 
 Alpine.data('bookingSidebar', (config) => ({
   priceUrl: config.priceUrl,
@@ -215,61 +218,38 @@ Alpine.data('searchSidebarDate', (initialDate = '') => ({
 Alpine.data('heroSearchForm', (config) => ({
   action: config.action,
   countries: config.countries || [],
+  monthOptions: config.monthOptions || [],
   initialCountry: config.initialCountry || '',
   initialDate: config.initialDate || '',
-  initialAdults: Math.max(1, parseInt(config.initialAdults, 10) || 2),
   selectedCountry: config.initialCountry || '',
   selectedDate: config.initialDate || '',
-  adults: Math.max(1, parseInt(config.initialAdults, 10) || 2),
   countryOpen: false,
-  dateOpen: false,
-  adultsOpen: false,
-  fp: null,
+  monthOpen: false,
   get selectedCountryName() {
     if (!this.selectedCountry) return '';
     const c = this.countries.find(x => x.slug === this.selectedCountry);
     return c ? c.name : '';
   },
+  get selectedMonthLabel() {
+    if (!this.selectedDate) return '';
+    const row = this.monthOptions.find((x) => x.value === this.selectedDate);
+    if (row) return row.label;
+    const parts = String(this.selectedDate).split('-');
+    if (parts.length >= 2) {
+      const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, 1);
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    }
+    return '';
+  },
   init() {
     this.selectedCountry = this.initialCountry;
     this.selectedDate = this.initialDate;
-    this.adults = this.initialAdults;
-    this.$nextTick(() => this.initFlatpickr());
   },
   selectCountry(slug) {
     this.selectedCountry = slug || '';
   },
-  toggleDatePicker() {
-    if (!this.fp) return;
-    if (this.dateOpen) {
-      this.fp.close();
-    } else {
-      this.fp.open();
-    }
-  },
-  formatDate(ymd) {
-    if (!ymd) return '';
-    const d = new Date(ymd + 'T00:00:00');
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  },
-  initFlatpickr() {
-    if (!window.flatpickr || !this.$refs.dateInput || !this.$refs.dateContainer) return;
-    const self = this;
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() + 1);
-    this.fp = window.flatpickr(this.$refs.dateInput, {
-      dateFormat: 'Y-m-d',
-      minDate: 'today',
-      maxDate: maxDate,
-      appendTo: this.$refs.dateContainer,
-      static: true,
-      onOpen() { self.dateOpen = true; },
-      onClose() { self.dateOpen = false; },
-      onChange(selected, dateStr) {
-        self.selectedDate = dateStr || '';
-      },
-    });
-    if (this.initialDate) this.fp.setDate(this.initialDate);
+  selectMonth(value) {
+    this.selectedDate = value || '';
   },
   submitForm(e) {
     // Form submits naturally with hidden inputs

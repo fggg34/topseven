@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Tours\Schemas;
 
 use App\Models\Tour;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -14,6 +15,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -108,6 +110,21 @@ class TourForm
                                         TextInput::make('sort_order')->numeric()->default(0),
                                     ])
                                     ->columns(3),
+                                Section::make('Homepage featured tours slider')
+                                    ->description('When this tour is added under Pages → Homepage → Featured tours, these dates appear on the white badge on the homepage card. Leave empty to hide the badge.')
+                                    ->schema([
+                                        DatePicker::make('homepage_card_date_from')
+                                            ->label('Date from')
+                                            ->native(false)
+                                            ->displayFormat('d M Y')
+                                            ->live(),
+                                        DatePicker::make('homepage_card_date_to')
+                                            ->label('Date to')
+                                            ->native(false)
+                                            ->displayFormat('d M Y')
+                                            ->minDate(fn (Get $get) => $get('homepage_card_date_from') ? \Carbon\Carbon::parse($get('homepage_card_date_from')) : null),
+                                    ])
+                                    ->columns(2),
                             ]),
                         Tab::make('Images')
                             ->schema([

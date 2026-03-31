@@ -13,13 +13,14 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -27,17 +28,22 @@ class HomepageHeroResource extends Resource
 {
     protected static ?string $model = HomepageHero::class;
 
-    protected static BackedEnum|string|null $navigationIcon = Heroicon::OutlinedPhoto;
+    /** URL: /backend/homepage (was /backend/homepage-heroes) */
+    protected static ?string $slug = 'homepage';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+    protected static BackedEnum|string|null $navigationIcon = Heroicon::OutlinedHome;
 
-    protected static ?string $navigationLabel = 'Homepage Hero';
+    protected static string|\UnitEnum|null $navigationGroup = 'Pages';
 
-    protected static ?string $modelLabel = 'Homepage Hero';
+    protected static ?int $navigationSort = 50;
 
-    protected static ?string $pluralModelLabel = 'Homepage Heroes';
+    protected static ?string $navigationLabel = 'Homepage';
 
-    protected static bool $shouldRegisterNavigation = false;
+    protected static ?string $modelLabel = 'Hero slide';
+
+    protected static ?string $pluralModelLabel = 'Hero slides';
+
+    protected static bool $shouldRegisterNavigation = true;
 
     public static function form(Schema $schema): Schema
     {
@@ -67,6 +73,7 @@ class HomepageHeroResource extends Resource
                     ->imagePreviewHeight('200')
                     ->panelAspectRatio('16/9')
                     ->panelLayout('integrated')
+                    ->dehydratedWhenHidden()
                     ->visible(fn ($get) => $get('banner_type') === 'image')
                     ->columnSpanFull(),
                 FileUpload::make('banner_video')
@@ -75,14 +82,21 @@ class HomepageHeroResource extends Resource
                     ->disk('public')
                     ->directory('heroes')
                     ->visibility('public')
+                    ->dehydratedWhenHidden()
                     ->visible(fn ($get) => $get('banner_type') === 'video')
                     ->columnSpanFull(),
                 TextInput::make('cta_text')
+                    ->label('Button text')
                     ->maxLength(255)
+                    ->columnSpanFull(),
+                TextInput::make('cta_url')
+                    ->label('Button URL')
+                    ->placeholder('/tours')
+                    ->maxLength(2048)
                     ->columnSpanFull(),
                 Toggle::make('is_active')
                     ->default(true)
-                    ->helperText('Only one hero should be active; it will be shown on the homepage.'),
+                    ->helperText('Only active slides are shown on the homepage hero slider.'),
             ]);
     }
 
@@ -92,6 +106,10 @@ class HomepageHeroResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
+                ImageColumn::make('banner_image_url')
+                    ->label('Image')
+                    ->height(40)
+                    ->visibleFrom('md'),
                 TextColumn::make('banner_type')
                     ->badge()
                     ->formatStateUsing(fn (string $state) => ucfirst($state)),
