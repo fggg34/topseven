@@ -49,9 +49,13 @@ class HomeController extends Controller
             ->get();
         $homepageBlogPosts = BlogPost::query()
             ->where('is_published', true)
-            ->whereNotNull('published_at')
+            ->where(function ($query): void {
+                $query
+                    ->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            })
             ->with('category')
-            ->orderByDesc('published_at')
+            ->orderByRaw('COALESCE(published_at, created_at) DESC')
             ->limit(3)
             ->get();
 
