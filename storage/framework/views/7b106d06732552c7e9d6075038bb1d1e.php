@@ -1,4 +1,0 @@
-<?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($siteIcon = \App\Models\Setting::get('site_icon')): ?>
-    <link rel="icon" href="<?php echo e(\Illuminate\Support\Facades\Storage::disk('public')->url($siteIcon)); ?>" type="<?php echo e(str_ends_with($siteIcon, '.svg') ? 'image/svg+xml' : (str_ends_with($siteIcon, '.ico') ? 'image/x-icon' : 'image/png')); ?>">
-<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-<?php /**PATH C:\Users\Administrator\Desktop\Projects\TOP7\topseven\resources\views/layouts/partials/favicon.blade.php ENDPATH**/ ?>

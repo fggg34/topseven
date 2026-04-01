@@ -6,6 +6,7 @@ use App\Models\Country;
 use App\Models\HomepageHero;
 use App\Models\HomepageSpotlightTour;
 use App\Models\HomepageWhyBookCard;
+use App\Models\Review;
 use App\Models\Setting;
 use App\Models\Tour;
 
@@ -55,7 +56,17 @@ class HomeController extends Controller
 
         $whyBookHeading = Setting::get('homepage_why_book_heading', 'Why thousands book with us.');
         $whyBookCards = HomepageWhyBookCard::query()->orderBy('sort_order')->get();
+        $homepageReviews = Review::query()
+            ->where('is_approved', true)
+            ->with([
+                'user:id,name',
+                'tour:id,title',
+            ])
+            ->orderByDesc('review_date')
+            ->orderByDesc('id')
+            ->limit(12)
+            ->get();
 
-        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards'));
+        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards', 'homepageReviews'));
     }
 }

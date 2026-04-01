@@ -134,6 +134,61 @@
 
 <x-home-where-next :countries="$whereNextCountries ?? collect()" />
 
+@if(($homepageReviews ?? collect())->isNotEmpty())
+<section class="home-testimonials-section mx-auto px-4 sm:px-6 lg:px-[80px] pt-8 pb-16">
+    <h2 class="text-center text-3xl md:text-[40px] font-semibold text-[#2f2419] tracking-tight mb-7">
+        What do Goway's travellers say
+    </h2>
+
+    <div class="relative">
+        <button type="button" class="home-testimonials-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Previous review">
+            <i class="fa-solid fa-arrow-left text-sm"></i>
+        </button>
+        <button type="button" class="home-testimonials-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Next review">
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+        </button>
+
+        <div class="swiper home-testimonials-swiper rounded-md overflow-hidden">
+            <div class="swiper-wrapper">
+                @foreach($homepageReviews as $review)
+                    @php
+                        $name = $review->display_name;
+                        $safeComment = trim((string) $review->comment);
+                        $comment = $safeComment !== '' ? $safeComment : 'Great service, smooth planning, and an unforgettable trip from start to finish.';
+                        $title = trim((string) ($review->title ?? '')) ?: $comment;
+                    @endphp
+                    <div class="swiper-slide">
+                        <div class="home-testimonial-slide relative min-h-[230px] md:min-h-[250px] bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=80');">
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#ab6f2e]/20 via-transparent to-[#f0ca79]/25"></div>
+
+                            <div class="relative z-10 px-6 md:px-10 py-6 md:py-8 flex items-center min-h-[230px] md:min-h-[250px]">
+                                <article class="w-full max-w-4xl bg-white/95 border border-[#efe7dc] shadow-[0_18px_40px_rgba(15,23,42,0.13)] px-5 md:px-10 py-5 md:py-6">
+                                    <h3 class="text-[22px] md:text-[34px] leading-tight font-medium text-[#3f2f23] mb-3">
+                                        &ldquo;{{ \Illuminate\Support\Str::limit($title, 90) }}&rdquo;
+                                    </h3>
+                                    <p class="text-[15px] md:text-[17px] leading-relaxed text-[#4d3f33] mb-4">
+                                        {{ \Illuminate\Support\Str::limit($comment, 220) }}
+                                    </p>
+                                    <div class="flex items-center justify-between gap-3 flex-wrap">
+                                        <p class="text-[15px] font-semibold text-[#2f2419]">{{ $name }}</p>
+                                        @if($review->platform)
+                                            <span class="inline-flex items-center gap-2 rounded bg-white px-2 py-1 border border-gray-200 text-[12px] text-gray-700">
+                                                <span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+                                                {{ $review->platform }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
 @push('styles')
 <style>
     .home-hero-swiper,
@@ -174,6 +229,14 @@
     .home-flash-sale-next.swiper-button-disabled {
         background-color: #e5e7eb !important;
         color: #9ca3af !important;
+    }
+    .home-testimonials-prev.swiper-button-disabled,
+    .home-testimonials-next.swiper-button-disabled {
+        opacity: 0.35;
+        pointer-events: none;
+    }
+    .home-testimonial-slide article {
+        backdrop-filter: blur(1px);
     }
 </style>
 @endpush
@@ -269,6 +332,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 640: { slidesPerView: 2.2, spaceBetween: 20 },
                 1024: { slidesPerView: 3.2, spaceBetween: 20 },
                 1280: { slidesPerView: 4, spaceBetween: 20 },
+            },
+        });
+    }
+    if (window.Swiper && document.querySelector('.home-testimonials-swiper')) {
+        new window.Swiper('.home-testimonials-swiper', {
+            modules: [window.SwiperNavigation, window.SwiperAutoplay],
+            slidesPerView: 1,
+            speed: 650,
+            loop: true,
+            autoplay: { delay: 7000, disableOnInteraction: false },
+            navigation: {
+                prevEl: '.home-testimonials-prev',
+                nextEl: '.home-testimonials-next',
             },
         });
     }
