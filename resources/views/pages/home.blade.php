@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.Swiper && document.querySelector('.home-seasonal-banners-swiper')) {
         new window.Swiper('.home-seasonal-banners-swiper', {
             modules: [window.SwiperNavigation, window.SwiperAutoplay],
-            slidesPerView: 3.3,
+            slidesPerView: 2.3,
             spaceBetween: 14,
             speed: 700,
             watchOverflow: true,
