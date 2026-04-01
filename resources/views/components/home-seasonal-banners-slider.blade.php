@@ -22,9 +22,9 @@
                         $buttonUrl = $resolveUrl($banner->button_url ?? '/tours');
                     @endphp
                     <div class="swiper-slide">
-                        <div class="relative overflow-hidden rounded-md border border-gray-200 min-h-[260px] md:min-h-[320px] bg-cover bg-center" style="background-image: url('{{ e($img ?: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1800&q=80') }}');">
+                        <div class="relative overflow-hidden rounded-md border border-gray-200 min-h-[320px] md:min-h-[400px] lg:min-h-[440px] bg-cover bg-center" style="background-image: url('{{ e($img ?: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1800&q=80') }}');">
                             <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-transparent"></div>
-                            <div class="relative z-10 h-full flex items-center px-6 md:px-12 py-7">
+                            <div class="absolute inset-0 z-10 flex items-center px-6 md:px-12">
                                 <div class="max-w-[520px]">
                                     <h3 class="text-white text-[30px] md:text-[42px] font-semibold leading-[1.05] drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
                                         {!! nl2br(e($title)) !!}
