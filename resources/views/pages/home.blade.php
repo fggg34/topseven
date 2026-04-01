@@ -158,6 +158,7 @@
 @endif
 
 <x-home-flash-sale-slider :rows="$homepageFlashSaleToursSecondary ?? collect()" />
+<x-home-seasonal-banners-slider :banners="$homepageSeasonalBanners ?? collect()" />
 
 @push('styles')
 <style>
@@ -211,6 +212,10 @@
     .home-testimonials-swiper .swiper-slide {
         display: flex;
         justify-content: center;
+    }
+    .home-seasonal-next.swiper-button-disabled {
+        opacity: 0.35;
+        pointer-events: none;
     }
 </style>
 @endpush
@@ -320,6 +325,23 @@ document.addEventListener('DOMContentLoaded', function () {
             navigation: {
                 prevEl: '.home-testimonials-prev',
                 nextEl: '.home-testimonials-next',
+            },
+        });
+    }
+    if (window.Swiper && document.querySelector('.home-seasonal-banners-swiper')) {
+        new window.Swiper('.home-seasonal-banners-swiper', {
+            modules: [window.SwiperNavigation, window.SwiperAutoplay],
+            slidesPerView: 1.06,
+            spaceBetween: 10,
+            speed: 700,
+            watchOverflow: true,
+            autoplay: { delay: 5500, disableOnInteraction: false },
+            navigation: {
+                nextEl: '.home-seasonal-next',
+            },
+            breakpoints: {
+                640: { slidesPerView: 1.05, spaceBetween: 12 },
+                1024: { slidesPerView: 1.08, spaceBetween: 12 },
             },
         });
     }

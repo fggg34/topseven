@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\HomepageHero;
+use App\Models\HomepageSeasonalBanner;
 use App\Models\HomepageSecondarySpotlightTour;
 use App\Models\HomepageSpotlightTour;
 use App\Models\HomepageWhyBookCard;
@@ -41,6 +42,10 @@ class HomeController extends Controller
             ->get()
             ->filter(fn (HomepageSecondarySpotlightTour $row) => $row->tour !== null)
             ->values();
+        $homepageSeasonalBanners = HomepageSeasonalBanner::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
 
         $featuredTours = Tour::where('is_active', true)->where('is_featured', true)
             ->with(['category', 'images', 'approvedReviews'])
@@ -78,6 +83,6 @@ class HomeController extends Controller
             ->limit(12)
             ->get();
 
-        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'homepageFlashSaleToursSecondary', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards', 'homepageReviews'));
+        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'homepageFlashSaleToursSecondary', 'homepageSeasonalBanners', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards', 'homepageReviews'));
     }
 }
