@@ -135,21 +135,24 @@
 <x-home-where-next :countries="$whereNextCountries ?? collect()" />
 
 @if(($homepageReviews ?? collect())->isNotEmpty())
-<section class="home-testimonials-section mx-auto px-4 sm:px-6 lg:px-[80px] pt-8 pb-16">
-    <h2 class="text-center text-3xl md:text-[40px] font-semibold text-[#2f2419] tracking-tight mb-7">
-        What do Goway's travellers say
-    </h2>
+<section class="home-testimonials-section px-4 sm:px-6 lg:px-[80px] pt-8 pb-16">
+    <div class="mx-auto w-full max-w-[1400px]">
+        <h2 class="text-center text-3xl md:text-[40px] font-semibold text-[#2f2419] tracking-tight mb-7">
+            What do Top 7 Agency travellers say
+        </h2>
 
-    <div class="relative">
-        <button type="button" class="home-testimonials-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Previous review">
-            <i class="fa-solid fa-arrow-left text-sm"></i>
-        </button>
-        <button type="button" class="home-testimonials-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Next review">
-            <i class="fa-solid fa-arrow-right text-sm"></i>
-        </button>
+        <div class="relative rounded-md overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=80');">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#ab6f2e]/20 via-transparent to-[#f0ca79]/25 pointer-events-none"></div>
 
-        <div class="swiper home-testimonials-swiper rounded-md overflow-hidden">
-            <div class="swiper-wrapper">
+            <button type="button" class="home-testimonials-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Previous review">
+                <i class="fa-solid fa-arrow-left text-sm"></i>
+            </button>
+            <button type="button" class="home-testimonials-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Next review">
+                <i class="fa-solid fa-arrow-right text-sm"></i>
+            </button>
+
+            <div class="swiper home-testimonials-swiper">
+                <div class="swiper-wrapper">
                 @foreach($homepageReviews as $review)
                     @php
                         $name = $review->display_name;
@@ -158,10 +161,8 @@
                         $title = trim((string) ($review->title ?? '')) ?: $comment;
                     @endphp
                     <div class="swiper-slide">
-                        <div class="home-testimonial-slide relative min-h-[230px] md:min-h-[250px] bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=80');">
-                            <div class="absolute inset-0 bg-gradient-to-r from-[#ab6f2e]/20 via-transparent to-[#f0ca79]/25"></div>
-
-                            <div class="relative z-10 px-6 md:px-10 py-6 md:py-8 flex items-center min-h-[230px] md:min-h-[250px]">
+                        <div class="home-testimonial-slide relative min-h-[230px] md:min-h-[250px]">
+                            <div class="relative z-10 px-6 md:px-10 py-6 md:py-8 flex items-center justify-center min-h-[230px] md:min-h-[250px]">
                                 <article class="w-full max-w-4xl bg-white/95 border border-[#efe7dc] shadow-[0_18px_40px_rgba(15,23,42,0.13)] px-5 md:px-10 py-5 md:py-6">
                                     <h3 class="text-[22px] md:text-[34px] leading-tight font-medium text-[#3f2f23] mb-3">
                                         &ldquo;{{ \Illuminate\Support\Str::limit($title, 90) }}&rdquo;
@@ -183,6 +184,7 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -237,6 +239,10 @@
     }
     .home-testimonial-slide article {
         backdrop-filter: blur(1px);
+    }
+    .home-testimonials-swiper .swiper-slide {
+        display: flex;
+        justify-content: center;
     }
 </style>
 @endpush
@@ -339,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
         new window.Swiper('.home-testimonials-swiper', {
             modules: [window.SwiperNavigation, window.SwiperAutoplay],
             slidesPerView: 1,
+            centeredSlides: true,
             speed: 650,
             loop: true,
             autoplay: { delay: 7000, disableOnInteraction: false },
