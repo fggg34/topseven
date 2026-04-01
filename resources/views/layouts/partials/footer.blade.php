@@ -1,119 +1,107 @@
 @php
-    $footerLogo = \App\Models\Setting::get('footer_logo', '') ?: \App\Models\Setting::get('site_logo', '');
-    $footerLogoUrl = $footerLogo ? \Illuminate\Support\Facades\Storage::disk('public')->url($footerLogo) : null;
     $instagramUrl = \App\Models\Setting::get('instagram_url', '');
     $facebookUrl = \App\Models\Setting::get('facebook_url', '');
     $tiktokUrl = \App\Models\Setting::get('tiktok_url', '');
     $youtubeUrl = \App\Models\Setting::get('youtube_url', '');
+    $siteName = \App\Models\Setting::get('site_name', config('app.name'));
     $footerMenu1 = \App\Models\Setting::get('footer_menu_1', '');
     $footerMenu1 = is_string($footerMenu1) ? (json_decode($footerMenu1, true) ?: []) : $footerMenu1;
-    if (empty($footerMenu1) || !isset($footerMenu1['title'])) {
-        $footerMenu1 = ['title' => 'Quick links', 'items' => [
-            ['label' => 'Tours', 'url' => '/tours'],
-            ['label' => 'Destinations', 'url' => '/countries'],
-            ['label' => 'Blog', 'url' => '/blog'],
-            ['label' => 'About us', 'url' => '/about'],
-            ['label' => 'Contact', 'url' => '/contact'],
-        ]];
+    if (empty($footerMenu1) || ! isset($footerMenu1['title'])) {
+        $footerMenu1 = ['title' => 'Company', 'items' => []];
     }
     $footerMenu2 = \App\Models\Setting::get('footer_menu_2', '');
     $footerMenu2 = is_string($footerMenu2) ? (json_decode($footerMenu2, true) ?: []) : $footerMenu2;
-    if (empty($footerMenu2) || !isset($footerMenu2['title'])) {
-        $footerMenu2 = ['title' => 'Company', 'items' => [
-            ['label' => 'About us', 'url' => '/about'],
-            ['label' => 'Contact', 'url' => '/contact'],
-            ['label' => 'FAQ', 'url' => '/faq'],
-        ]];
+    if (empty($footerMenu2) || ! isset($footerMenu2['title'])) {
+        $footerMenu2 = ['title' => 'Popular Destinations', 'items' => []];
     }
     $resolveUrl = fn ($u) => (str_starts_with($u ?? '', 'http') ? $u : url($u ?? '#'));
 @endphp
-<footer class="bg-brand-footer text-gray-300 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {{-- Logo + Tagline + Social --}}
-            <div>
-                @if($footerLogoUrl)
-                    <a href="{{ route('home') }}" class="inline-block mb-4">
-                        <img src="{{ $footerLogoUrl }}" alt="{{ \App\Models\Setting::get('site_name', config('app.name')) }}" class="h-10 w-auto object-contain object-left">
-                    </a>
-                @else
-                    <h3 class="text-white font-semibold text-lg mb-4">{{ \App\Models\Setting::get('site_name', config('app.name')) }}</h3>
-                @endif
-                <p class="text-sm text-gray-400 mb-4">{{ \App\Models\Setting::get('site_tagline', 'Discover your next adventure') }}</p>
-                @if($instagramUrl || $facebookUrl || $tiktokUrl || $youtubeUrl)
-                    <div class="flex items-center gap-6">
-                        @if($instagramUrl)
-                            <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" class="text-brand-btn hover:text-brand-btn-hover transition-colors" aria-label="Instagram">
-                                <i class="fa-brands fa-instagram text-2xl"></i>
-                            </a>
-                        @endif
-                        @if($facebookUrl)
-                            <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" class="text-brand-btn hover:text-brand-btn-hover transition-colors" aria-label="Facebook">
-                                <i class="fa-brands fa-facebook-f text-2xl"></i>
-                            </a>
-                        @endif
-                        @if($tiktokUrl)
-                            <a href="{{ $tiktokUrl }}" target="_blank" rel="noopener noreferrer" class="text-brand-btn hover:text-brand-btn-hover transition-colors" aria-label="TikTok">
-                                <i class="fa-brands fa-tiktok text-2xl"></i>
-                            </a>
-                        @endif
-                        @if($youtubeUrl)
-                            <a href="{{ $youtubeUrl }}" target="_blank" rel="noopener noreferrer" class="text-brand-btn hover:text-brand-btn-hover transition-colors" aria-label="YouTube">
-                                <i class="fa-brands fa-youtube text-2xl"></i>
-                            </a>
-                        @endif
+
+<footer class="mt-16 bg-[#f8f6f2] text-[#222] border-t border-[#e6e1d8]">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="border border-[#ddd6cb] bg-[#faf8f4]">
+            <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[170px]">
+                <div class="hidden lg:block lg:col-span-4 h-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80')"></div>
+                <div class="lg:col-span-4 flex items-center px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
+                    <div>
+                        <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]">The latest ideas in luxury travel</h3>
+                        <p class="mt-2 text-sm text-[#555]">Join our weekly travel newsletter</p>
                     </div>
-                @endif
-            </div>
-            {{-- Footer Menu 1 (dynamic) --}}
-            @if(!empty($footerMenu1['items']))
-            <div>
-                <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">{{ $footerMenu1['title'] }}</h3>
-                <ul class="space-y-2.5 text-sm">
-                    @foreach($footerMenu1['items'] as $item)
-                        <li><a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-gray-400 hover:text-white transition">{{ $item['label'] ?? '' }}</a></li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            {{-- Footer Menu 2 (dynamic) --}}
-            @if(!empty($footerMenu2['items']))
-            <div>
-                <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">{{ $footerMenu2['title'] }}</h3>
-                <ul class="space-y-2.5 text-sm">
-                    @foreach($footerMenu2['items'] as $item)
-                        <li><a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-gray-400 hover:text-white transition">{{ $item['label'] ?? '' }}</a></li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            {{-- Contact --}}
-            <div>
-                <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Contact</h3>
-                <ul class="space-y-2.5 text-sm text-gray-400">
-                    @if(\App\Models\Setting::get('contact_email'))
-                        <li class="flex items-center gap-2">
-                            <i class="fa-solid fa-envelope text-xs text-gray-500"></i>
-                            <a href="mailto:{{ \App\Models\Setting::get('contact_email') }}" class="hover:text-white transition">{{ \App\Models\Setting::get('contact_email') }}</a>
-                        </li>
+                </div>
+                <div class="lg:col-span-4 px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
+                    @if(session('newsletter_success'))
+                        <p class="text-sm text-green-700 mb-2">{{ session('newsletter_success') }}</p>
                     @endif
-                    @if(\App\Models\Setting::get('contact_phone'))
-                        <li class="flex items-center gap-2">
-                            <i class="fa-solid fa-phone text-xs text-gray-500"></i>
-                            <a href="tel:{{ \App\Models\Setting::get('contact_phone') }}" class="hover:text-white transition">{{ \App\Models\Setting::get('contact_phone') }}</a>
-                        </li>
-                    @endif
-                    @if(\App\Models\Setting::get('contact_address'))
-                        <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-location-dot text-xs text-gray-500 mt-0.5"></i>
-                            <span>{{ \App\Models\Setting::get('contact_address') }}</span>
-                        </li>
-                    @endif
-                </ul>
+                    <form method="POST" action="{{ route('newsletter.subscribe') }}" class="space-y-2">
+                        @csrf
+                        <input type="text" name="full_name" value="{{ old('full_name') }}" placeholder="Full name" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email address" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
+                        @error('email')
+                            <p class="text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                        <label class="flex items-start gap-2 text-[11px] text-[#666] leading-snug">
+                            <input type="checkbox" name="opt_in" value="1" checked class="mt-0.5 border-[#cbc4b8]">
+                            <span>I would like to receive weekly travel inspiration and ideas from {{ $siteName }}'s newsletter</span>
+                        </label>
+                        <button type="submit" class="w-full h-10 bg-[#d9c9a8] hover:bg-[#cfbe9a] transition-colors text-[#1f1f1f] text-sm font-semibold inline-flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-envelope text-xs"></i>
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="border-t border-brand-footer-border mt-10 pt-8 text-center text-sm text-gray-500">
-            &copy; {{ date('Y') }} {{ \App\Models\Setting::get('site_name', config('app.name')) }}. All rights reserved.
+
+        <div class="mt-5 text-sm text-[#4a4a4a]">
+            Are you a top travel specialist?
+            <a href="{{ route('contact') }}" class="text-[#1f4a98] font-semibold hover:underline">Click here to contact us.</a>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3">{{ $footerMenu1['title'] }}</h4>
+                <ul class="space-y-1.5 text-[15px]">
+                    @foreach(($footerMenu1['items'] ?? []) as $item)
+                        <li>
+                            <a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-[#1f4a98] hover:underline">{{ $item['label'] ?? '' }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3">{{ $footerMenu2['title'] }}</h4>
+                <ul class="space-y-1.5 text-[15px]">
+                    @foreach(($footerMenu2['items'] ?? []) as $item)
+                        <li>
+                            <a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-[#1f4a98] hover:underline">{{ $item['label'] ?? '' }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3">Connect With Us</h4>
+                <div class="flex items-center gap-2">
+                    @if($facebookUrl)<a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-facebook-f text-sm"></i></a>@endif
+                    @if($instagramUrl)<a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-instagram text-sm"></i></a>@endif
+                    @if($youtubeUrl)<a href="{{ $youtubeUrl }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-youtube text-sm"></i></a>@endif
+                    @if($tiktokUrl)<a href="{{ $tiktokUrl }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-tiktok text-sm"></i></a>@endif
+                </div>
+                <p class="mt-4 text-sm text-[#6a6a6a]">
+                    Copyright &copy; {{ date('Y') }} {{ $siteName }}.<br>
+                    All rights reserved.
+                </p>
+                @if(\App\Models\Setting::get('contact_address'))
+                    <p class="mt-2 text-sm text-[#6a6a6a]">{{ \App\Models\Setting::get('contact_address') }}</p>
+                @endif
+            </div>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-[#ded8ce] flex flex-wrap items-center justify-end gap-5 text-[13px] text-[#4663a8]">
+            <a href="{{ route('contact') }}" class="hover:underline">Privacy Policy</a>
+            <a href="{{ route('contact') }}" class="hover:underline">Terms of Use</a>
+            <a href="{{ route('contact') }}" class="hover:underline">Contact Support</a>
         </div>
     </div>
 </footer>

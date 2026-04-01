@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsletterSubscriberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TourController;
 use Illuminate\Support\Facades\Route;
@@ -45,10 +46,9 @@ Route::get('/faq', fn () => view('pages.faq'))->name('faq');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 
-Route::post('/newsletter', function () {
-    request()->validate(['email' => 'required|email']);
-    return back()->with('success', 'Thanks for subscribing!');
-})->name('newsletter.subscribe');
+Route::post('/newsletter', [NewsletterSubscriberController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('newsletter.subscribe');
 
 Route::get('/dashboard', \App\Http\Controllers\User\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
