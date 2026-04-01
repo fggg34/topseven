@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\BlogPost;
 use App\Models\HomepageHero;
 use App\Models\HomepageSeasonalBanner;
 use App\Models\HomepageSecondarySpotlightTour;
@@ -46,6 +47,13 @@ class HomeController extends Controller
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
+        $homepageBlogPosts = BlogPost::query()
+            ->where('is_published', true)
+            ->whereNotNull('published_at')
+            ->with('category')
+            ->orderByDesc('published_at')
+            ->limit(3)
+            ->get();
 
         $featuredTours = Tour::where('is_active', true)->where('is_featured', true)
             ->with(['category', 'images', 'approvedReviews'])
@@ -83,6 +91,6 @@ class HomeController extends Controller
             ->limit(12)
             ->get();
 
-        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'homepageFlashSaleToursSecondary', 'homepageSeasonalBanners', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards', 'homepageReviews'));
+        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'homepageFlashSaleToursSecondary', 'homepageSeasonalBanners', 'homepageBlogPosts', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards', 'homepageReviews'));
     }
 }

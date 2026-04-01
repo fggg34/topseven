@@ -159,6 +159,7 @@
 
 <x-home-flash-sale-slider :rows="$homepageFlashSaleToursSecondary ?? collect()" />
 <x-home-seasonal-banners-slider :banners="$homepageSeasonalBanners ?? collect()" />
+<x-home-blog-stories :posts="$homepageBlogPosts ?? collect()" />
 
 @push('styles')
 <style>
