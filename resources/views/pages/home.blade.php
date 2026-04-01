@@ -135,7 +135,7 @@
 <x-home-where-next :countries="$whereNextCountries ?? collect()" />
 
 @if(($homepageReviews ?? collect())->isNotEmpty())
-<section class="home-testimonials-section px-4 sm:px-6 lg:px-[80px] pt-8 pb-16">
+<section class="home-testimonials-section px-4 sm:px-6 lg:px-[80px] pt-16 pb-16">
     <div class="mx-auto w-full max-w-[1400px]">
         <h2 class="text-center text-3xl md:text-[40px] font-semibold text-[#2f2419] tracking-tight mb-7">
             What do Top 7 Agency travellers say
