@@ -1,1 +1,0 @@
-<?php echo e($this->getId()); ?>.table.records.<?php echo e($recordKey); ?><?php /**PATH /Users/kevinhitaj/Desktop/Projects/TOP 7 TRAVEL/storage/framework/views/3e0bf97100f4b90a175a9511eed4d844.blade.php ENDPATH**/ ?>

@@ -1,1 +1,0 @@
-<?php echo e($this->getId()); ?>.table.bulk-select-page.checkbox.<?php echo e(\Illuminate\Support\Str::random()); ?><?php /**PATH /Users/kevinhitaj/Desktop/Projects/TOP 7 TRAVEL/storage/framework/views/ea80dffac119befd6f645f91537ca2e2.blade.php ENDPATH**/ ?>
