@@ -141,8 +141,7 @@
             What do Top 7 Agency travellers say
         </h2>
 
-        <div class="relative rounded-md overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=80');">
-            <div class="absolute inset-0 bg-gradient-to-r from-[#ab6f2e]/20 via-transparent to-[#f0ca79]/25 pointer-events-none"></div>
+        <div class="relative overflow-visible">
 
             <button type="button" class="home-testimonials-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Previous review">
                 <i class="fa-solid fa-arrow-left text-sm"></i>
@@ -151,8 +150,10 @@
                 <i class="fa-solid fa-arrow-right text-sm"></i>
             </button>
 
-            <div class="swiper home-testimonials-swiper">
-                <div class="swiper-wrapper">
+            <div class="relative rounded-md overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=80');">
+                <div class="absolute inset-0 bg-gradient-to-r from-[#ab6f2e]/20 via-transparent to-[#f0ca79]/25 pointer-events-none"></div>
+                <div class="swiper home-testimonials-swiper">
+                    <div class="swiper-wrapper">
                 @foreach($homepageReviews as $review)
                     @php
                         $name = $review->display_name;
@@ -184,6 +185,7 @@
                         </div>
                     </div>
                 @endforeach
+                    </div>
                 </div>
             </div>
         </div>
