@@ -6,13 +6,13 @@
 @endphp
 
 @if($banners->isNotEmpty())
-<section class="home-seasonal-banners-section mx-auto px-4 sm:px-6 lg:px-[80px] pt-8 pb-12 overflow-visible">
+<section class="home-seasonal-banners-section mx-auto px-4 sm:px-6 lg:px-[80px] pt-8 pb-12" style="overflow: hidden;">
     <div class="relative">
         <button type="button" class="home-seasonal-next absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white text-gray-700 border border-gray-100 shadow-[0_8px_18px_rgba(15,23,42,0.18)] flex items-center justify-center hover:bg-gray-100 transition-colors" aria-label="Next">
             <i class="fa-solid fa-arrow-right text-xs"></i>
         </button>
 
-        <div class="swiper home-seasonal-banners-swiper overflow-visible">
+        <div style="overflow: visible;" class="swiper home-seasonal-banners-swiper overflow-visible">
             <div class="swiper-wrapper">
                 @foreach($banners as $banner)
                     @php
