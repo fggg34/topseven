@@ -17,130 +17,126 @@
 @if(\App\Models\Setting::get('page_contact_seo_og_image'))@section('og_image', \App\Models\Setting::get('page_contact_seo_og_image'))@endif
 
 @section('content')
-{{-- Hero --}}
-<div class="relative w-full overflow-hidden bg-brand-footer" style="height: 320px;">
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $heroBg }}');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+<div class="relative w-full overflow-hidden bg-[#111827]" style="height: 380px;">
+    <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('{{ $heroBg }}');"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
     <div class="absolute inset-0 flex items-end">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-10">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
             <nav class="text-sm mb-4" aria-label="Breadcrumb">
                 <ol class="flex items-center gap-1.5">
-                    <li><a href="{{ route('home') }}" class="text-white/70 hover:text-white transition">Home</a></li>
-                    <li class="text-white/50">/</li>
+                    <li><a href="{{ route('home') }}" class="text-white/60 hover:text-white transition">Home</a></li>
+                    <li class="text-white/40">/</li>
                     <li class="text-white">Contact</li>
                 </ol>
             </nav>
-            <h1 class="text-4xl md:text-5xl font-bold text-white" style="color: #fff !important;">{{ $heroTitle }}</h1>
+            <h1 class="text-4xl md:text-6xl font-serif text-white tracking-tight">{{ $heroTitle }}</h1>
             @if($heroSubtitle)
-                <p class="mt-2 text-lg text-white/80">{{ $heroSubtitle }}</p>
+                <p class="mt-3 text-lg text-white/70">{{ $heroSubtitle }}</p>
             @endif
         </div>
     </div>
 </div>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-14">
 
-        {{-- Form --}}
         <div class="lg:col-span-3">
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ $formTitle }}</h2>
-            <p class="text-gray-500 mb-8">{{ $formDescription }}</p>
+            <h2 class="text-3xl md:text-[38px] font-serif text-[#111827] mb-2">{{ $formTitle }}</h2>
+            <p class="text-[16px] text-[#6a6a6a] mb-10">{{ $formDescription }}</p>
 
             @if(session('success'))
-                <div class="mb-6 p-4 bg-green-50 text-green-800 rounded-xl border border-green-100 flex items-center gap-3">
+                <div class="mb-8 p-5 bg-green-50 text-green-800 border border-green-100 flex items-center gap-3 text-sm">
                     <i class="fa-solid fa-circle-check text-green-500"></i>
                     {{ session('success') }}
                 </div>
             @endif
 
-            <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
+            <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
                 @csrf
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1.5">Name</label>
+                        <label for="name" class="block text-[13px] font-semibold uppercase tracking-wider text-[#111827]/60 mb-2">Name</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                            class="w-full rounded-xl border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 py-3"
+                            class="w-full border border-[#d1cdc4] bg-white px-4 py-3.5 text-sm text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827] focus:border-[#111827] transition"
                             placeholder="Your name">
                         @error('name')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+                        <label for="email" class="block text-[13px] font-semibold uppercase tracking-wider text-[#111827]/60 mb-2">Email</label>
                         <input type="email" name="email" id="email" value="{{ old('email') }}" required
-                            class="w-full rounded-xl border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 py-3"
+                            class="w-full border border-[#d1cdc4] bg-white px-4 py-3.5 text-sm text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827] focus:border-[#111827] transition"
                             placeholder="your@email.com">
                         @error('email')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
                 </div>
                 <div>
-                    <label for="subject" class="block text-sm font-medium text-gray-700 mb-1.5">Subject</label>
+                    <label for="subject" class="block text-[13px] font-semibold uppercase tracking-wider text-[#111827]/60 mb-2">Subject</label>
                     <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
-                        class="w-full rounded-xl border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 py-3"
+                        class="w-full border border-[#d1cdc4] bg-white px-4 py-3.5 text-sm text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827] focus:border-[#111827] transition"
                         placeholder="How can we help?">
                     @error('subject')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                 </div>
                 <div>
-                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
-                    <textarea name="message" id="message" rows="5" required
-                        class="w-full rounded-xl border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500"
+                    <label for="message" class="block text-[13px] font-semibold uppercase tracking-wider text-[#111827]/60 mb-2">Message</label>
+                    <textarea name="message" id="message" rows="6" required
+                        class="w-full border border-[#d1cdc4] bg-white px-4 py-3.5 text-sm text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827] focus:border-[#111827] transition"
                         placeholder="Tell us more about your inquiry...">{{ old('message') }}</textarea>
                     @error('message')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                 </div>
-                <button type="submit" class="px-8 py-3.5 bg-brand-btn hover:bg-brand-btn-hover text-white font-medium rounded-xl transition-colors">
+                <button type="submit" class="px-10 py-4 bg-[#111827] hover:bg-[#1f2937] text-white text-sm font-semibold tracking-wider uppercase transition-colors">
                     Send message
                 </button>
             </form>
         </div>
 
-        {{-- Contact info sidebar --}}
         <div class="lg:col-span-2">
-            <div class="sticky top-24 space-y-6">
-                <div class="rounded-2xl bg-white border border-gray-100 p-8">
-                    <h3 class="text-lg font-bold text-gray-900 mb-6">Contact details</h3>
+            <div class="sticky top-28 space-y-6">
+                <div class="bg-[#f8f6f2] border border-[#e6e1d8] p-8">
+                    <h3 class="text-xl font-serif text-[#111827] mb-6">Contact details</h3>
                     <div class="space-y-5">
                         @if(\App\Models\Setting::get('contact_email'))
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <i class="fa-solid fa-envelope text-brand-btn"></i>
+                            <div class="w-11 h-11 bg-[#111827] flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-envelope text-white text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-0.5">Email</p>
-                                <a href="mailto:{{ \App\Models\Setting::get('contact_email') }}" class="text-sm text-gray-700 hover:text-brand-btn transition break-all">{{ \App\Models\Setting::get('contact_email') }}</a>
+                                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-0.5">Email</p>
+                                <a href="mailto:{{ \App\Models\Setting::get('contact_email') }}" class="text-sm text-[#111827] hover:underline break-all">{{ \App\Models\Setting::get('contact_email') }}</a>
                             </div>
                         </div>
                         @endif
 
                         @if(\App\Models\Setting::get('contact_phone'))
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <i class="fa-solid fa-phone text-brand-btn"></i>
+                            <div class="w-11 h-11 bg-[#111827] flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-phone text-white text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-0.5">Phone</p>
-                                <a href="tel:{{ \App\Models\Setting::get('contact_phone') }}" class="text-sm text-gray-700 hover:text-brand-btn transition">{{ \App\Models\Setting::get('contact_phone') }}</a>
+                                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-0.5">Phone</p>
+                                <a href="tel:{{ \App\Models\Setting::get('contact_phone') }}" class="text-sm text-[#111827] hover:underline">{{ \App\Models\Setting::get('contact_phone') }}</a>
                             </div>
                         </div>
                         @endif
 
                         @if(\App\Models\Setting::get('contact_address'))
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <i class="fa-solid fa-location-dot text-brand-btn"></i>
+                            <div class="w-11 h-11 bg-[#111827] flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-location-dot text-white text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-0.5">Address</p>
-                                <p class="text-sm text-gray-700">{{ \App\Models\Setting::get('contact_address') }}</p>
+                                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-0.5">Address</p>
+                                <p class="text-sm text-[#111827]">{{ \App\Models\Setting::get('contact_address') }}</p>
                             </div>
                         </div>
                         @endif
                     </div>
                 </div>
 
-                {{-- Quick links --}}
-                <div class="rounded-2xl bg-white border border-gray-100 p-8 text-center">
-                    <i class="fa-solid fa-headset text-3xl text-brand-btn mb-4"></i>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $sidebarTitle }}</h3>
-                    <p class="text-sm text-gray-500 mb-5">{{ $sidebarDescription }}</p>
-                    <a href="{{ $sidebarButtonUrl }}" class="inline-flex px-6 py-2.5 bg-brand-btn hover:bg-brand-btn-hover text-white text-sm font-medium rounded-lg transition-colors">
+                <div class="bg-[#111827] p-8 text-center">
+                    <i class="fa-solid fa-headset text-3xl text-white/80 mb-5"></i>
+                    <h3 class="text-xl font-serif text-white mb-2">{{ $sidebarTitle }}</h3>
+                    <p class="text-sm text-white/60 mb-6">{{ $sidebarDescription }}</p>
+                    <a href="{{ $sidebarButtonUrl }}" class="inline-flex px-7 py-3 border border-white/40 text-white text-sm font-semibold uppercase tracking-wider hover:bg-white hover:text-[#111827] transition-colors">
                         {{ $sidebarButtonText }}
                     </a>
                 </div>

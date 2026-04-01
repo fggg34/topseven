@@ -22,17 +22,26 @@
 @endpush
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
     @php
         $images = $tour->images->isEmpty() ? collect([null]) : $tour->images;
         $firstImage = $images->first();
         $mainImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Tour';
     @endphp
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <div class="lg:col-span-2 space-y-12">
             <div class="flex flex-col items-left">
+                <nav class="text-sm mb-4" aria-label="Breadcrumb">
+                    <ol class="flex items-center gap-1.5 text-[#6a6a6a]">
+                        <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition">Home</a></li>
+                        <li class="text-[#ccc]">/</li>
+                        <li><a href="{{ route('tours.index') }}" class="hover:text-[#111827] transition">Tours</a></li>
+                        <li class="text-[#ccc]">/</li>
+                        <li class="text-[#111827] truncate max-w-[200px]">{{ $tour->title }}</li>
+                    </ol>
+                </nav>
                 <div class="flex flex-wrap items-center gap-3">
-                    <h1 class="text-3xl font-bold text-gray-900">{{ $tour->title }}</h1>
+                    <h1 class="text-3xl md:text-[40px] font-serif text-[#111827] leading-[1.15]">{{ $tour->title }}</h1>
                     <!-- @if($tour->season)
                         @php
                             $seasonLabels = ['summer' => 'Summer', 'winter' => 'Winter', 'all_season' => 'All Season'];
@@ -127,42 +136,42 @@
                     ? $tour->duration_days . ' day' . ($tour->duration_days > 1 ? 's' : '')
                     : ($tour->duration_hours ? $tour->duration_hours . ' hours' : null);
             @endphp
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2" style="margin-top: 20px;">
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-flag text-slate-600 text-sm"></i>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-2 py-6 border-y border-[#e6e1d8]" style="margin-top: 20px;">
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-flag text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Tour starts</p>
-                        <p class="text-sm text-sky-600 truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Tour starts</p>
+                        <p class="text-sm text-[#111827] font-medium truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-sun text-slate-600 text-sm"></i>
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-sun text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Duration</p>
-                        <p class="text-sm text-sky-600">{{ $durationLabel ?: '—' }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Duration</p>
+                        <p class="text-sm text-[#111827] font-medium">{{ $durationLabel ?: '—' }}</p>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-suitcase text-slate-600 text-sm"></i>
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-suitcase text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Ending place</p>
-                        <p class="text-sm text-sky-600 truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Ending place</p>
+                        <p class="text-sm text-[#111827] font-medium truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
                     </div>
                 </div>
                 @if($tour->category)
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-route text-slate-600 text-sm"></i>
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-route text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Tour Type</p>
-                        <p class="text-sm text-sky-600">{{ $tour->category->name }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Tour Type</p>
+                        <p class="text-sm text-[#111827] font-medium">{{ $tour->category->name }}</p>
                     </div>
                 </div>
                 @endif
@@ -170,13 +179,13 @@
                 @php
                     $difficultyLabels = ['easy' => 'Easy', 'moderate' => 'Moderate', 'challenging' => 'Challenging', 'strenuous' => 'Strenuous'];
                 @endphp
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-mountain text-slate-600 text-sm"></i>
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-mountain text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Difficulty</p>
-                        <p class="text-sm text-sky-600">{{ $difficultyLabels[$tour->difficulty] ?? $tour->difficulty }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Difficulty</p>
+                        <p class="text-sm text-[#111827] font-medium">{{ $difficultyLabels[$tour->difficulty] ?? $tour->difficulty }}</p>
                     </div>
                 </div>
                 @endif
@@ -184,48 +193,48 @@
                 @php
                     $seasonLabels = ['summer' => 'Summer', 'winter' => 'Winter', 'all_season' => 'All Season'];
                 @endphp
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-calendar-check text-slate-600 text-sm"></i>
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-check text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Availability</p>
-                        <p class="text-sm text-sky-600">{{ $seasonLabels[$tour->season] ?? $tour->season }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Availability</p>
+                        <p class="text-sm text-[#111827] font-medium">{{ $seasonLabels[$tour->season] ?? $tour->season }}</p>
                     </div>
                 </div>
                 @endif
                 @if($tour->max_group_size)
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-user-group text-slate-600 text-sm"></i>
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-user-group text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Max people</p>
-                        <p class="text-sm text-sky-600">{{ $tour->max_group_size }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Max people</p>
+                        <p class="text-sm text-[#111827] font-medium">{{ $tour->max_group_size }}</p>
                     </div>
                 </div>
                 @endif
                 @if($tour->languages && count($tour->languages) > 0)
-                <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-language text-slate-600 text-sm"></i>
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#111827] flex items-center justify-center">
+                        <i class="fa-solid fa-language text-white text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Language</p>
-                        <p class="text-sm text-sky-600">{{ implode(', ', (array) $tour->languages) }}</p>
+                        <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Language</p>
+                        <p class="text-sm text-[#111827] font-medium">{{ implode(', ', (array) $tour->languages) }}</p>
                     </div>
                 </div>
                 @endif
             </div>
 
-            <div class="prose max-w-none">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Summary</h2>
+            <div class="prose max-w-none prose-headings:font-serif prose-headings:text-[#111827] prose-p:text-[#4a4a4a] prose-p:leading-[1.8]">
+                <h2 class="text-3xl font-serif text-[#111827] mb-4">Summary</h2>
                 {!! $tour->description !!}
             </div>
 
             @if($tour->tour_highlights && count($tour->tour_highlights) > 0)
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Tour highlights</h2>
+                    <h2 class="text-3xl font-serif text-[#111827] mb-4">Tour highlights</h2>
                     <ul class="space-y-3">
                         @foreach($tour->tour_highlights as $highlight)
                             @php $text = is_array($highlight) ? ($highlight['text'] ?? $highlight['value'] ?? '') : $highlight; @endphp
@@ -257,14 +266,14 @@
             @if($tour->itineraries->isNotEmpty())
                 @php $firstId = $tour->itineraries->first()->id; @endphp
                 <div class="" x-data="{ openDay: {{ $firstId }} }">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Itinerary &amp; Details</h2>
-                    <div class="border border-gray-200 rounded-lg overflow-hidden divide-y divide-gray-200">
+                    <h2 class="text-3xl font-serif text-[#111827] mb-4">Itinerary &amp; Details</h2>
+                    <div class="border border-[#e6e1d8] overflow-hidden divide-y divide-[#e6e1d8]">
                         @foreach($tour->itineraries as $day)
                             <div class="bg-white">
                                 <button type="button"
                                     @click="openDay = openDay === {{ $day->id }} ? null : {{ $day->id }}"
-                                    :class="openDay === {{ $day->id }} ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'"
-                                    class="w-full flex items-center justify-between px-4 py-4 text-left font-semibold text-gray-900 transition-colors">
+                                    :class="openDay === {{ $day->id }} ? 'bg-[#f8f6f2]' : 'bg-white hover:bg-[#faf9f6]'"
+                                    class="w-full flex items-center justify-between px-5 py-5 text-left font-semibold text-[#111827] transition-colors">
                                     <span>@if($day->day)Day {{ $day->day }}: @endif{{ $day->title }}</span>
                                     <span class="inline-flex w-7 h-7 flex-shrink-0 ml-2 items-center justify-center">
                                         <i class="fa-solid fa-chevron-down text-gray-500 text-base transition-transform duration-200"
@@ -274,8 +283,8 @@
                                 </button>
                                 <div x-show="openDay === {{ $day->id }}"
                                     x-collapse
-                                    class="border-t border-gray-200">
-                                    <div class="px-4 py-4 text-gray-600 text-sm space-y-4">
+                                    class="border-t border-[#e6e1d8]">
+                                    <div class="px-5 py-5 text-[#4a4a4a] text-sm space-y-4">
                                         @if($day->description)
                                             <div class="prose prose-sm max-w-none text-gray-600">
                                                 {!! $day->description !!}
@@ -293,7 +302,7 @@
             {{-- What to bring --}}
             @if($tour->what_to_bring && count($tour->what_to_bring) > 0)
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-3">What to bring</h2>
+                    <h2 class="text-3xl font-serif text-[#111827] mb-3">What to bring</h2>
                     <ul class="space-y-2">
                         @foreach((array) $tour->what_to_bring as $item)
                             <li class="flex items-start gap-3">
@@ -312,7 +321,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     @if($tour->included)
                         <div>
-                            <h2 class="text-3xl font-bold text-gray-900 mb-3">Included</h2>
+                            <h2 class="text-3xl font-serif text-[#111827] mb-3">Included</h2>
                             <ul class="space-y-2">
                                 @foreach((array) $tour->included as $item)
                                     <li class="flex items-start gap-3">
@@ -327,7 +336,7 @@
                     @endif
                     @if($tour->not_included)
                         <div>
-                            <h2 class="text-3xl font-bold text-gray-900 mb-3">Not included</h2>
+                            <h2 class="text-3xl font-serif text-[#111827] mb-3">Not included</h2>
                             <ul class="space-y-2">
                                 @foreach((array) $tour->not_included as $item)
                                     <li class="flex items-start gap-3">
@@ -352,14 +361,14 @@
             <div>
                 <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
                     <div>
-                        <h2 class="text-3xl font-bold text-gray-900">Customer reviews</h2>
+                        <h2 class="text-3xl font-serif text-[#111827]">Customer reviews</h2>
                         <p class="mt-1 text-base text-gray-600">
                             Read what real customers had to say about <strong class="font-bold text-gray-900">{{ $tour->title }}.</strong>
                         </p>
                     </div>
                     @if($reviewCount > 0)
                     <div class="flex-shrink-0 w-full md:w-auto md:min-w-[200px]">
-                        <div class="rounded-xl p-5 text-white bg-lime-900">
+                        <div class="p-5 text-white bg-[#111827]">
                             <p class="text-sm">Overall rating for this trip</p>
                             @php
                                 $fullStars = (int) floor($avgRating);
@@ -398,10 +407,10 @@
                             if ($initials === '') { $initials = '?'; }
                             $displayDate = $review->display_date;
                         @endphp
-                        <div class="border border-gray-100 rounded-xl p-5 md:p-6 bg-white shadow-sm relative" x-data="{ expanded: false }">
+                        <div class="border border-[#e6e1d8] p-5 md:p-6 bg-white relative" x-data="{ expanded: false }">
                             <x-review-platform-logo :platform="$review->platform" :url="$review->platform_tour_url" />
                             <div class="flex gap-4 {{ $review->platform ? 'pr-12' : '' }}">
-                                <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
+                                <div class="w-12 h-12 rounded-full bg-[#111827] flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
                                     {{ $initials }}
                                 </div>
                                 <div class="min-w-0 flex-1">

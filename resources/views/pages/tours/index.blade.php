@@ -17,32 +17,48 @@
 @section('description', 'Browse our selection of tours and book your next adventure.')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" x-data="tourFilters()" x-init="init()">
+<div class="relative w-full overflow-hidden bg-[#111827]" style="height: 380px;">
+    <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&h=600&fit=crop');"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
+    <div class="absolute inset-0 flex items-end">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
+            <nav class="text-sm mb-4" aria-label="Breadcrumb">
+                <ol class="flex items-center gap-1.5">
+                    <li><a href="{{ route('home') }}" class="text-white/60 hover:text-white transition">Home</a></li>
+                    <li class="text-white/40">/</li>
+                    <li class="text-white">Tours</li>
+                </ol>
+            </nav>
+            <h1 class="text-4xl md:text-6xl font-serif text-white tracking-tight">Explore Our Tours</h1>
+            <p class="mt-3 text-lg text-white/70 max-w-xl">Handpicked experiences designed to immerse you in culture, nature, and unforgettable moments.</p>
+        </div>
+    </div>
+</div>
 
-    {{-- Horizontal filter bar --}}
-    <div class="tours-filter-bar flex flex-wrap items-center gap-3 pb-6 border-b border-gray-200">
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="tourFilters()" x-init="init()">
 
-        {{-- Category (primary, stands out) --}}
+    <div class="tours-filter-bar flex flex-wrap items-center gap-3 pb-7 border-b border-[#e6e1d8]">
+
         @if($categories->isNotEmpty())
         <div class="relative tours-filter-category">
             <button @click="openCategory = !openCategory" type="button"
-                class="inline-flex items-center gap-2 px-5 py-3 bg-lime-50 border-2 rounded-full text-sm font-semibold text-lime-800 hover:bg-lime-100 hover:border-lime-400 transition-all shadow-sm"
-                :class="selectedCategory ? 'border-lime-500 bg-lime-100' : 'border-lime-300'">
-                <i class="fa-solid fa-route text-lime-600"></i>
+                class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
+                :class="selectedCategory ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                <i class="fa-solid fa-route text-xs"></i>
                 <span x-text="selectedCategory ? (categories.find(c => c.slug === selectedCategory)?.name || 'Category') : 'Tour Type'"></span>
-                <i class="fa-solid fa-chevron-down text-[10px] text-lime-600 ml-1"></i>
+                <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
             </button>
             <div x-show="openCategory" @click.outside="openCategory = false" x-transition
-                class="absolute left-0 top-full mt-2 z-50 bg-white rounded-xl shadow-xl border-2 border-lime-200 p-3 min-w-[220px]">
+                class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[220px]">
                 <button @click="selectCategory(''); openCategory = false"
-                    class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-colors"
-                    :class="!selectedCategory ? 'bg-lime-50 text-lime-800' : 'hover:bg-gray-50 text-gray-700'">
+                    class="w-full text-left px-5 py-2.5 text-sm transition-colors"
+                    :class="!selectedCategory ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'">
                     All categories
                 </button>
                 @foreach($categories as $cat)
                     <button @click="selectCategory('{{ $cat->slug }}'); openCategory = false"
-                        class="w-full text-left px-4 py-2.5 rounded-lg text-sm transition-colors"
-                        :class="selectedCategory === '{{ $cat->slug }}' ? 'bg-lime-50 text-lime-800 font-medium' : 'hover:bg-gray-50 text-gray-700'">
+                        class="w-full text-left px-5 py-2.5 text-sm transition-colors"
+                        :class="selectedCategory === '{{ $cat->slug }}' ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'">
                         {{ $cat->name }}
                     </button>
                 @endforeach
@@ -50,112 +66,93 @@
         </div>
         @endif
 
-        <!-- {{-- Pick Date --}}
-        <div class="relative">
-            <button @click="openDatePicker()" type="button"
-                class="inline-flex items-center gap-2 px-4 py-2.5 bg-white border rounded-full text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors"
-                :class="selectedDate ? 'border-gray-900 text-gray-900' : 'border-gray-300'">
-                <i class="fa-regular fa-calendar text-gray-400"></i>
-                <span x-text="selectedDate || 'Pick Date'"></span>
-                <i class="fa-solid fa-chevron-down text-[10px] text-gray-400 ml-1"></i>
-            </button>
-            <div x-ref="calendarContainer" class="tours-date-calendar-wrap absolute left-0 top-full mt-2 z-50"></div>
-            <input type="text" x-ref="filterDateInput" class="sr-only" />
-        </div> -->
-
-        {{-- Duration --}}
         <div class="relative" x-data="{ open: false }">
             <button @click="open = !open" type="button"
-                class="inline-flex items-center gap-2 px-4 py-2.5 bg-white border rounded-full text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors"
-                :class="selectedDurations.length > 0 ? 'border-gray-900 text-gray-900' : 'border-gray-300'">
+                class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
+                :class="selectedDurations.length > 0 ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
                 <span x-text="selectedDurations.length > 0 ? 'Duration (' + selectedDurations.length + ')' : 'Duration'"></span>
-                <i class="fa-solid fa-chevron-down text-[10px] text-gray-400 ml-1"></i>
+                <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
             </button>
             <div x-show="open" @click.outside="open = false" x-transition
-                class="absolute left-0 top-full mt-2 z-50 bg-white rounded-xl shadow-xl border border-gray-200 p-3 min-w-[200px]">
+                class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[200px]">
                 @foreach($durationOptions as $opt)
-                    <label class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <label class="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f6f2] cursor-pointer transition-colors">
                         <input type="checkbox" value="{{ $opt['value'] }}"
-                            class="h-4 w-4 rounded border-gray-300 text-lime-600 focus:ring-lime-500"
+                            class="h-4 w-4 border-gray-300 text-[#111827] focus:ring-[#111827]"
                             :checked="selectedDurations.includes('{{ $opt['value'] }}')"
                             @change="toggleDuration('{{ $opt['value'] }}')">
-                        <span class="text-sm text-gray-700">{{ $opt['label'] }}</span>
+                        <span class="text-sm text-[#4a4a4a]">{{ $opt['label'] }}</span>
                     </label>
                 @endforeach
                 @if($durationOptions->isEmpty())
-                    <p class="px-3 py-2 text-sm text-gray-400">No options available</p>
+                    <p class="px-4 py-2.5 text-sm text-[#aaa]">No options available</p>
                 @endif
             </div>
         </div>
 
-        {{-- Season --}}
         <div class="relative" x-data="{ open: false }">
             <button @click="open = !open" type="button"
-                class="inline-flex items-center gap-2 px-4 py-2.5 bg-white border rounded-full text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors"
-                :class="selectedSeasons.length > 0 ? 'border-gray-900 text-gray-900' : 'border-gray-300'">
+                class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
+                :class="selectedSeasons.length > 0 ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
                 <span x-text="selectedSeasons.length > 0 ? 'Season (' + selectedSeasons.length + ')' : 'Season'"></span>
-                <i class="fa-solid fa-chevron-down text-[10px] text-gray-400 ml-1"></i>
+                <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
             </button>
             <div x-show="open" @click.outside="open = false" x-transition
-                class="absolute left-0 top-full mt-2 z-50 bg-white rounded-xl shadow-xl border border-gray-200 p-3 min-w-[200px]">
+                class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[200px]">
                 @foreach($seasonOptions as $opt)
-                    <label class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <label class="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f6f2] cursor-pointer transition-colors">
                         <input type="checkbox" value="{{ $opt['value'] }}"
-                            class="h-4 w-4 rounded border-gray-300 text-lime-600 focus:ring-lime-500"
+                            class="h-4 w-4 border-gray-300 text-[#111827] focus:ring-[#111827]"
                             :checked="selectedSeasons.includes('{{ $opt['value'] }}')"
                             @change="toggleSeason('{{ $opt['value'] }}')">
-                        <span class="text-sm text-gray-700">{{ $opt['label'] }}</span>
+                        <span class="text-sm text-[#4a4a4a]">{{ $opt['label'] }}</span>
                     </label>
                 @endforeach
                 @if($seasonOptions->isEmpty())
-                    <p class="px-3 py-2 text-sm text-gray-400">No options available</p>
+                    <p class="px-4 py-2.5 text-sm text-[#aaa]">No options available</p>
                 @endif
             </div>
         </div>
 
-        {{-- On Sale toggle --}}
-        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
-            <span class="text-sm font-medium text-gray-700">On Sale</span>
+        <label class="inline-flex items-center gap-2 cursor-pointer select-none ml-1">
+            <span class="text-sm font-semibold text-[#111827] uppercase tracking-wider">On Sale</span>
             <button type="button" @click="onSale = !onSale; applyFilters()"
                 class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
-                :class="onSale ? 'bg-brand-btn' : 'bg-gray-200'"
+                :class="onSale ? 'bg-[#111827]' : 'bg-gray-200'"
                 role="switch" :aria-checked="onSale">
                 <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
                     :class="onSale ? 'translate-x-5' : 'translate-x-0'"></span>
             </button>
         </label>
 
-        {{-- Clear Filters (only when filters are active) --}}
         @if(request('date') || request()->has('duration') || request()->has('season') || request('category') || request()->boolean('on_sale'))
-            <a href="{{ route('tours.index') }}" class="text-sm text-gray-500 hover:text-gray-900 underline underline-offset-2 ml-1">Clear Filters</a>
+            <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">Clear</a>
         @endif
     </div>
 
-    {{-- Results count + sort --}}
-    <div class="flex items-center justify-between mt-6 mb-6">
-        <p class="text-sm text-gray-600">
-            <span class="font-semibold text-gray-900">{{ $tours->total() }}</span> Tours
+    <div class="flex items-center justify-between mt-8 mb-8">
+        <p class="text-sm text-[#6a6a6a]">
+            <span class="font-semibold text-[#111827]">{{ $tours->total() }}</span> Tours available
         </p>
 
         <div class="relative" x-data="{ open: false }">
             <button @click="open = !open" type="button"
-                class="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 hover:border-gray-400 transition-colors">
-                <span>Sort: <span class="font-medium" x-text="sortLabel()">Most Popular</span></span>
-                <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                class="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d1cdc4] bg-white text-sm text-[#111827] hover:border-[#111827] transition-colors">
+                <span>Sort: <span class="font-semibold" x-text="sortLabel()">Most Popular</span></span>
+                <i class="fa-solid fa-chevron-down text-[9px] text-[#111827]/50"></i>
             </button>
             <div x-show="open" @click.outside="open = false" x-transition
-                class="absolute right-0 top-full mt-1 z-50 bg-white rounded-xl shadow-xl border border-gray-200 py-1 min-w-[180px]">
+                class="absolute right-0 top-full mt-1 z-50 bg-white shadow-xl border border-[#e6e1d8] py-1 min-w-[180px]">
                 <template x-for="opt in sortOptions" :key="opt.value">
                     <button @click="currentSort = opt.value; open = false; applyFilters()"
-                        class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
-                        :class="currentSort === opt.value ? 'text-gray-900 font-medium' : 'text-gray-600'"
+                        class="w-full text-left px-5 py-2.5 text-sm hover:bg-[#f8f6f2] transition-colors"
+                        :class="currentSort === opt.value ? 'text-[#111827] font-semibold' : 'text-[#4a4a4a]'"
                         x-text="opt.label"></button>
                 </template>
             </div>
         </div>
     </div>
 
-    {{-- Tour grid --}}
     @php
         $searchParams = array_filter([
             'country' => request('country') ?: request('city'),
@@ -164,15 +161,17 @@
             'category' => request('category'),
         ]);
     @endphp
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @forelse($tours as $tour)
             <x-tour-card :tour="$tour" :queryParams="$searchParams" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
         @empty
-            <p class="col-span-full text-gray-500 text-center py-12">No tours found. Try adjusting your filters.</p>
+            <div class="col-span-full text-center py-20">
+                <p class="text-lg text-[#6a6a6a] font-serif">No tours found. Try adjusting your filters.</p>
+            </div>
         @endforelse
     </div>
 
-    <div class="mt-8">
+    <div class="mt-10">
         {{ $tours->links() }}
     </div>
 </div>
