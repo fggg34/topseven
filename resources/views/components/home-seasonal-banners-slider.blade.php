@@ -6,7 +6,7 @@
 @endphp
 
 @if($banners->isNotEmpty())
-<section class="home-seasonal-banners-section mx-auto px-4 sm:px-6 lg:px-[80px] pt-8 pb-12">
+<section class="home-seasonal-banners-section mx-auto px-4 sm:px-6 lg:px-[80px] pt-8 pb-12 overflow-visible">
     <div class="relative">
         <button type="button" class="home-seasonal-next absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white text-gray-700 border border-gray-100 shadow-[0_8px_18px_rgba(15,23,42,0.18)] flex items-center justify-center hover:bg-gray-100 transition-colors" aria-label="Next">
             <i class="fa-solid fa-arrow-right text-xs"></i>
@@ -22,7 +22,7 @@
                         $buttonUrl = $resolveUrl($banner->button_url ?? '/tours');
                     @endphp
                     <div class="swiper-slide">
-                        <div class="relative overflow-hidden rounded-md border border-gray-200 min-h-[210px] md:min-h-[240px] bg-cover bg-center" style="background-image: url('{{ e($img ?: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1800&q=80') }}');">
+                        <div class="relative overflow-hidden rounded-md border border-gray-200 min-h-[260px] md:min-h-[320px] bg-cover bg-center" style="background-image: url('{{ e($img ?: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1800&q=80') }}');">
                             <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-transparent"></div>
                             <div class="relative z-10 h-full flex items-center px-6 md:px-12 py-7">
                                 <div class="max-w-[520px]">

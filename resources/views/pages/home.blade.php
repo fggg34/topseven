@@ -331,8 +331,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.Swiper && document.querySelector('.home-seasonal-banners-swiper')) {
         new window.Swiper('.home-seasonal-banners-swiper', {
             modules: [window.SwiperNavigation, window.SwiperAutoplay],
-            slidesPerView: 1.06,
-            spaceBetween: 10,
+            slidesPerView: 3.3,
+            spaceBetween: 14,
             speed: 700,
             watchOverflow: true,
             autoplay: { delay: 5500, disableOnInteraction: false },
@@ -340,8 +340,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 nextEl: '.home-seasonal-next',
             },
             breakpoints: {
-                640: { slidesPerView: 1.05, spaceBetween: 12 },
-                1024: { slidesPerView: 1.08, spaceBetween: 12 },
+                640: { slidesPerView: 1.2, spaceBetween: 12 },
+                1024: { slidesPerView: 2.2, spaceBetween: 14 },
+                1280: { slidesPerView: 3.3, spaceBetween: 14 },
             },
         });
     }
