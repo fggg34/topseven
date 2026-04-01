@@ -94,42 +94,6 @@
 @section('content')
 <x-home-flash-sale-slider :rows="$homepageFlashSaleTours ?? collect()" />
 
-{{-- Featured Tours Swiper --}}
-@if($featuredTours->isNotEmpty())
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="flex items-end justify-between mb-8">
-        <div>
-            <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">Our best selling tours at a glance</p>
-            <h2 class="text-2xl md:text-3xl font-bold text-lime-900">
-                @php $searchSlug = request()->get('country') ?: request()->get('city'); @endphp
-                @if($searchSlug && $countryName = ($countries ?? collect())->firstWhere('slug', $searchSlug)?->name)
-                    Based on your search in {{ $countryName }}
-                @else
-                    Most Popular Tours
-                @endif
-            </h2>
-        </div>
-        <div class="flex items-center gap-2">
-            <button type="button" class="featured-prev w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-lime-600 hover:border-lime-300 transition-colors">
-                <i class="fa-solid fa-arrow-left text-sm"></i>
-            </button>
-            <button type="button" class="featured-next w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-lime-600 hover:border-lime-300 transition-colors">
-                <i class="fa-solid fa-arrow-right text-sm"></i>
-            </button>
-        </div>
-    </div>
-    <div class="swiper featured-tours-swiper overflow-visible md:overflow-hidden">
-        <div class="swiper-wrapper">
-            @foreach($featuredTours as $tour)
-                <div class="swiper-slide">
-                    <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
 <x-home-why-book :heading="$whyBookHeading" :cards="$whyBookCards" />
 
 <x-home-where-next :countries="$whereNextCountries ?? collect()" />
@@ -192,6 +156,8 @@
     </div>
 </section>
 @endif
+
+<x-home-flash-sale-slider :rows="$homepageFlashSaleToursSecondary ?? collect()" />
 
 @push('styles')
 <style>

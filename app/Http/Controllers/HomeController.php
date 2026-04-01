@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\HomepageHero;
+use App\Models\HomepageSecondarySpotlightTour;
 use App\Models\HomepageSpotlightTour;
 use App\Models\HomepageWhyBookCard;
 use App\Models\Review;
@@ -30,6 +31,16 @@ class HomeController extends Controller
             ->filter(fn (HomepageSpotlightTour $row) => $row->tour !== null)
             ->values();
         $countries = Country::active()->with(['tours' => fn ($q) => $q->where('is_active', true)->select('id', 'price')])->orderBy('name')->get();
+        $homepageFlashSaleToursSecondary = HomepageSecondarySpotlightTour::query()
+            ->with([
+                'tour' => fn ($q) => $q
+                    ->where('is_active', true)
+                    ->with(['images', 'countries', 'category']),
+            ])
+            ->orderBy('sort_order')
+            ->get()
+            ->filter(fn (HomepageSecondarySpotlightTour $row) => $row->tour !== null)
+            ->values();
 
         $featuredTours = Tour::where('is_active', true)->where('is_featured', true)
             ->with(['category', 'images', 'approvedReviews'])
@@ -67,6 +78,6 @@ class HomeController extends Controller
             ->limit(12)
             ->get();
 
-        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards', 'homepageReviews'));
+        return view('pages.home', compact('heroSlides', 'homepageFlashSaleTours', 'homepageFlashSaleToursSecondary', 'countries', 'featuredTours', 'wishlistedIds', 'whereNextCountries', 'whyBookHeading', 'whyBookCards', 'homepageReviews'));
     }
 }
