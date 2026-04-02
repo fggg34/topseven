@@ -46,85 +46,93 @@
 @if(\App\Models\Setting::get('page_about_seo_og_image'))@section('og_image', \App\Models\Setting::get('page_about_seo_og_image'))@endif
 
 @section('content')
-<div class="relative w-full overflow-hidden bg-[#111827]" style="height: 420px;">
-    <div class="absolute inset-0 bg-cover bg-center opacity-50" style="background-image: url('{{ $heroBg }}');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
-    <div class="absolute inset-0 flex items-end">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
-            <nav class="text-sm mb-4" aria-label="Breadcrumb">
+{{-- Full-screen hero --}}
+<div class="relative w-full overflow-hidden bg-[#111827]" style="height: 520px;">
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $heroBg }}'); opacity: 0.4;"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#111827] via-[#111827]/40 to-transparent"></div>
+    <div class="absolute inset-0 flex flex-col justify-center">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <nav class="text-sm mb-6" aria-label="Breadcrumb">
                 <ol class="flex items-center gap-1.5">
-                    <li><a href="{{ route('home') }}" class="text-white/60 hover:text-white transition">Home</a></li>
-                    <li class="text-white/40">/</li>
-                    <li class="text-white">About us</li>
+                    <li><a href="{{ route('home') }}" class="text-white/50 hover:text-white transition">Home</a></li>
+                    <li class="text-white/30">/</li>
+                    <li class="text-white/80">About us</li>
                 </ol>
             </nav>
-            <h1 class="text-4xl md:text-6xl font-serif text-white tracking-tight">{{ $heroTitle }}</h1>
-            <p class="mt-3 text-lg text-white/70 max-w-xl">Crafting unforgettable journeys with passion, expertise, and attention to every detail.</p>
+            <p class="text-[13px] font-semibold uppercase tracking-[0.25em] text-white/50 mb-4">Who we are</p>
+            <h1 class="text-5xl md:text-7xl font-serif text-white tracking-tight leading-[1.05]">{{ $heroTitle }}</h1>
+            <div class="w-16 h-[2px] bg-white/40 mt-6"></div>
         </div>
     </div>
 </div>
 
+{{-- Intro section --}}
 @if($introTitle || $introContent || $introImage)
-<section class="py-20 md:py-28">
+<section class="relative">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center">
-            <div>
-                @if($introLabel)
-                    <p class="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#111827]/50 mb-4">{{ $introLabel }}</p>
-                @endif
-                @if($introTitle)
-                    <h2 class="text-3xl md:text-[42px] font-serif text-[#111827] leading-[1.1] mb-7">{{ $introTitle }}</h2>
-                @endif
-                @if($introContent)
-                    <div class="space-y-5 text-[17px] text-[#4a4a4a] leading-[1.7]">
-                        @foreach(explode("\n\n", $introContent) as $para)
-                            @if(trim($para))
-                                <p>{{ $para }}</p>
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-            <div class="relative">
-                <div class="rounded-sm overflow-hidden shadow-2xl">
-                    <img src="{{ $introImageUrl }}" alt="Our team" class="w-full h-full object-cover" style="aspect-ratio: 7/5;">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+            {{-- Image side --}}
+            <div class="lg:col-span-5 relative -mt-20 lg:-mt-24 z-10">
+                <div class="overflow-hidden shadow-2xl">
+                    <img src="{{ $introImageUrl }}" alt="Our team" class="w-full object-cover" style="aspect-ratio: 5/6; min-height: 450px;">
                 </div>
                 @if($introBadgeTitle || $introBadgeSubtitle)
-                <div class="absolute -bottom-5 -left-5 bg-white border border-gray-100 shadow-lg px-6 py-4 hidden lg:block">
-                    @if($introBadgeTitle)<p class="text-sm font-semibold text-[#111827]">{{ $introBadgeTitle }}</p>@endif
-                    @if($introBadgeSubtitle)<p class="text-xs text-[#6a6a6a]">{{ $introBadgeSubtitle }}</p>@endif
+                <div class="absolute bottom-6 right-6 bg-[#111827] text-white px-6 py-4 shadow-xl">
+                    @if($introBadgeTitle)<p class="text-sm font-semibold">{{ $introBadgeTitle }}</p>@endif
+                    @if($introBadgeSubtitle)<p class="text-xs text-white/60 mt-0.5">{{ $introBadgeSubtitle }}</p>@endif
                 </div>
                 @endif
+            </div>
+            {{-- Text side --}}
+            <div class="lg:col-span-7 flex items-center">
+                <div class="py-16 md:py-24 lg:pl-16 xl:pl-24">
+                    @if($introLabel)
+                        <p class="text-[13px] font-semibold uppercase tracking-[0.25em] text-[#111827]/40 mb-4">{{ $introLabel }}</p>
+                    @endif
+                    @if($introTitle)
+                        <h2 class="text-3xl md:text-[40px] font-serif text-[#111827] leading-[1.12] mb-8">{{ $introTitle }}</h2>
+                    @endif
+                    @if($introContent)
+                        <div class="space-y-5 text-[16px] text-[#5a5a5a] leading-[1.8]">
+                            @foreach(explode("\n\n", $introContent) as $para)
+                                @if(trim($para))
+                                    <p>{{ $para }}</p>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
 </section>
 @endif
 
+{{-- Values --}}
 @if(!empty($values))
-<section class="py-20 md:py-28 bg-[#f8f6f2]">
+<section class="py-20 md:py-28 bg-[#111827]">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="max-w-2xl mb-14">
             @if($valuesLabel)
-                <p class="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#111827]/50 mb-4">{{ $valuesLabel }}</p>
+                <p class="text-[13px] font-semibold uppercase tracking-[0.25em] text-white/40 mb-4">{{ $valuesLabel }}</p>
             @endif
             @if($valuesTitle)
-                <h2 class="text-3xl md:text-[42px] font-serif text-[#111827] leading-[1.1]">{{ $valuesTitle }}</h2>
+                <h2 class="text-3xl md:text-[40px] font-serif text-white leading-[1.12]">{{ $valuesTitle }}</h2>
             @endif
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10">
             @foreach($values as $val)
-            <div class="bg-white border border-[#e6e1d8] p-9">
+            <div class="bg-[#111827] p-10 group hover:bg-[#1a2332] transition-colors">
                 @if(!empty($val['icon']))
-                <div class="w-14 h-14 rounded-full bg-[#111827] flex items-center justify-center mb-6">
-                    <i class="fa-solid {{ $val['icon'] }} text-lg text-white"></i>
+                <div class="w-12 h-12 border border-white/20 flex items-center justify-center mb-7 group-hover:border-white/40 transition-colors">
+                    <i class="fa-solid {{ $val['icon'] }} text-white/70 text-lg"></i>
                 </div>
                 @endif
                 @if(!empty($val['title']))
-                    <h3 class="text-xl font-serif text-[#111827] mb-3">{{ $val['title'] }}</h3>
+                    <h3 class="text-xl font-serif text-white mb-3">{{ $val['title'] }}</h3>
                 @endif
                 @if(!empty($val['description']))
-                    <p class="text-[15px] text-[#6a6a6a] leading-relaxed">{{ $val['description'] }}</p>
+                    <p class="text-[15px] text-white/55 leading-relaxed">{{ $val['description'] }}</p>
                 @endif
             </div>
             @endforeach
@@ -133,47 +141,54 @@
 </section>
 @endif
 
+{{-- Quote --}}
 @if($quoteText)
-<section class="py-20 md:py-28 bg-[#111827]">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="w-16 h-[2px] bg-white/30 mx-auto mb-10"></div>
-        <blockquote class="text-2xl md:text-[32px] font-serif text-white leading-[1.35] mb-8">
+<section class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('{{ $heroBg }}');"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <i class="fa-solid fa-quote-left text-[#111827]/10 text-6xl mb-6"></i>
+        <blockquote class="text-2xl md:text-[34px] font-serif text-[#111827] leading-[1.3] mb-8">
             &ldquo;{{ $quoteText }}&rdquo;
         </blockquote>
-        <p class="text-sm text-white/50 tracking-wider uppercase">The {{ $siteName }} team</p>
+        <div class="w-10 h-[2px] bg-[#111827]/20 mx-auto mb-4"></div>
+        <p class="text-sm text-[#111827]/50 tracking-[0.2em] uppercase">The {{ $siteName }} team</p>
     </div>
 </section>
 @endif
 
+{{-- What to expect --}}
 @if(!empty($expectItems) || $expectTitle)
-<section class="py-20 md:py-28">
+<section class="py-20 md:py-28 bg-[#f8f6f2]">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center">
-            <div class="order-2 lg:order-1 relative">
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="overflow-hidden">
-                        <img src="{{ $expectImage1Url }}" alt="Destination" class="w-full object-cover" style="aspect-ratio: 4/5;">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+            {{-- Images --}}
+            <div class="relative">
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-7 overflow-hidden shadow-lg">
+                        <img src="{{ $expectImage1Url }}" alt="Destination" class="w-full object-cover" style="aspect-ratio: 3/4;">
                     </div>
-                    <div class="overflow-hidden mt-10">
-                        <img src="{{ $expectImage2Url }}" alt="Experience" class="w-full object-cover" style="aspect-ratio: 4/5;">
+                    <div class="col-span-5 mt-16 overflow-hidden shadow-lg">
+                        <img src="{{ $expectImage2Url }}" alt="Experience" class="w-full object-cover" style="aspect-ratio: 3/4;">
                     </div>
                 </div>
+                <div class="absolute -bottom-4 left-8 bg-[#111827] text-white px-6 py-3 shadow-xl hidden lg:block">
+                    <p class="text-sm font-semibold tracking-wider uppercase">{{ count($expectItems) }} Promises We Keep</p>
+                </div>
             </div>
-            <div class="order-1 lg:order-2">
+            {{-- Content --}}
+            <div class="lg:pt-4">
                 @if($expectLabel)
-                    <p class="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#111827]/50 mb-4">{{ $expectLabel }}</p>
+                    <p class="text-[13px] font-semibold uppercase tracking-[0.25em] text-[#111827]/40 mb-4">{{ $expectLabel }}</p>
                 @endif
                 @if($expectTitle)
-                    <h2 class="text-3xl md:text-[42px] font-serif text-[#111827] leading-[1.1] mb-10">{{ $expectTitle }}</h2>
+                    <h2 class="text-3xl md:text-[40px] font-serif text-[#111827] leading-[1.12] mb-10">{{ $expectTitle }}</h2>
                 @endif
                 @if(!empty($expectItems))
-                <div class="space-y-7">
+                <div class="space-y-0 divide-y divide-[#e6e1d8]">
                     @foreach($expectItems as $i => $item)
-                    <div class="flex items-start gap-5">
-                        <div class="w-10 h-10 rounded-full bg-[#111827] flex items-center justify-center flex-shrink-0 text-white text-sm font-semibold">
-                            {{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}
-                        </div>
-                        <div>
+                    <div class="flex items-start gap-5 py-6 first:pt-0">
+                        <span class="text-[32px] font-serif text-[#111827]/15 leading-none flex-shrink-0 w-10 text-right">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                        <div class="min-w-0">
                             @if(!empty($item['title']))
                                 <h4 class="text-lg font-semibold text-[#111827] mb-1">{{ $item['title'] }}</h4>
                             @endif
@@ -190,4 +205,16 @@
     </div>
 </section>
 @endif
+
+{{-- CTA --}}
+<section class="relative py-20 md:py-24 bg-[#111827] overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center opacity-15" style="background-image: url('{{ $heroBg }}');"></div>
+    <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-[42px] font-serif text-white leading-[1.12] mb-4">Ready to explore with us?</h2>
+        <p class="text-white/55 text-lg mb-8 max-w-xl mx-auto">Let us craft your perfect journey. Browse our curated collection of tours and experiences.</p>
+        <a href="{{ route('tours.index') }}" class="inline-flex items-center px-10 py-4 border-2 border-white text-white text-sm font-semibold uppercase tracking-wider hover:bg-white hover:text-[#111827] transition-all">
+            Browse our tours
+        </a>
+    </div>
+</section>
 @endsection
