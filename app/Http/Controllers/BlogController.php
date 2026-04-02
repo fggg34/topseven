@@ -10,13 +10,22 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        $query = BlogPost::where('is_published', true)->whereNotNull('published_at')->with('category');
+        $query = BlogPost::query()
+            ->where('is_published', true)
+            ->where(function ($q): void {
+                $q->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            })
+            ->with('category');
 
         if ($request->filled('category')) {
             $query->whereHas('category', fn ($q) => $q->where('slug', $request->category));
         }
 
-        $posts = $query->orderByDesc('published_at')->paginate(9)->withQueryString();
+        $posts = $query
+            ->orderByRaw('COALESCE(published_at, created_at) DESC')
+            ->paginate(9)
+            ->withQueryString();
         $categories = BlogCategory::all();
 
         return view('pages.blog.index', compact('posts', 'categories'));
@@ -24,16 +33,25 @@ class BlogController extends Controller
 
     public function show(string $slug)
     {
-        $post = BlogPost::where('slug', $slug)->where('is_published', true)
+        $post = BlogPost::where('slug', $slug)
+            ->where('is_published', true)
+            ->where(function ($q): void {
+                $q->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            })
             ->with(['category', 'tags'])
             ->firstOrFail();
 
         $related = BlogPost::where('is_published', true)
             ->where('id', '!=', $post->id)
+            ->where(function ($q): void {
+                $q->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            })
             ->where(function ($q) use ($post) {
                 $q->where('blog_category_id', $post->blog_category_id)->orWhereNull('blog_category_id');
             })
-            ->orderByDesc('published_at')
+            ->orderByRaw('COALESCE(published_at, created_at) DESC')
             ->limit(3)
             ->get();
 
