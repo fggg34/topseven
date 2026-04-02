@@ -1,14 +1,71 @@
-@props(['tour', 'queryParams' => [], 'wishlisted' => false, 'slider' => false])
+@props(['tour', 'queryParams' => [], 'wishlisted' => false, 'slider' => false, 'variant' => 'default'])
 
 @php
     $firstImg = $tour->images->first();
     $imageUrl = $firstImg?->url ?? 'https://placehold.co/600x400/e5e7eb/6b7280?text=Tour';
-    $rating = $tour->average_rating ?? $tour->approvedReviews->avg('rating');
-    $reviewCount = $tour->approvedReviews->count();
+    if ($variant === 'flash' && !$firstImg) {
+        $imageUrl = 'https://placehold.co/600x800/e5e7eb/6b7280?text=Tour';
+    }
     $tourUrl = route('tours.show', $tour->slug);
     if (!empty($queryParams)) {
         $tourUrl .= '?' . http_build_query($queryParams);
     }
+@endphp
+
+@if($variant === 'flash')
+@php
+    $sale = (float) ($tour->price ?? 0);
+    $base = (float) ($tour->base_price ?? 0);
+    $hasCompare = $base > $sale && $sale >= 0 && $base > 0;
+    $currency = ($tour->currency === 'EUR' || !$tour->currency) ? '€' : ($tour->currency === 'USD' ? '$' : $tour->currency . ' ');
+    $decimals = ($sale != floor($sale)) ? 2 : 0;
+    $baseDecimals = ($base != floor($base)) ? 2 : 0;
+@endphp
+<article {{ $attributes->merge(['class' => 'h-full']) }}>
+    <a href="{{ $tourUrl }}" class="home-flash-sale-card group relative block aspect-[3/4] min-h-[420px] sm:min-h-[480px] max-h-[560px] rounded-[28px] overflow-hidden shadow-md ring-1 ring-black/10 h-full">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-[1.04]" style="background-image: url('{{ e($imageUrl) }}');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/[0.88] via-black/35 to-transparent pointer-events-none"></div>
+
+        @auth
+            @if($wishlisted)
+                <form method="POST" action="{{ route('wishlist.destroy', $tour) }}" class="absolute top-4 right-4 z-20" onclick="event.preventDefault(); event.stopPropagation(); this.submit();">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-rose-400 hover:bg-white/30 transition-colors" aria-label="Remove from wishlist">
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M6.25 3.333a4.583 4.583 0 0 0-4.583 4.584c0 4.583 5.416 8.75 8.333 9.716 2.917-.966 8.333-5.133 8.333-9.716A4.583 4.583 0 0 0 10 5.28a4.578 4.578 0 0 0-3.75-1.948Z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </form>
+            @else
+                <form method="POST" action="{{ route('wishlist.store', $tour) }}" class="absolute top-4 right-4 z-20" onclick="event.preventDefault(); event.stopPropagation(); this.submit();">
+                    @csrf
+                    <button type="submit" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:text-rose-400 hover:bg-white/30 transition-colors" aria-label="Add to wishlist">
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M6.25 3.333a4.583 4.583 0 0 0-4.583 4.584c0 4.583 5.416 8.75 8.333 9.716 2.917-.966 8.333-5.133 8.333-9.716A4.583 4.583 0 0 0 10 5.28a4.578 4.578 0 0 0-3.75-1.948Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </form>
+            @endif
+        @endauth
+
+        <div class="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6 pt-24 flex flex-col justify-end text-left">
+            <h3 class="text-xl sm:text-2xl font-bold text-white leading-[1.2] tracking-tight line-clamp-4 drop-shadow-sm font-sans">
+                {{ $tour->title }}
+            </h3>
+            <div class="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span class="text-[15px] sm:text-base font-bold text-white tabular-nums tracking-tight">
+                    From {{ $currency }}{{ number_format($sale, $decimals) }}
+                </span>
+                @if($hasCompare)
+                    <span class="text-sm sm:text-[15px] font-normal text-white/75 line-through tabular-nums">
+                        {{ $currency }}{{ number_format($base, $baseDecimals) }}
+                    </span>
+                @endif
+            </div>
+        </div>
+    </a>
+</article>
+@else
+@php
+    $rating = $tour->average_rating ?? $tour->approvedReviews->avg('rating');
+    $reviewCount = $tour->approvedReviews->count();
 
     $durationLabel = $tour->duration_days
         ? $tour->duration_days . ' day' . ($tour->duration_days > 1 ? 's' : '')
@@ -124,3 +181,4 @@
         </div>
     </a>
 </article>
+@endif

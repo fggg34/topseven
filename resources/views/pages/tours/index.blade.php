@@ -163,7 +163,7 @@
     @endphp
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @forelse($tours as $tour)
-            <x-tour-card :tour="$tour" :queryParams="$searchParams" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
+            <x-tour-card variant="flash" :tour="$tour" :queryParams="$searchParams" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
         @empty
             <div class="col-span-full text-center py-20">
                 <p class="text-lg text-[#6a6a6a] font-serif">No tours found. Try adjusting your filters.</p>
