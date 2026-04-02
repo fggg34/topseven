@@ -33,6 +33,7 @@ Route::get('/cities/{city}/highlights/{highlight}', function (string $city, stri
 });
 
 Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])->middleware('throttle:10,1')->name('bookings.store');
+Route::post('/tours/{slug}/enquiry', [\App\Http\Controllers\TourEnquiryController::class, 'store'])->middleware('throttle:10,1')->name('tours.enquiry.store');
 Route::get('/bookings/confirmation/{token}', [\App\Http\Controllers\BookingController::class, 'confirmation'])->name('bookings.confirmation');
 
 Route::permanentRedirect('/packages', '/tours');
