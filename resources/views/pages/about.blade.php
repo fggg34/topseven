@@ -67,7 +67,7 @@
 </section>
 
 {{-- 2. Intro --}}
-<!-- @if($introTitle || $introContent)
+@if($introTitle || $introContent)
 <section class="px-4 sm:px-6 md:px-[80px] py-16 md:py-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-20 items-start">
@@ -95,7 +95,7 @@
         </div>
     </div>
 </section>
-@endif -->
+@endif
 
 {{-- 3. Image mosaic --}}
 <section class="px-4 sm:px-6 md:px-[80px]">
@@ -187,7 +187,7 @@
 @endif
 
 {{-- 6. What to expect --}}
-@if(!empty($expectItems))
+<!-- @if(!empty($expectItems))
 <section class="px-4 sm:px-6 md:px-[80px] pb-16 md:pb-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-20 items-start mb-12">
@@ -219,7 +219,7 @@
         </div>
     </div>
 </section>
-@endif
+@endif -->
 
 {{-- 7. CTA --}}
 <section class="px-4 sm:px-6 md:px-[80px] pb-16 md:pb-24">
