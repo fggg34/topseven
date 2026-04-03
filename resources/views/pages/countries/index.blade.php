@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
 @section('title', 'All Countries - ' . config('app.name'))
-@section('description', 'Explore countries and find tours.')
+@section('description', 'Explore countries and find travel packages.')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -36,9 +36,9 @@
                         <h2 class="text-xl font-bold" style="color: #fff !important;">{{ $country->name }}</h2>
                         <p class="text-sm text-white/90 mt-1">
                             @if($country->tours_count > 0)
-                                {{ $country->tours_count }} {{ Str::plural('Tour', $country->tours_count) }}
+                                {{ $country->tours_count }} {{ $country->tours_count === 1 ? 'travel package' : 'travel packages' }}
                             @else
-                                Tours coming soon
+                                Travel packages coming soon
                             @endif
                         </p>
                     </div>

@@ -38,7 +38,7 @@
 
     <tr><td colspan="2" style="padding: 8px 16px; background: #f9fafb; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280;">Booking details</td></tr>
     <tr class="detail-row">
-        <td class="detail-label">Tour</td>
+        <td class="detail-label">Travel package</td>
         <td class="detail-value"><strong>{{ $booking->tour->title }}</strong></td>
     </tr>
     <tr class="detail-row">

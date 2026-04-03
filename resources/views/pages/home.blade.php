@@ -10,7 +10,7 @@
         ? $heroSlides
         : collect([
             (object) [
-                'title' => "Europe's Best Tours & Things to Do",
+                'title' => "Europe's Best Travel Packages & Things to Do",
                 'subtitle' => 'Book unforgettable trips with local experts.',
                 'banner_type' => 'image',
                 'banner_image_url' => 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920',

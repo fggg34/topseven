@@ -19,9 +19,14 @@ class CountryController extends Controller
     public function show(string $slug)
     {
         $country = Country::where('slug', $slug)
-            ->with(['highlights', 'tours' => fn ($q) => $q->where('is_active', true)])
+            ->with([
+                'highlights',
+                'tours' => fn ($q) => $q->where('is_active', true)->with(['images', 'category', 'approvedReviews']),
+            ])
             ->firstOrFail();
 
-        return view('pages.countries.show', compact('country'));
+        $wishlistedIds = auth()->user()?->wishlistTours()->pluck('tours.id')->toArray() ?? [];
+
+        return view('pages.countries.show', compact('country', 'wishlistedIds'));
     }
 }

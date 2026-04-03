@@ -16,7 +16,7 @@
 
 <table class="email-table">
     <tr class="detail-row">
-        <td class="detail-label">Tour</td>
+        <td class="detail-label">Travel package</td>
         <td class="detail-value"><strong>{{ $booking->tour->title }}</strong></td>
     </tr>
     <tr class="detail-row">
@@ -70,6 +70,6 @@
     <a href="{{ $booking->confirmation_url }}" class="btn">View booking confirmation</a>
 </div>
 <div style="margin-top: 12px; text-align: center;">
-    <a href="{{ route('tours.show', $booking->tour->slug) }}" style="color: #65a30d; font-weight: 600; font-size: 14px;">View tour details</a>
+    <a href="{{ route('tours.show', $booking->tour->slug) }}" style="color: #65a30d; font-weight: 600; font-size: 14px;">View travel package details</a>
 </div>
 @endsection

@@ -6,7 +6,7 @@
 
 @if($rows->isNotEmpty())
 @php
-    $headline = \App\Models\Setting::get('homepage_flash_sale_headline', 'Hand-picked tours for your next trip.');
+    $headline = \App\Models\Setting::get('homepage_flash_sale_headline', 'Hand-picked travel packages for your next trip.');
     $highlight = \App\Models\Setting::get('homepage_flash_sale_highlight', '');
     $ctaLabel = \App\Models\Setting::get('homepage_flash_sale_cta_label', 'View All');
     $ctaUrlRaw = \App\Models\Setting::get('homepage_flash_sale_cta_url', '/tours');
@@ -38,7 +38,7 @@
                 @continue(!$tour)
                 @php
                     $img = $tour->images->first();
-                    $imageUrl = $img?->url ?? 'https://placehold.co/600x800/e5e7eb/6b7280?text=Tour';
+                    $imageUrl = $img?->url ?? 'https://placehold.co/600x800/e5e7eb/6b7280?text=Travel+Package';
                     $tourUrl = route('tours.show', $tour->slug);
                     $sale = (float) ($tour->price ?? 0);
                     $base = (float) ($tour->base_price ?? 0);

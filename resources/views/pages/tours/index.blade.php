@@ -13,8 +13,8 @@
 </style>
 @endpush
 
-@section('title', 'Tours - ' . config('app.name'))
-@section('description', 'Browse our selection of tours and book your next adventure.')
+@section('title', 'Travel Packages - ' . config('app.name'))
+@section('description', 'Browse our selection of travel packages and book your next adventure.')
 
 @section('content')
 <div class="relative w-full overflow-hidden bg-[#111827]" style="height: 380px;">
@@ -26,10 +26,10 @@
                 <ol class="flex items-center gap-1.5">
                     <li><a href="{{ route('home') }}" class="text-white/60 hover:text-white transition">Home</a></li>
                     <li class="text-white/40">/</li>
-                    <li class="text-white">Tours</li>
+                    <li class="text-white">Travel Packages</li>
                 </ol>
             </nav>
-            <h1 class="text-4xl md:text-6xl font-serif text-white tracking-tight">Explore Our Tours</h1>
+            <h1 class="text-4xl md:text-6xl font-serif text-white tracking-tight">Explore Our Travel Packages</h1>
             <p class="mt-3 text-lg text-white/70 max-w-xl">Handpicked experiences designed to immerse you in culture, nature, and unforgettable moments.</p>
         </div>
     </div>
@@ -45,7 +45,7 @@
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
                 :class="selectedCategory ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
                 <i class="fa-solid fa-route text-xs"></i>
-                <span x-text="selectedCategory ? (categories.find(c => c.slug === selectedCategory)?.name || 'Category') : 'Tour Type'"></span>
+                <span x-text="selectedCategory ? (categories.find(c => c.slug === selectedCategory)?.name || 'Category') : 'Package type'"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
             </button>
             <div x-show="openCategory" @click.outside="openCategory = false" x-transition
@@ -132,7 +132,7 @@
 
     <div class="flex items-center justify-between mt-8 mb-8">
         <p class="text-sm text-[#6a6a6a]">
-            <span class="font-semibold text-[#111827]">{{ $tours->total() }}</span> Tours available
+            <span class="font-semibold text-[#111827]">{{ $tours->total() }}</span> travel packages available
         </p>
 
         <div class="relative" x-data="{ open: false }">
@@ -166,7 +166,7 @@
             <x-tour-card variant="flash" :tour="$tour" :queryParams="$searchParams" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
         @empty
             <div class="col-span-full text-center py-20">
-                <p class="text-lg text-[#6a6a6a] font-serif">No tours found. Try adjusting your filters.</p>
+                <p class="text-lg text-[#6a6a6a] font-serif">No travel packages found. Try adjusting your filters.</p>
             </div>
         @endforelse
     </div>

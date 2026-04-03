@@ -2,9 +2,9 @@
 
 @php
     $firstImg = $tour->images->first();
-    $imageUrl = $firstImg?->url ?? 'https://placehold.co/600x400/e5e7eb/6b7280?text=Tour';
+    $imageUrl = $firstImg?->url ?? 'https://placehold.co/600x400/e5e7eb/6b7280?text=Travel+Package';
     if ($variant === 'flash' && !$firstImg) {
-        $imageUrl = 'https://placehold.co/600x800/e5e7eb/6b7280?text=Tour';
+        $imageUrl = 'https://placehold.co/600x800/e5e7eb/6b7280?text=Travel+Package';
     }
     $tourUrl = route('tours.show', $tour->slug);
     if (!empty($queryParams)) {

@@ -8,9 +8,9 @@
     $dateForSummary = $booking_date ? \Carbon\Carbon::parse($booking_date) : $tourDate?->date;
     $displayDateTime = $dateForSummary ? $dateForSummary->format('d/m/Y') : '';
     $firstImage = $tour->images->first();
-    $tourImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Tour';
+    $tourImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Travel+Package';
     $durationDays = (int) ($tour->duration_days ?? 0);
-    $durationLabel = $durationDays ? $durationDays . ' Day' . ($durationDays > 1 ? 's' : '') . ' Tour' : ($tour->duration_hours ? $tour->duration_hours . ' hours' : 'Tour');
+    $durationLabel = $durationDays ? $durationDays . ' Day' . ($durationDays > 1 ? 's' : '') . ' Travel Package' : ($tour->duration_hours ? $tour->duration_hours . ' hours' : 'Travel Package');
     $total = $pricing['total'] ?? (($tourDate->price ?? $tour->base_price ?? $tour->price) * $guests);
 @endphp
 <div class="bg-gray-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
@@ -133,7 +133,7 @@
                 </button>
             </div>
 
-            {{-- Right column: Tour Summary --}}
+            {{-- Right column: travel package summary --}}
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm sticky top-24">
                     <div class="aspect-video bg-gray-200">

@@ -15,7 +15,7 @@
     $values = is_string($values) ? (json_decode($values, true) ?: []) : $values;
     if (empty($values)) {
         $values = [
-            ['icon' => 'fa-heart', 'title' => 'Honesty over hype', 'description' => "We'll tell you honestly which tours are worth it and which spots are overhyped."],
+            ['icon' => 'fa-heart', 'title' => 'Honesty over hype', 'description' => "We'll tell you honestly which travel packages are worth it and which spots are overhyped."],
             ['icon' => 'fa-people-group', 'title' => 'Small groups, real connections', 'description' => "We keep groups small on purpose. You're not a ticket number."],
             ['icon' => 'fa-seedling', 'title' => 'Respect the places we visit', 'description' => 'We work with local families and support the communities that make Albania special.'],
         ];
@@ -42,7 +42,7 @@
 @extends('layouts.site')
 
 @section('title', \App\Models\Setting::get('page_about_seo_title') ?: ('About Us - ' . config('app.name')))
-@section('description', \App\Models\Setting::get('page_about_seo_description') ?: 'The story behind our tours, our team, and why we love sharing Albania with you.')
+@section('description', \App\Models\Setting::get('page_about_seo_description') ?: 'The story behind our travel packages, our team, and why we love sharing Albania with you.')
 @if(\App\Models\Setting::get('page_about_seo_og_image'))@section('og_image', \App\Models\Setting::get('page_about_seo_og_image'))@endif
 
 @section('content')
@@ -224,18 +224,23 @@
 {{-- 7. CTA --}}
 <section class="px-4 sm:px-6 md:px-[80px] pb-16 md:pb-24">
     <div class="max-w-[1400px] mx-auto">
-        <div class="rounded-[28px] bg-gray-900 px-8 md:px-16 py-14 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="max-w-lg text-center md:text-left">
-                <h2 class="text-3xl md:text-[42px] font-bold text-white leading-[1.1] tracking-tight mb-3">Ready for your next adventure?</h2>
-                <p class="text-white/60 text-[17px] leading-relaxed">Explore our hand-picked tours or tell us about your dream trip.</p>
-            </div>
-            <div class="flex flex-wrap gap-3">
-                <a href="{{ route('tours.index') }}" class="inline-flex items-center rounded-full bg-white text-gray-900 text-sm font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors">
-                    Browse tours
-                </a>
-                <a href="{{ route('contact') }}" class="inline-flex items-center rounded-full border border-white/30 text-white text-sm font-semibold px-7 py-3.5 hover:bg-white/10 transition-colors">
-                    Get in touch
-                </a>
+        <div class="relative overflow-hidden rounded-[28px] bg-gray-900 px-8 md:px-16 py-14 md:py-20 shadow-xl shadow-black/20">
+            {{-- Glassmorphism orbs --}}
+            <div class="pointer-events-none absolute -top-28 -left-20 h-56 w-56 rounded-full border border-white/[0.12] bg-gradient-to-br from-white/20 via-white/[0.07] to-transparent backdrop-blur-2xl sm:h-72 sm:w-72 md:-top-32 md:-left-24" aria-hidden="true"></div>
+            <div class="pointer-events-none absolute -bottom-32 -right-16 h-64 w-64 rounded-full border border-white/[0.1] bg-gradient-to-tl from-lime-400/25 via-white/[0.06] to-transparent backdrop-blur-3xl sm:h-80 sm:w-80 md:-bottom-36 md:-right-12" aria-hidden="true"></div>
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="max-w-lg text-center md:text-left">
+                    <h2 class="text-3xl md:text-[42px] font-bold text-white leading-[1.1] tracking-tight mb-3">Ready for your next adventure?</h2>
+                    <p class="text-white/60 text-[17px] leading-relaxed">Explore our hand-picked travel packages or tell us about your dream trip.</p>
+                </div>
+                <div class="flex flex-wrap justify-center md:justify-end gap-3">
+                    <a href="{{ route('tours.index') }}" class="inline-flex items-center rounded-full bg-white text-gray-900 text-sm font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors">
+                        Browse travel packages
+                    </a>
+                    <a href="{{ route('contact') }}" class="inline-flex items-center rounded-full border border-white/30 text-white text-sm font-semibold px-7 py-3.5 hover:bg-white/10 transition-colors">
+                        Get in touch
+                    </a>
+                </div>
             </div>
         </div>
     </div>

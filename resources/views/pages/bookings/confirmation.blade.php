@@ -6,9 +6,9 @@
 @php
     $bookingDate = $booking->booking_date ?? $booking->tourDate?->date;
     $firstImage = $booking->tour->images->first();
-    $tourImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Tour';
+    $tourImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Travel+Package';
     $durationDays = (int) ($booking->tour->duration_days ?? 0);
-    $durationLabel = $durationDays ? $durationDays . ' Day' . ($durationDays > 1 ? 's' : '') . ' Tour' : ($booking->tour->duration_hours ? (int) $booking->tour->duration_hours . ' hours' : 'Tour');
+    $durationLabel = $durationDays ? $durationDays . ' Day' . ($durationDays > 1 ? 's' : '') . ' Travel Package' : ($booking->tour->duration_hours ? (int) $booking->tour->duration_hours . ' hours' : 'Travel Package');
 @endphp
 <div class="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
@@ -47,7 +47,7 @@
                         </div>
                         @endif
                         <div>
-                            <dt class="text-xs font-medium text-gray-500 uppercase tracking-wide">Tour</dt>
+                            <dt class="text-xs font-medium text-gray-500 uppercase tracking-wide">Travel package</dt>
                             <dd class="mt-1 font-medium text-gray-900">{{ $booking->tour->title }}</dd>
                         </div>
                         <div>
@@ -82,16 +82,16 @@
                         @endif
                     </dl>
                     <div class="flex flex-wrap gap-3 mt-6 pt-5 border-t border-gray-100">
-                        <a href="{{ route('tours.show', $booking->tour->slug) }}" class="inline-flex items-center justify-center px-5 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition">View tour</a>
+                        <a href="{{ route('tours.show', $booking->tour->slug) }}" class="inline-flex items-center justify-center px-5 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition">View travel package</a>
                         @auth
                             <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-medium text-white bg-brand-btn hover:bg-brand-btn-hover transition">My bookings</a>
                         @else
-                            <a href="{{ route('tours.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-medium text-white bg-brand-btn hover:bg-brand-btn-hover transition">Browse more tours</a>
+                            <a href="{{ route('tours.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-medium text-white bg-brand-btn hover:bg-brand-btn-hover transition">Browse more travel packages</a>
                         @endauth
                     </div>
                 </div>
 
-                {{-- Right: Tour summary --}}
+                {{-- Right: travel package summary --}}
                 <div class="lg:col-span-2 bg-gray-50 p-6 sm:p-8 border-t lg:border-t-0 lg:border-l border-gray-200">
                     <div class="aspect-[4/3] rounded-xl overflow-hidden bg-gray-200 mb-4">
                         <img src="{{ $tourImageUrl }}" alt="{{ $booking->tour->title }}" class="w-full h-full object-cover">

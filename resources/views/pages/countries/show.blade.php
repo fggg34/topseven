@@ -13,7 +13,9 @@
 @endpush
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+<div class="w-full">
+    <div class="px-4 sm:px-6 lg:px-[80px] pt-8 pb-14">
+        <div class="max-w-[1400px] mx-auto">
 
     {{-- Breadcrumb --}}
     <nav class="text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
@@ -89,7 +91,7 @@
                         <span class="w-9 h-9 rounded-lg bg-lime-50 flex items-center justify-center"><i class="fa-solid fa-route text-lime-600 text-sm"></i></span>
                         <div>
                             <span class="text-lg font-bold text-gray-900">{{ $country->tours->where('is_active', true)->count() }}</span>
-                            <span class="text-sm text-gray-500 ml-1">Tours</span>
+                            <span class="text-sm text-gray-500 ml-1">Travel packages</span>
                         </div>
                     </div>
                 @endif
@@ -106,9 +108,14 @@
         </div>
     </div>
 
+        </div>
+    </div>
+
     {{-- Places to visit --}}
     @if($country->highlights->isNotEmpty())
-    <section class="mb-14 overflow-hidden">
+    <div class="px-4 sm:px-6 lg:px-[80px] pb-14">
+        <div class="max-w-[1400px] mx-auto">
+            <section class="mb-0 overflow-hidden">
         <div class="flex items-end justify-between mb-8">
             <div>
                 <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">Explore</p>
@@ -140,51 +147,46 @@
                 @endforeach
             </div>
         </div>
-    </section>
+            </section>
+        </div>
+    </div>
     @endif
 
-    {{-- Tours --}}
+    {{-- Travel packages (homepage flash-style carousel) --}}
     @if($country->tours->isNotEmpty())
-    <section class="mb-14">
-        <div class="flex items-end justify-between mb-8">
-            <div>
-                <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">Curated experiences</p>
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Tours in {{ $country->name }}</h2>
-            </div>
-            <div class="flex items-center gap-2">
-                <div class="flex items-center gap-2 sm:hidden">
-                    <button type="button" class="city-tours-prev w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-lime-600 hover:border-lime-300 transition-colors">
-                        <i class="fa-solid fa-arrow-left text-sm"></i>
-                    </button>
-                    <button type="button" class="city-tours-next w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-lime-600 hover:border-lime-300 transition-colors">
-                        <i class="fa-solid fa-arrow-right text-sm"></i>
-                    </button>
-                </div>
-                <a href="{{ route('tours.index', ['country' => $country->slug]) }}" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition hidden sm:block">
-                    View all tours &rarr;
-                </a>
-            </div>
+    @php
+        $countryTours = $country->tours->take(8);
+    @endphp
+    <section class="px-4 sm:px-6 lg:px-[80px] pb-16">
+        <div class="mb-6 md:mb-8">
+            <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">Curated experiences</p>
+            <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-semibold text-gray-700 tracking-tight leading-tight">
+                Travel packages in {{ $country->name }}
+            </h2>
         </div>
-        {{-- Grid on desktop --}}
-        <div class="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            @foreach($country->tours->where('is_active', true)->take(8) as $tour)
-                <x-tour-card :tour="$tour" :queryParams="[]" />
-            @endforeach
-        </div>
-        {{-- Slider on mobile --}}
-        <div class="swiper city-tours-swiper overflow-visible block sm:!hidden">
+
+        <div class="swiper country-packages-swiper overflow-visible">
             <div class="swiper-wrapper">
-                @foreach($country->tours->where('is_active', true)->take(8) as $tour)
-                <div class="swiper-slide">
-                    <x-tour-card :tour="$tour" :queryParams="['country' => $country->slug]" :slider="true" />
+                @foreach($countryTours as $tour)
+                <div class="swiper-slide !h-auto">
+                    <x-tour-card variant="flash" :tour="$tour" :queryParams="['country' => $country->slug]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
                 </div>
                 @endforeach
             </div>
         </div>
-        <div class="mt-6 text-center sm:hidden">
-            <a href="{{ route('tours.index', ['country' => $country->slug]) }}" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition">
-                View all tours &rarr;
+
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mt-8">
+            <a href="{{ route('tours.index', ['country' => $country->slug]) }}" class="inline-flex items-center justify-center rounded-full bg-black text-white text-sm font-semibold px-6 py-2.5 hover:bg-gray-900 transition-colors">
+                View all travel packages
             </a>
+            <div class="flex items-center justify-end gap-2">
+                <button type="button" class="country-packages-prev w-11 h-11 rounded-full border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center transition-colors hover:bg-gray-200 disabled:opacity-40 disabled:pointer-events-none" aria-label="Previous">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </button>
+                <button type="button" class="country-packages-next w-11 h-11 rounded-full bg-black text-white flex items-center justify-center transition-colors hover:bg-gray-900 disabled:opacity-40 disabled:pointer-events-none" aria-label="Next">
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+            </div>
         </div>
     </section>
     @endif
@@ -210,14 +212,21 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         });
     }
-    if (window.Swiper && document.querySelector('.city-tours-swiper')) {
-        new window.Swiper('.city-tours-swiper', {
+    if (window.Swiper && document.querySelector('.country-packages-swiper')) {
+        new window.Swiper('.country-packages-swiper', {
             modules: [window.SwiperNavigation],
-            slidesPerView: 1.2,
-            spaceBetween: 20,
+            slidesPerView: 1.15,
+            spaceBetween: 16,
+            watchOverflow: true,
             navigation: {
-                prevEl: '.city-tours-prev',
-                nextEl: '.city-tours-next',
+                prevEl: '.country-packages-prev',
+                nextEl: '.country-packages-next',
+            },
+            breakpoints: {
+                480: { slidesPerView: 1.35, spaceBetween: 16 },
+                640: { slidesPerView: 2.15, spaceBetween: 16 },
+                1024: { slidesPerView: 3.15, spaceBetween: 16 },
+                1280: { slidesPerView: 4.15, spaceBetween: 16 },
             },
         });
     }

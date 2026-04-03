@@ -7,7 +7,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <h1 class="text-2xl lg:text-3xl font-bold text-lime-900">My Trips</h1>
-                        <p class="mt-1 text-gray-600">Manage your bookings and saved tours</p>
+                        <p class="mt-1 text-gray-600">Manage your bookings and saved travel packages</p>
                     </div>
                     <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-lime-700 transition-colors">
                         <span class="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center">
@@ -45,7 +45,7 @@
                         </div>
                         <div>
                             <p class="text-2xl font-bold text-lime-900">{{ $wishlistTours->count() }}</p>
-                            <p class="text-sm text-gray-500">Saved tours</p>
+                            <p class="text-sm text-gray-500">Saved travel packages</p>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                             <p class="text-sm text-gray-500 mt-0.5">Your upcoming and past reservations</p>
                         </div>
                         <a href="{{ route('tours.index') }}" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors hidden sm:inline-flex items-center gap-1">
-                            Browse tours
+                            Browse travel packages
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </a>
                     </div>
@@ -72,7 +72,7 @@
                                     <i class="fa-solid fa-calendar-xmark text-gray-400 text-2xl"></i>
                                 </div>
                                 <p class="text-gray-600 font-medium">No bookings yet</p>
-                                <p class="text-sm text-gray-500 mt-1 mb-6">Discover amazing tours and start planning your next adventure.</p>
+                                <p class="text-sm text-gray-500 mt-1 mb-6">Discover amazing travel packages and start planning your next adventure.</p>
                                 <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-btn hover:bg-brand-btn-hover text-white text-sm font-medium rounded-lg transition-colors">
                                     <i class="fa-solid fa-compass"></i>
                                     Browse tours
@@ -126,20 +126,20 @@
                     </div>
                     @if(!$bookings->isEmpty())
                         <div class="mt-4 text-center sm:hidden">
-                            <a href="{{ route('tours.index') }}" class="text-sm font-medium text-lime-600 hover:text-lime-700">Browse more tours</a>
+                            <a href="{{ route('tours.index') }}" class="text-sm font-medium text-lime-600 hover:text-lime-700">Browse more travel packages</a>
                         </div>
                     @endif
                 </section>
 
-                {{-- Saved tours --}}
+                {{-- Saved travel packages --}}
                 <section>
                     <div class="flex items-center justify-between mb-6">
                         <div>
-                            <h2 class="text-lg font-semibold text-lime-900">Saved tours</h2>
-                            <p class="text-sm text-gray-500 mt-0.5">Tours you've added to your wishlist</p>
+                            <h2 class="text-lg font-semibold text-lime-900">Saved travel packages</h2>
+                            <p class="text-sm text-gray-500 mt-0.5">Travel packages you've added to your wishlist</p>
                         </div>
                         <a href="{{ route('tours.index') }}" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors hidden sm:inline-flex items-center gap-1">
-                            Explore tours
+                            Explore travel packages
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </a>
                     </div>
@@ -150,11 +150,11 @@
                                 <div class="w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-4">
                                     <i class="fa-regular fa-heart text-amber-500 text-2xl"></i>
                                 </div>
-                                <p class="text-gray-600 font-medium">No saved tours yet</p>
-                                <p class="text-sm text-gray-500 mt-1 mb-6">Save tours you love and they'll appear here for easy access.</p>
+                                <p class="text-gray-600 font-medium">No saved travel packages yet</p>
+                                <p class="text-sm text-gray-500 mt-1 mb-6">Save travel packages you love and they'll appear here for easy access.</p>
                                 <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-btn hover:bg-brand-btn-hover text-white text-sm font-medium rounded-lg transition-colors">
                                     <i class="fa-solid fa-compass"></i>
-                                    Explore tours
+                                    Explore travel packages
                                 </a>
                             </div>
                         @else

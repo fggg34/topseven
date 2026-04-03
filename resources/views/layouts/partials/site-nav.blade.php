@@ -12,8 +12,8 @@
         $navItems = [
             ['type' => 'dropdown', 'label' => 'Destinations', 'children' => [['label' => 'All Destinations', 'url' => '/countries']]],
             ['type' => 'dropdown', 'label' => 'Travel Collections', 'children' => [
-                ['label' => 'All Tours', 'url' => '/tours'],
-                ['label' => 'Popular Tours', 'url' => '/tours?sort=popular'],
+                ['label' => 'All Travel Packages', 'url' => '/tours'],
+                ['label' => 'Popular Travel Packages', 'url' => '/tours?sort=popular'],
                 ['label' => 'Travel Stories', 'url' => '/blog'],
             ]],
             ['type' => 'dropdown', 'label' => 'About', 'children' => [

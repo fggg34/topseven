@@ -7,7 +7,7 @@
     $formDescription = \App\Models\Setting::get('page_contact_form_description', "Fill out the form below and we'll get back to you as soon as possible.");
     $sidebarTitle = \App\Models\Setting::get('page_contact_sidebar_title', 'Need quick help?');
     $sidebarDescription = \App\Models\Setting::get('page_contact_sidebar_description', 'Check our frequently asked questions for instant answers.');
-    $sidebarButtonText = \App\Models\Setting::get('page_contact_sidebar_button_text', 'Browse tours');
+    $sidebarButtonText = \App\Models\Setting::get('page_contact_sidebar_button_text', 'Browse travel packages');
     $sidebarButtonUrl = \App\Models\Setting::get('page_contact_sidebar_button_url', '') ?: route('tours.index');
     $contactEmail = \App\Models\Setting::get('contact_email');
     $contactPhone = \App\Models\Setting::get('contact_phone');
@@ -121,12 +121,21 @@
                             @error('email')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                     </div>
-                    <div>
-                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1.5">Subject <span class="text-red-400">*</span></label>
-                        <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
-                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
-                            placeholder="How can we help?">
-                        @error('subject')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1.5">Subject <span class="text-red-400">*</span></label>
+                            <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                placeholder="How can we help?">
+                            @error('subject')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1.5">Phone</label>
+                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" autocomplete="tel"
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                placeholder="Your phone number">
+                            @error('phone')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+                        </div>
                     </div>
                     <div>
                         <label for="message" class="block text-sm font-medium text-gray-700 mb-1.5">Message <span class="text-red-400">*</span></label>
@@ -154,7 +163,7 @@
                                     <i class="fa-solid fa-plane-departure text-white text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-semibold text-gray-900">Custom Tour Requests</h4>
+                                    <h4 class="text-sm font-semibold text-gray-900">Custom travel package requests</h4>
                                     <p class="text-[13px] text-gray-500 mt-0.5">Tell us your dream itinerary and we'll make it happen.</p>
                                 </div>
                             </div>

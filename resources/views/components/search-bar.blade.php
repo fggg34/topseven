@@ -1,4 +1,4 @@
-@props(['action' => route('tours.index'), 'placeholder' => 'Search tours...'])
+@props(['action' => route('tours.index'), 'placeholder' => 'Search travel packages...'])
 
 <form action="{{ $action }}" method="GET" class="flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto">
     <input type="search" name="q" value="{{ request('q') }}" placeholder="{{ $placeholder }}" class="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 px-4 py-3">

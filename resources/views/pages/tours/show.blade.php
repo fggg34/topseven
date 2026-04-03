@@ -20,7 +20,7 @@
 @php
     $images = $tour->images->isEmpty() ? collect([null]) : $tour->images;
     $firstImage = $images->first();
-    $mainImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Tour';
+    $mainImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Travel+Package';
 @endphp
 
 {{-- Hero --}}
@@ -33,7 +33,7 @@
                 <ol class="flex items-center gap-1.5 text-white/80">
                     <li><a href="{{ route('home') }}" class="hover:text-white transition">Home</a></li>
                     <li>/</li>
-                    <li><a href="{{ route('tours.index') }}" class="hover:text-white transition">Tours</a></li>
+                    <li><a href="{{ route('tours.index') }}" class="hover:text-white transition">Travel Packages</a></li>
                     <li>/</li>
                     <li class="truncate max-w-[250px]">{{ $tour->title }}</li>
                 </ol>
@@ -116,13 +116,13 @@
                     <div class="tour-gallery-right grid grid-cols-2 grid-rows-[130px] sm:grid-cols-2 sm:grid-rows-2 sm:min-h-0 gap-3">
                     @if($img2)
                         <a href="{{ $img2->url }}" class="glightbox block overflow-hidden h-[130px] sm:h-auto sm:min-h-0 rounded-xl" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
-                            <img src="{{ $img2->url }}" alt="{{ $img2->alt ?? 'Tour image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
+                            <img src="{{ $img2->url }}" alt="{{ $img2->alt ?? 'Travel package image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
                         </a>
                     @endif
                     @if($img3)
                         <div class="relative overflow-hidden h-[130px] sm:h-auto sm:min-h-0 rounded-xl">
                             <a href="{{ $img3->url }}" class="glightbox block w-full h-full overflow-hidden" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
-                                <img src="{{ $img3->url }}" alt="{{ $img3->alt ?? 'Tour image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
+                                <img src="{{ $img3->url }}" alt="{{ $img3->alt ?? 'Travel package image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
                             </a>
                             @if($totalImages > 4)
                                 <a href="{{ $img1->url ?? $mainImageUrl }}" class="glightbox sm:hidden absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 text-white text-xs font-medium hover:bg-black/75 transition z-10" data-gallery="tour-gallery-{{ $tour->id }}" aria-label="View all {{ $totalImages }} photos">
@@ -134,7 +134,7 @@
                     @if($img4)
                         <div class="hidden sm:block lg:col-span-2 relative overflow-hidden sm:min-h-0 rounded-xl">
                             <a href="{{ $img4->url }}" class="glightbox block w-full h-full overflow-hidden" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
-                                <img src="{{ $img4->url }}" alt="{{ $img4->alt ?? 'Tour image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
+                                <img src="{{ $img4->url }}" alt="{{ $img4->alt ?? 'Travel package image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
                             </a>
                             @if($totalImages > 4)
                                 <a style="z-index: 0;" href="{{ $img1->url ?? $mainImageUrl }}" class="glightbox hidden sm:flex absolute bottom-3 right-3 items-center gap-1.5 px-4 py-2 rounded-full bg-black/60 text-white text-sm font-medium hover:bg-black/75 transition z-10" data-gallery="tour-gallery-{{ $tour->id }}" aria-label="View all {{ $totalImages }} photos">
@@ -149,7 +149,7 @@
                     <div class="hidden">
                         @foreach($galleryImages->skip(4) as $extraImg)
                             <a href="{{ $extraImg->url }}" class="glightbox" data-gallery="tour-gallery-{{ $tour->id }}">
-                                <img src="{{ $extraImg->url }}" alt="{{ $extraImg->alt ?? 'Tour image' }}" loading="lazy">
+                                <img src="{{ $extraImg->url }}" alt="{{ $extraImg->alt ?? 'Travel package image' }}" loading="lazy">
                             </a>
                         @endforeach
                     </div>
@@ -165,7 +165,7 @@
                 {{-- Tour highlights --}}
                 @if($tour->tour_highlights && count($tour->tour_highlights) > 0)
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Tour highlights</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Travel package highlights</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @foreach($tour->tour_highlights as $highlight)
                             @php $text = is_array($highlight) ? ($highlight['text'] ?? $highlight['value'] ?? '') : $highlight; @endphp
@@ -379,7 +379,7 @@
                     @auth
                         @if($userHasReviewed ?? false)
                             <div class="rounded-2xl bg-gray-100 p-6 text-center">
-                                <p class="text-gray-500">You have already reviewed this tour. Thank you!</p>
+                                <p class="text-gray-500">You have already reviewed this travel package. Thank you!</p>
                             </div>
                         @else
                             <div class="rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
@@ -443,7 +443,7 @@
                 <div id="enquiry-form" class="lg:sticky lg:top-24 lg:self-start scroll-mt-12">
                     <div class="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
                         <div class="bg-gray-900 rounded-t-2xl px-6 py-5">
-                            <h3 class="text-lg font-bold text-white">Enquire About This Tour</h3>
+                            <h3 class="text-lg font-bold text-white">Enquire About This Travel Package</h3>
                             @php
                                 $basePrice = (float)($tour->base_price ?? $tour->price ?? 0);
                                 $currency = ($tour->currency === 'EUR' || !$tour->currency) ? '€' : ($tour->currency === 'USD' ? '$' : $tour->currency . ' ');
@@ -488,22 +488,22 @@
                                     @error('phone')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
 
+                                @if($tour->homepage_card_date_from || $tour->homepage_card_date_to)
                                 <div class="grid grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Departure</label>
-                                        <input type="date" name="departure_date"
-                                            value="{{ old('departure_date', $tour->homepage_card_date_from?->format('Y-m-d')) }}"
-                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
-                                        @error('departure_date')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                                        <div class="w-full rounded-xl border border-gray-200 bg-gray-100 px-3 py-3 text-sm text-gray-900 tabular-nums select-none" title="Set by your travel advisor for this package">
+                                            {{ $tour->homepage_card_date_from?->format('M j, Y') ?? '—' }}
+                                        </div>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Return</label>
-                                        <input type="date" name="return_date"
-                                            value="{{ old('return_date', $tour->homepage_card_date_to?->format('Y-m-d')) }}"
-                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
-                                        @error('return_date')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                                        <div class="w-full rounded-xl border border-gray-200 bg-gray-100 px-3 py-3 text-sm text-gray-900 tabular-nums select-none" title="Set by your travel advisor for this package">
+                                            {{ $tour->homepage_card_date_to?->format('M j, Y') ?? '—' }}
+                                        </div>
                                     </div>
                                 </div>
+                                @endif
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Guests <span class="text-red-500">*</span></label>
