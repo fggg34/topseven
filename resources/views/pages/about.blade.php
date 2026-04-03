@@ -225,9 +225,8 @@
 <section class="px-4 sm:px-6 md:px-[80px] pb-16 md:pb-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="relative overflow-hidden rounded-[28px] bg-gray-900 px-8 md:px-16 py-14 md:py-20 shadow-xl shadow-black/20">
-            {{-- Glassmorphism orbs --}}
-            <div class="pointer-events-none absolute -top-28 -left-20 h-56 w-56 rounded-full border border-white/[0.12] bg-gradient-to-br from-white/20 via-white/[0.07] to-transparent backdrop-blur-2xl sm:h-72 sm:w-72 md:-top-32 md:-left-24" aria-hidden="true"></div>
-            <div class="pointer-events-none absolute -bottom-32 -right-16 h-64 w-64 rounded-full border border-white/[0.1] bg-gradient-to-tl from-lime-400/25 via-white/[0.06] to-transparent backdrop-blur-3xl sm:h-80 sm:w-80 md:-bottom-36 md:-right-12" aria-hidden="true"></div>
+            <div class="pointer-events-none absolute -top-20 -left-14 h-44 w-44 rounded-full bg-white/[0.06] blur-2xl sm:h-56 sm:w-56 md:-top-24 md:-left-16" aria-hidden="true"></div>
+            <div class="pointer-events-none absolute -bottom-24 -right-10 h-52 w-52 rounded-full bg-lime-400/[0.08] blur-3xl sm:h-64 sm:w-64 md:-bottom-28 md:-right-8" aria-hidden="true"></div>
             <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div class="max-w-lg text-center md:text-left">
                     <h2 class="text-3xl md:text-[42px] font-bold text-white leading-[1.1] tracking-tight mb-3">Ready for your next adventure?</h2>
