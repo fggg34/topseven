@@ -1,121 +1,72 @@
-<section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            <?php echo e(__('Delete Account')); ?>
+<?php
+    $inputClass = 'w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#111827] focus:border-transparent transition';
+?>
+
+<section>
+    <header class="mb-6">
+        <h2 class="text-lg font-semibold text-[#111827]">
+            <?php echo e(__('Delete account')); ?>
 
         </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-gray-500 leading-relaxed">
             <?php echo e(__('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.')); ?>
 
         </p>
     </header>
 
-    <?php if (isset($component)) { $__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.danger-button','data' => ['xData' => '','xOn:click.prevent' => '$dispatch(\'open-modal\', \'confirm-user-deletion\')']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('danger-button'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['x-data' => '','x-on:click.prevent' => '$dispatch(\'open-modal\', \'confirm-user-deletion\')']); ?>
-<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
-<?php echo e(__('Delete Account')); ?> <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11)): ?>
-<?php $attributes = $__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11; ?>
-<?php unset($__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11)): ?>
-<?php $component = $__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11; ?>
-<?php unset($__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11); ?>
-<?php endif; ?>
+    <button
+        type="button"
+        class="inline-flex items-center justify-center rounded-full border border-red-200 bg-white text-red-700 text-sm font-semibold px-8 py-3.5 hover:bg-red-50 transition-colors"
+        x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+    ><?php echo e(__('Delete account')); ?></button>
 
     <?php if (isset($component)) { $__componentOriginal9f64f32e90b9102968f2bc548315018c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9f64f32e90b9102968f2bc548315018c = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.modal','data' => ['name' => 'confirm-user-deletion','show' => $errors->userDeletion->isNotEmpty(),'focusable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.modal','data' => ['name' => 'confirm-user-deletion','show' => $errors->userDeletion->isNotEmpty(),'focusable' => true,'maxWidth' => 'md']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('modal'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['name' => 'confirm-user-deletion','show' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->userDeletion->isNotEmpty()),'focusable' => true]); ?>
+<?php $component->withAttributes(['name' => 'confirm-user-deletion','show' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->userDeletion->isNotEmpty()),'focusable' => true,'maxWidth' => 'md']); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
-        <form method="post" action="<?php echo e(route('profile.destroy')); ?>" class="p-6">
+        <form method="post" action="<?php echo e(route('profile.destroy')); ?>" class="p-6 sm:p-8">
             <?php echo csrf_field(); ?>
             <?php echo method_field('delete'); ?>
 
-            <h2 class="text-lg font-medium text-gray-900">
+            <h2 class="text-lg font-semibold text-[#111827]">
                 <?php echo e(__('Are you sure you want to delete your account?')); ?>
 
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-2 text-sm text-gray-500 leading-relaxed">
                 <?php echo e(__('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.')); ?>
 
             </p>
 
             <div class="mt-6">
-                <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'password','value' => ''.e(__('Password')).'','class' => 'sr-only']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['for' => 'password','value' => ''.e(__('Password')).'','class' => 'sr-only']); ?>
-<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
-
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'password','name' => 'password','type' => 'password','class' => 'mt-1 block w-3/4','placeholder' => ''.e(__('Password')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('text-input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['id' => 'password','name' => 'password','type' => 'password','class' => 'mt-1 block w-3/4','placeholder' => ''.e(__('Password')).'']); ?>
-<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
-
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal18c21970322f9e5c938bc954620c12bb)): ?>
-<?php $attributes = $__attributesOriginal18c21970322f9e5c938bc954620c12bb; ?>
-<?php unset($__attributesOriginal18c21970322f9e5c938bc954620c12bb); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal18c21970322f9e5c938bc954620c12bb)): ?>
-<?php $component = $__componentOriginal18c21970322f9e5c938bc954620c12bb; ?>
-<?php unset($__componentOriginal18c21970322f9e5c938bc954620c12bb); ?>
-<?php endif; ?>
-
+                <label for="password" class="sr-only"><?php echo e(__('Password')); ?></label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    class="<?php echo e($inputClass); ?>"
+                    placeholder="<?php echo e(__('Password')); ?>"
+                    autocomplete="current-password"
+                />
                 <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->userDeletion->get('password'),'class' => 'mt-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->userDeletion->get('password'),'class' => 'mt-1.5']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-error'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->userDeletion->get('password')),'class' => 'mt-2']); ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->userDeletion->get('password')),'class' => 'mt-1.5']); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
 <?php echo $__env->renderComponent(); ?>
@@ -130,56 +81,17 @@
 <?php endif; ?>
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.secondary-button','data' => ['xOn:click' => '$dispatch(\'close\')']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('secondary-button'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['x-on:click' => '$dispatch(\'close\')']); ?>
-<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+            <div class="mt-8 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+                <button
+                    type="button"
+                    class="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white text-[#111827] text-sm font-semibold px-6 py-3 hover:bg-gray-50 transition-colors w-full sm:w-auto"
+                    x-on:click="$dispatch('close')"
+                ><?php echo e(__('Cancel')); ?></button>
 
-                    <?php echo e(__('Cancel')); ?>
-
-                 <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af)): ?>
-<?php $attributes = $__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af; ?>
-<?php unset($__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal3b0e04e43cf890250cc4d85cff4d94af)): ?>
-<?php $component = $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af; ?>
-<?php unset($__componentOriginal3b0e04e43cf890250cc4d85cff4d94af); ?>
-<?php endif; ?>
-
-                <?php if (isset($component)) { $__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.danger-button','data' => ['class' => 'ms-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('danger-button'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['class' => 'ms-3']); ?>
-<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
-
-                    <?php echo e(__('Delete Account')); ?>
-
-                 <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11)): ?>
-<?php $attributes = $__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11; ?>
-<?php unset($__attributesOriginal656e8c5ea4d9a4fa173298297bfe3f11); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11)): ?>
-<?php $component = $__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11; ?>
-<?php unset($__componentOriginal656e8c5ea4d9a4fa173298297bfe3f11); ?>
-<?php endif; ?>
+                <button
+                    type="submit"
+                    class="inline-flex items-center justify-center rounded-full bg-red-600 text-white text-sm font-semibold px-6 py-3 hover:bg-red-700 transition-colors w-full sm:w-auto"
+                ><?php echo e(__('Delete account')); ?></button>
             </div>
         </form>
      <?php echo $__env->renderComponent(); ?>

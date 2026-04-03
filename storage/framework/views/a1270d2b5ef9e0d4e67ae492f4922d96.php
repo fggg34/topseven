@@ -92,9 +92,30 @@
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                     <a href="<?php echo e(route('dashboard')); ?>"
-                       class="<?php echo e($headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700'); ?> transition-colors"
+                       class="<?php echo e($headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700'); ?> transition-colors inline-flex"
                        title="My account" aria-label="My account">
-                        <i class="fa-solid fa-circle-user text-2xl lg:text-[26px] leading-none"></i>
+                        <?php if (isset($component)) { $__componentOriginal97cd70b27ebbfc72f0446b75665d1c91 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.icons.user-circled','data' => ['class' => 'w-6 h-6 lg:w-[26px] lg:h-[26px] shrink-0']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('icons.user-circled'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'w-6 h-6 lg:w-[26px] lg:h-[26px] shrink-0']); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91)): ?>
+<?php $attributes = $__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91; ?>
+<?php unset($__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal97cd70b27ebbfc72f0446b75665d1c91)): ?>
+<?php $component = $__componentOriginal97cd70b27ebbfc72f0446b75665d1c91; ?>
+<?php unset($__componentOriginal97cd70b27ebbfc72f0446b75665d1c91); ?>
+<?php endif; ?>
                     </a>
                 <?php else: ?>
                     <a href="<?php echo e(route('login')); ?>"
@@ -156,7 +177,28 @@
             <div class="px-5 pb-3 flex items-center gap-4 border-b border-gray-100">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                     <a href="<?php echo e(route('dashboard')); ?>" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-circle-user text-lg text-gray-500"></i> My account
+                        <?php if (isset($component)) { $__componentOriginal97cd70b27ebbfc72f0446b75665d1c91 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.icons.user-circled','data' => ['class' => 'w-[1.125rem] h-[1.125rem] shrink-0 text-gray-500']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('icons.user-circled'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'w-[1.125rem] h-[1.125rem] shrink-0 text-gray-500']); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91)): ?>
+<?php $attributes = $__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91; ?>
+<?php unset($__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal97cd70b27ebbfc72f0446b75665d1c91)): ?>
+<?php $component = $__componentOriginal97cd70b27ebbfc72f0446b75665d1c91; ?>
+<?php unset($__componentOriginal97cd70b27ebbfc72f0446b75665d1c91); ?>
+<?php endif; ?> My account
                     </a>
                 <?php else: ?>
                     <a href="<?php echo e(route('login')); ?>" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors">Log in</a>
