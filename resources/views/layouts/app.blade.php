@@ -21,7 +21,7 @@
     <body class="font-sans antialiased bg-gray-50 text-gray-900">
         @include('layouts.partials.site-nav')
 
-        <main>
+        <main class="mt-[77px]">
             {{ $slot }}
         </main>
 
