@@ -1,9 +1,9 @@
 <x-app-layout>
     {{-- Hero --}}
-    <div class="relative w-full overflow-hidden bg-[#111827]" style="min-height: 220px;">
+    <div class="relative w-full overflow-hidden bg-[#111827]">
         <div class="absolute inset-0 bg-cover bg-center opacity-35" style="background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&h=500&fit=crop');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/70 to-[#111827]/50"></div>
-        <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[80px] py-10 md:py-12">
+        <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[80px] py-10 md:py-12 min-h-[220px]">
             <p class="text-xs font-medium uppercase tracking-wider text-white/50 mb-2">My account</p>
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-white tracking-tight leading-tight">Hello, {{ auth()->user()->name }}</h1>
             <p class="mt-2 text-base text-white/65 max-w-xl">Package enquiries and saved trips in one place.</p>
