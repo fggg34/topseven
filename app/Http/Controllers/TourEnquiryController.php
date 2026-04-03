@@ -21,6 +21,7 @@ class TourEnquiryController extends Controller
 
         TourEnquiry::create([
             'tour_id' => $tour->id,
+            'user_id' => auth()->id(),
             'full_name' => $validated['full_name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,

@@ -88,6 +88,19 @@
                         @endif
                     </div>
                 @endif
+                @auth
+                    <a href="{{ route('dashboard') }}"
+                       class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors"
+                       title="My account" aria-label="My account">
+                        <i class="fa-solid fa-circle-user text-2xl lg:text-[26px] leading-none"></i>
+                    </a>
+                @else
+                    <a href="{{ route('login') }}"
+                       class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors"
+                       title="Log in" aria-label="Log in">
+                        <i class="fa-regular fa-circle-user text-2xl lg:text-[26px] leading-none"></i>
+                    </a>
+                @endauth
             </div>
 
             {{-- Mobile hamburger --}}
@@ -138,6 +151,18 @@
                     @endif
                 </div>
             @endif
+            <div class="px-5 pb-3 flex items-center gap-4 border-b border-gray-100">
+                @auth
+                    <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-circle-user text-lg text-gray-500"></i> My account
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors">Log in</a>
+                    @if(Route::has('register'))
+                        <a href="{{ route('register') }}" @click="mobileOpen = false" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">Register</a>
+                    @endif
+                @endauth
+            </div>
             @auth
                 <form method="POST" action="{{ route('logout') }}" class="px-5 pb-2">@csrf
                     <button type="submit" class="text-sm text-gray-500 hover:text-red-600 transition-colors">Log out</button>
