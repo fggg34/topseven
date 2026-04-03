@@ -19,19 +19,18 @@ class ContactController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
+            'phone' => 'required|string|max:50',
             'subject' => 'required|string|max:255',
-            'phone' => 'nullable|string|max:50',
             'message' => 'required|string|max:5000',
         ]);
 
         $to = Setting::get('contact_email', config('mail.from.address'));
 
-        $phone = trim((string) ($validated['phone'] ?? ''));
-        $phoneLine = $phone !== '' ? "\nPhone: {$phone}" : '';
+        $phone = trim((string) $validated['phone']);
 
         try {
             Mail::raw(
-                "Name: {$validated['name']}\nEmail: {$validated['email']}{$phoneLine}\nSubject: {$validated['subject']}\n\nMessage:\n{$validated['message']}",
+                "Name: {$validated['name']}\nEmail: {$validated['email']}\nPhone: {$phone}\nSubject: {$validated['subject']}\n\nMessage:\n{$validated['message']}",
                 fn ($m) => $m->to($to)->subject('Contact form: ' . $validated['subject'])
             );
         } catch (\Throwable $e) {

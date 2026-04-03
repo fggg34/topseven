@@ -123,18 +123,18 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1.5">Phone <span class="text-red-400">*</span></label>
+                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" required autocomplete="tel"
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                placeholder="Your phone number">
+                            @error('phone')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
                             <label for="subject" class="block text-sm font-medium text-gray-700 mb-1.5">Subject <span class="text-red-400">*</span></label>
                             <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
                                 class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
                                 placeholder="How can we help?">
                             @error('subject')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1.5">Phone</label>
-                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" autocomplete="tel"
-                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
-                                placeholder="Your phone number">
-                            @error('phone')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                     </div>
                     <div>
