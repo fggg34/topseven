@@ -90,9 +90,9 @@
                 @endif
                 @auth
                     <a href="{{ route('dashboard') }}"
-                       class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors"
+                       class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors inline-flex"
                        title="My account" aria-label="My account">
-                        <i class="fa-solid fa-circle-user text-2xl lg:text-[26px] leading-none"></i>
+                        <x-icons.user-circled class="w-6 h-6 lg:w-[26px] lg:h-[26px] shrink-0" />
                     </a>
                 @else
                     <a href="{{ route('login') }}"
@@ -154,7 +154,7 @@
             <div class="px-5 pb-3 flex items-center gap-4 border-b border-gray-100">
                 @auth
                     <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-circle-user text-lg text-gray-500"></i> My account
+                        <x-icons.user-circled class="w-[1.125rem] h-[1.125rem] shrink-0 text-gray-500" /> My account
                     </a>
                 @else
                     <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors">Log in</a>

@@ -20,10 +20,12 @@
 
         <main class="pt-28 pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-8rem)]">
             <div class="max-w-[440px] mx-auto">
-                @php $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
-                <a href="{{ route('home') }}" class="block text-center mb-8 group">
-                    <span class="text-2xl sm:text-3xl font-serif font-semibold text-[#111827] tracking-tight group-hover:text-lime-800 transition-colors">{{ $siteName }}</span>
-                </a>
+                @unless(request()->routeIs('login', 'register', 'password.request'))
+                    @php $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
+                    <a href="{{ route('home') }}" class="block text-center mb-8 group">
+                        <span class="text-2xl sm:text-3xl font-serif font-semibold text-[#111827] tracking-tight group-hover:text-lime-800 transition-colors">{{ $siteName }}</span>
+                    </a>
+                @endunless
 
                 <div class="rounded-[28px] bg-white border border-[#e6e1d8] shadow-xl shadow-black/5 overflow-hidden">
                     <div class="px-8 py-10 sm:px-10 sm:py-12">
