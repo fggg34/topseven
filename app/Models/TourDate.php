@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TourDate extends Model
 {
@@ -25,8 +24,4 @@ class TourDate extends Model
         return $this->belongsTo(Tour::class);
     }
 
-    public function bookings(): HasMany
-    {
-        return $this->hasMany(Booking::class, 'tour_date_id');
-    }
 }

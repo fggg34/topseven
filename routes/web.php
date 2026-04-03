@@ -15,11 +15,6 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
-// More specific tour routes first so /tours/{slug} doesn't capture e.g. slug "xyz/available-dates"
-Route::get('/tours/{slug}/price', [\App\Http\Controllers\Api\TourBookingApiController::class, 'price'])->name('tours.price');
-Route::get('/tours/{slug}/available-dates', [\App\Http\Controllers\Api\TourBookingApiController::class, 'availableDates'])->name('tours.available-dates');
-Route::get('/tours/{slug}/check-date', [\App\Http\Controllers\Api\TourBookingApiController::class, 'checkDate'])->name('tours.check-date');
-Route::get('/tours/{slug}/book', [\App\Http\Controllers\BookingController::class, 'create'])->name('bookings.create');
 Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
 
 Route::get('/countries', [CountryController::class, 'index'])->name('countries.index');
@@ -32,9 +27,7 @@ Route::get('/cities/{city}/highlights/{highlight}', function (string $city, stri
     return redirect()->route('countries.highlights.show', ['country' => $city, 'highlight' => $highlight], 301);
 });
 
-Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])->middleware('throttle:10,1')->name('bookings.store');
 Route::post('/tours/{slug}/enquiry', [\App\Http\Controllers\TourEnquiryController::class, 'store'])->middleware('throttle:10,1')->name('tours.enquiry.store');
-Route::get('/bookings/confirmation/{token}', [\App\Http\Controllers\BookingController::class, 'confirmation'])->name('bookings.confirmation');
 
 Route::permanentRedirect('/packages', '/tours');
 
@@ -57,7 +50,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/my-bookings/{token}/cancel', [\App\Http\Controllers\User\BookingController::class, 'cancelByToken'])->name('user.bookings.cancel');
     Route::post('/wishlist/{tour}', [\App\Http\Controllers\User\WishlistController::class, 'store'])->name('wishlist.store');
     Route::delete('/wishlist/{tour}', [\App\Http\Controllers\User\WishlistController::class, 'destroy'])->name('wishlist.destroy');
     Route::post('/tours/{tour:slug}/reviews', [\App\Http\Controllers\ReviewController::class, 'store'])->name('reviews.store');

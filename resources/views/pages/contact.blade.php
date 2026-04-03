@@ -172,7 +172,7 @@
                                     <i class="fa-solid fa-users text-white text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-semibold text-gray-900">Group Bookings</h4>
+                                    <h4 class="text-sm font-semibold text-gray-900">Group travel</h4>
                                     <p class="text-[13px] text-gray-500 mt-0.5">Special rates and tailored experiences for groups.</p>
                                 </div>
                             </div>

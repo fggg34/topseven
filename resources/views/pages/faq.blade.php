@@ -7,9 +7,9 @@
     $sections = is_string($sections) ? (json_decode($sections, true) ?: []) : $sections;
     if (empty($sections)) {
         $sections = [
-            ['category_label' => 'Booking & payments', 'category_title' => 'How booking works', 'items' => [
-                ['q' => 'How do I book a travel package?', 'a' => 'Simply browse our travel packages, select the one you like, pick your preferred date and number of travelers, and complete the booking form.'],
-                ['q' => 'What payment methods do you accept?', 'a' => 'We accept all major credit and debit cards, as well as bank transfers.'],
+            ['category_label' => 'Enquiries & payments', 'category_title' => 'How enquiries work', 'items' => [
+                ['q' => 'How do I enquire about a travel package?', 'a' => 'Browse our travel packages, open the one you like, and submit the enquiry form with your dates, guest count, and message. Our team will contact you with availability and next steps.'],
+                ['q' => 'What payment methods do you accept?', 'a' => 'We accept all major credit and debit cards, as well as bank transfers. Payment is arranged after we confirm your trip details.'],
             ]],
             ['category_label' => 'Cancellations & changes', 'category_title' => 'Flexibility when you need it', 'items' => [
                 ['q' => 'What is your cancellation policy?', 'a' => 'Most travel packages offer free cancellation up to 7 days before the departure date.'],
@@ -27,7 +27,7 @@
 @extends('layouts.site')
 
 @section('title', \App\Models\Setting::get('page_faq_seo_title') ?: ('FAQ - ' . config('app.name')))
-@section('description', \App\Models\Setting::get('page_faq_seo_description') ?: 'Frequently asked questions about our travel packages, bookings and services.')
+@section('description', \App\Models\Setting::get('page_faq_seo_description') ?: 'Frequently asked questions about our travel packages, enquiries and services.')
 @if(\App\Models\Setting::get('page_faq_seo_og_image'))@section('og_image', \App\Models\Setting::get('page_faq_seo_og_image'))@endif
 
 @section('content')

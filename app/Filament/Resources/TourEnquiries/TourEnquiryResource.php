@@ -25,7 +25,7 @@ class TourEnquiryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Bookings';
+    protected static string|\UnitEnum|null $navigationGroup = 'Enquiries';
 
     protected static ?string $navigationLabel = 'Tour enquiries';
 

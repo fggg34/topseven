@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Booking;
+use App\Models\TourEnquiry;
 use Filament\Widgets\ChartWidget;
 
 class RevenueChartWidget extends ChartWidget
@@ -11,9 +11,9 @@ class RevenueChartWidget extends ChartWidget
 
     protected int|string|array $columnSpan = 1;
 
-    protected ?string $heading = 'Revenue by month';
+    protected ?string $heading = 'Package enquiries by month';
 
-    protected ?string $description = 'Last 12 months (excluding cancelled).';
+    protected ?string $description = 'Last 12 months (by submission date).';
 
     protected ?string $maxHeight = '300px';
 
@@ -30,16 +30,15 @@ class RevenueChartWidget extends ChartWidget
             $end = $date->copy()->endOfMonth();
 
             $labels[] = $date->format('M Y');
-            $data[] = (float) Booking::query()
-                ->where('status', '!=', 'cancelled')
-                ->whereBetween('booking_date', [$start, $end])
-                ->sum('total_amount');
+            $data[] = TourEnquiry::query()
+                ->whereBetween('created_at', [$start, $end])
+                ->count();
         }
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Revenue (€)',
+                    'label' => 'Enquiries',
                     'data' => $data,
                     'fill' => true,
                     'borderColor' => 'rgb(34, 197, 94)',

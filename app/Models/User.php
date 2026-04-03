@@ -63,11 +63,6 @@ class User extends Authenticatable implements FilamentUser
         return strtolower(trim($this->role ?? '')) === 'admin';
     }
 
-    public function bookings()
-    {
-        return $this->hasMany(Booking::class);
-    }
-
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class);

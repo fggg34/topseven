@@ -11,9 +11,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $user = $request->user();
-        $bookings = $user->bookings()->with(['tour', 'tourDate'])->orderByDesc('created_at')->paginate(10);
         $wishlistTours = $user->wishlistTours()->with(['category', 'images'])->get();
-        $activeBookingsCount = $user->bookings()->where('status', '!=', 'cancelled')->count();
 
         $enquiries = TourEnquiry::query()
             ->with(['tour.images', 'tour'])
@@ -28,6 +26,6 @@ class DashboardController extends Controller
 
         $enquiriesCount = $enquiries->count();
 
-        return view('dashboard', compact('bookings', 'wishlistTours', 'activeBookingsCount', 'enquiries', 'enquiriesCount'));
+        return view('dashboard', compact('wishlistTours', 'enquiries', 'enquiriesCount'));
     }
 }

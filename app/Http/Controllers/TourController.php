@@ -64,7 +64,7 @@ class TourController extends Controller
             'price_low' => $query->orderBy('price'),
             'price_high' => $query->orderByDesc('price'),
             'newest' => $query->orderByDesc('created_at'),
-            default => $query->withCount('bookings')->orderByDesc('is_featured')->orderByDesc('bookings_count'),
+            default => $query->orderByDesc('is_featured')->orderByDesc('created_at'),
         };
 
         $tours = $query->paginate(12)->withQueryString();

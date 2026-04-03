@@ -179,11 +179,6 @@ class Tour extends Model
         return $this->hasMany(TourAvailability::class)->orderBy('date');
     }
 
-    public function bookings(): HasMany
-    {
-        return $this->hasMany(Booking::class);
-    }
-
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
@@ -237,7 +232,7 @@ class Tour extends Model
     /**
      * Duplicate this tour as a draft with all fields and related data.
      * Copies: images (same file refs), itineraries, pricing tiers, countries.
-     * Does not copy: dates, availabilities, bookings, reviews.
+     * Does not copy: dates, availabilities, reviews.
      */
     public function duplicate(): self
     {

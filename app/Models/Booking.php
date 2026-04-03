@@ -98,9 +98,6 @@ class Booking extends Model
      */
     public function getConfirmationUrlAttribute(): string
     {
-        if ($this->confirmation_token) {
-            return route('bookings.confirmation', ['token' => $this->confirmation_token]);
-        }
         return route('tours.index');
     }
 }

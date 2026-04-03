@@ -6,7 +6,7 @@
         <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[80px] py-10 md:py-12">
             <p class="text-xs font-medium uppercase tracking-wider text-white/50 mb-2">My account</p>
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-white tracking-tight leading-tight">Hello, {{ auth()->user()->name }}</h1>
-            <p class="mt-2 text-base text-white/65 max-w-xl">Bookings, package enquiries, and saved trips in one place.</p>
+            <p class="mt-2 text-base text-white/65 max-w-xl">Package enquiries and saved trips in one place.</p>
             <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-white/90 hover:text-white transition-colors">
                 <i class="fa-solid fa-gear text-sm"></i>
                 Account settings
@@ -24,16 +24,7 @@
         @endif
 
         {{-- Stats --}}
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-            <div class="bg-white rounded-2xl border border-[#e6e1d8] shadow-sm p-6 flex items-center gap-4">
-                <div class="w-14 h-14 rounded-2xl bg-[#111827] flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-calendar-check text-white text-xl"></i>
-                </div>
-                <div>
-                    <p class="text-2xl font-bold text-[#111827] tabular-nums">{{ $activeBookingsCount ?? 0 }}</p>
-                    <p class="text-sm text-gray-500">Active bookings</p>
-                </div>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
             <div class="bg-white rounded-2xl border border-[#e6e1d8] shadow-sm p-6 flex items-center gap-4">
                 <div class="w-14 h-14 rounded-2xl bg-lime-100 flex items-center justify-center flex-shrink-0">
                     <i class="fa-solid fa-paper-plane text-lime-800 text-xl"></i>
@@ -149,77 +140,6 @@
                                 </li>
                             @endforeach
                         </ul>
-                    @endif
-                </div>
-            </section>
-
-            {{-- Bookings --}}
-            <section>
-                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
-                    <div>
-                        <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#111827]">My bookings</h2>
-                        <p class="text-sm text-gray-500 mt-1">Confirmed reservations and payment details</p>
-                    </div>
-                    <a href="{{ route('tours.index') }}" class="text-sm font-semibold text-lime-700 hover:text-lime-800 hidden sm:inline-flex items-center gap-1.5">
-                        Browse travel packages
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </a>
-                </div>
-
-                <div class="bg-white rounded-[28px] border border-[#e6e1d8] shadow-sm overflow-hidden">
-                    @if($bookings->isEmpty())
-                        <div class="p-12 md:p-16 text-center">
-                            <div class="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                                <i class="fa-solid fa-calendar-xmark text-gray-400 text-2xl"></i>
-                            </div>
-                            <p class="text-[#111827] font-semibold text-lg">No bookings yet</p>
-                            <p class="text-sm text-gray-500 mt-2 mb-8">Complete a booking to see it listed here.</p>
-                            <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-2 rounded-full bg-[#111827] text-white text-sm font-semibold px-7 py-3 hover:bg-gray-900 transition-colors">
-                                <i class="fa-solid fa-compass text-xs"></i>
-                                Browse packages
-                            </a>
-                        </div>
-                    @else
-                        <ul class="divide-y divide-[#e6e1d8]">
-                            @foreach($bookings as $booking)
-                                @php
-                                    $bookingDate = $booking->tourDate?->date ?? $booking->booking_date;
-                                    $currency = $booking->currency ?: '€';
-                                @endphp
-                                <li class="p-6 md:p-8 hover:bg-[#faf9f6] transition-colors flex flex-col sm:flex-row sm:items-center gap-4">
-                                    <div class="flex-1 min-w-0">
-                                        <a href="{{ route('bookings.confirmation', ['token' => $booking->confirmation_token]) }}" class="font-semibold text-[#111827] hover:text-lime-800 transition line-clamp-2 text-lg">
-                                            {{ $booking->tour->title }}
-                                        </a>
-                                        <div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-gray-500">
-                                            <span class="inline-flex items-center gap-1.5">
-                                                <i class="fa-regular fa-calendar text-gray-400"></i>
-                                                {{ $bookingDate?->format('M j, Y') ?? '—' }}
-                                            </span>
-                                            <span class="inline-flex items-center gap-1.5">
-                                                <i class="fa-solid fa-users text-gray-400"></i>
-                                                {{ $booking->guest_count }} {{ Str::plural('guest', $booking->guest_count) }}
-                                            </span>
-                                            <span class="font-semibold text-[#111827] tabular-nums">{{ $currency }}{{ number_format($booking->total_amount, 2) }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-3 flex-shrink-0">
-                                        <span class="inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-full
-                                            @if($booking->status === 'confirmed') bg-emerald-50 text-emerald-800
-                                            @elseif($booking->status === 'cancelled') bg-gray-100 text-gray-500
-                                            @else bg-lime-50 text-lime-900 @endif">
-                                            {{ ucfirst($booking->status) }}
-                                        </span>
-                                        <a href="{{ route('bookings.confirmation', ['token' => $booking->confirmation_token]) }}" class="text-sm font-semibold text-lime-700 hover:text-lime-800">
-                                            Details
-                                        </a>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                        @if($bookings->hasPages())
-                            <div class="px-6 py-4 border-t border-[#e6e1d8] bg-[#faf9f6]">{{ $bookings->links() }}</div>
-                        @endif
                     @endif
                 </div>
             </section>
