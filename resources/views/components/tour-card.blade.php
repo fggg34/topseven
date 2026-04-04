@@ -21,8 +21,8 @@
     $decimals = ($sale != floor($sale)) ? 2 : 0;
     $baseDecimals = ($base != floor($base)) ? 2 : 0;
 @endphp
-<article {{ $attributes->merge(['class' => 'h-full']) }}>
-    <a href="{{ $tourUrl }}" class="home-flash-sale-card group relative block aspect-[3/4] min-h-[420px] sm:min-h-[480px] max-h-[560px] rounded-[28px] overflow-hidden shadow-md ring-1 ring-black/10 h-full">
+<article {{ $attributes->merge(['class' => 'h-full min-w-0 w-full']) }}>
+    <a href="{{ $tourUrl }}" class="home-flash-sale-card group relative block w-full max-w-full aspect-[3/4] min-h-[420px] sm:min-h-[480px] max-h-[560px] rounded-[28px] overflow-hidden shadow-md ring-1 ring-black/10 h-full box-border">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-[1.04]" style="background-image: url('{{ e($imageUrl) }}');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-black/[0.88] via-black/35 to-transparent pointer-events-none"></div>
 
@@ -45,8 +45,8 @@
             @endif
         @endauth
 
-        <div class="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6 pt-24 flex flex-col justify-end text-left">
-            <h3 class="text-xl sm:text-2xl font-bold text-white leading-[1.2] tracking-tight line-clamp-4 drop-shadow-sm font-sans">
+        <div class="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6 pt-24 flex flex-col justify-end text-left min-w-0">
+            <h3 class="text-xl sm:text-2xl font-bold text-white leading-[1.2] tracking-tight line-clamp-4 drop-shadow-sm font-sans break-words">
                 {{ $tour->title }}
             </h3>
             <div class="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
@@ -80,9 +80,9 @@
     $currency = ($tour->currency === 'EUR' || !$tour->currency) ? '€' : $tour->currency;
 @endphp
 
-<article {{ $attributes->merge(['class' => 'group bg-white rounded-xl overflow-hidden border border-gray-200 transition-shadow ' . ($slider ? 'flex-shrink-0 hover:shadow-md' : 'hover:shadow-lg')]) }}
+<article {{ $attributes->merge(['class' => 'group bg-white rounded-xl overflow-hidden border border-gray-200 transition-shadow min-w-0 w-full ' . ($slider ? 'flex-shrink-0 hover:shadow-md' : 'hover:shadow-lg')]) }}
     @if($slider) data-slider-card @endif>
-    <a href="{{ $tourUrl }}" class="flex flex-col h-full">
+    <a href="{{ $tourUrl }}" class="flex flex-col h-full w-full min-w-0">
         {{-- Image --}}
         <div class="relative overflow-hidden flex-shrink-0 aspect-[4/3] rounded-xl px-2 mt-2" style="max-width: 100% !important;">
             <img style="width: 100% !important;" src="{{ $imageUrl }}" alt="{{ $tour->title }}"
