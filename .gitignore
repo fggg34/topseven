@@ -32,4 +32,5 @@ Archive.zip
 
 # Laravel runtime (never commit — causes merge noise and pull conflicts)
 /storage/framework/views/*
+!/storage/framework/views/.gitkeep
 /storage/logs/*.log
