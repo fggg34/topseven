@@ -12,25 +12,27 @@
 @section('description', 'Browse our selection of travel packages and book your next adventure.')
 
 @section('content')
-<div class="relative w-full overflow-hidden bg-[#111827]" style="height: 380px;">
-    <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&h=600&fit=crop');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
-    <div class="absolute inset-0 flex items-end">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
-            <nav class="text-sm mb-4" aria-label="Breadcrumb">
-                <ol class="flex items-center gap-1.5">
-                    <li><a href="{{ route('home') }}" class="text-white/60 hover:text-white transition">Home</a></li>
-                    <li class="text-white/40">/</li>
-                    <li class="text-white">Travel Packages</li>
-                </ol>
-            </nav>
-            <h1 class="text-4xl md:text-6xl font-serif text-white tracking-tight">Explore Our Travel Packages</h1>
-            <p class="mt-3 text-lg text-white/70 max-w-xl">Handpicked experiences designed to immerse you in culture, nature, and unforgettable moments.</p>
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="pt-10 pb-8 md:pt-12 md:pb-10">
+        <nav class="text-sm" aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
+                <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">Home</a></li>
+                <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
+                <li class="text-[#111827] font-medium">Travel Packages</li>
+            </ol>
+        </nav>
+        <div class="mt-6 md:mt-8 max-w-3xl">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#111827] tracking-tight leading-[1.1]">
+                Explore our travel packages
+            </h1>
+            <p class="mt-4 text-base md:text-lg text-[#6a6a6a] leading-relaxed">
+                Handpicked experiences designed to immerse you in culture, nature, and unforgettable moments.
+            </p>
+            <div class="mt-6 h-1 w-14 rounded-full bg-lime-600" aria-hidden="true"></div>
         </div>
-    </div>
-</div>
+    </header>
 
-<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="tourFilters()" x-init="init()">
+    <div class="pb-10 pt-2" x-data="tourFilters()" x-init="init()">
 
     <div class="tours-filter-bar flex flex-wrap items-center gap-3 pb-7 border-b border-[#e6e1d8]">
 
@@ -133,6 +135,7 @@
 
     <div class="mt-10">
         {{ $tours->links() }}
+    </div>
     </div>
 </div>
 @endsection
