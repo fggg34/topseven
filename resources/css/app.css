@@ -48,34 +48,6 @@
   width: 100%;
 }
 
-/* Tour gallery: <640px = 1 col; 640-1023px = simple 2-col (2x2); >=1024px = left large (row span 2) + right nested (top 2 small, bottom 1 wide) */
-@media (min-width: 640px) and (max-width: 1023px) {
-  .tour-gallery-right {
-    display: contents;
-  }
-}
-@media (min-width: 1024px) {
-  .tour-gallery-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    height: 485px;
-  }
-  .tour-gallery-grid > a:first-child {
-    grid-row: span 2;
-  }
-  .tour-gallery-right {
-    display: grid;
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 16px;
-  }
-  .tour-gallery-right > *:last-child {
-    grid-column: 1 / -1;
-  }
-}
-
 /* Prose paragraph spacing (backend rich text editor content) */
 .prose p,
 .prose-sm p,

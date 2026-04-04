@@ -56,31 +56,115 @@
     $images = $tour->images->isEmpty() ? collect([null]) : $tour->images;
     $firstImage = $images->first();
     $mainImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Travel+Package';
+    $galleryImages = $tour->images->isEmpty()
+        ? collect([(object) ['url' => $mainImageUrl, 'alt' => $tour->title]])
+        : $tour->images;
+    $img1 = $galleryImages->get(0);
+    $img2 = $galleryImages->get(1) ?? $img1;
+    $img3 = $galleryImages->get(2) ?? $galleryImages->get(1) ?? $img1;
+    $totalImages = $tour->images->isEmpty() ? 1 : $tour->images->count();
+    $galleryLightboxLinks = $totalImages > 1;
+    $galleryPromo = trim((string) \App\Models\Setting::get('tour_gallery_promo_text', ''));
+    if ($galleryPromo === '') {
+        $galleryPromo = 'Flex cancellation: peace of mind for just $99 per person';
+    }
 @endphp
 
-{{-- Hero --}}
-<section class="relative w-full overflow-hidden rounded-b-[40px]" style="height: 460px;">
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ e($mainImageUrl) }}');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
-    <div class="absolute inset-0 flex flex-col justify-end">
-        <div class="w-full max-w-none px-4 sm:px-6 md:px-[80px] pb-10 md:pb-12">
-            <nav class="text-sm mb-4 opacity-70" aria-label="Breadcrumb">
-                <ol class="flex items-center gap-1.5 text-white/80">
-                    <li><a href="{{ route('home') }}" class="hover:text-white transition">Home</a></li>
-                    <li>/</li>
-                    <li><a href="{{ route('tours.index') }}" class="hover:text-white transition">Travel Packages</a></li>
-                    <li>/</li>
-                    <li class="truncate max-w-[250px]">{{ $tour->title }}</li>
-                </ol>
-            </nav>
-            @if($tour->category)
-                <span class="inline-flex rounded-full bg-white/20 backdrop-blur-sm px-3.5 py-1 text-[12px] font-medium text-white mb-3">{{ $tour->category->name }}</span>
-            @endif
-            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.08]">{{ $tour->title }}</h1>
-            @if($tour->approvedReviews->count() > 0)
-                <div class="mt-3 flex items-center gap-2">
-                    <x-review-stars :rating="(float) $tour->average_rating" />
-                    <span class="text-sm text-white/70">({{ $tour->approvedReviews->count() }} reviews)</span>
+{{-- Title + bento gallery (2/3 main + promo bar | 1/3 stacked thumbs + view all) --}}
+<section class="px-4 sm:px-6 md:px-[80px] pt-6 md:pt-10 pb-2">
+    <div class="max-w-[1400px] mx-auto">
+        <nav class="text-sm mb-4" aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
+                <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">Home</a></li>
+                <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
+                <li><a href="{{ route('tours.index') }}" class="hover:text-[#111827] transition-colors">Travel Packages</a></li>
+                <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
+                <li class="text-[#111827] font-medium truncate max-w-[min(100%,280px)]">{{ $tour->title }}</li>
+            </ol>
+        </nav>
+        @if($tour->category)
+            <span class="inline-flex rounded-full bg-gray-100 px-3.5 py-1 text-[12px] font-semibold text-[#111827] mb-3">{{ $tour->category->name }}</span>
+        @endif
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#111827] tracking-tight leading-[1.1] max-w-4xl">{{ $tour->title }}</h1>
+        @if($tour->approvedReviews->count() > 0)
+            <div class="mt-3 flex items-center gap-2 text-[#111827]">
+                <x-review-stars :rating="(float) $tour->average_rating" />
+                <span class="text-sm text-[#6a6a6a]">({{ $tour->approvedReviews->count() }} reviews)</span>
+            </div>
+        @endif
+
+        <div class="tour-gallery mt-8 md:mt-10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-4 lg:h-[min(32rem,calc(100vh-12rem))] lg:max-h-[560px] lg:min-h-[380px]">
+                {{-- Left: hero image + promo bar (flush, shared corner radius) --}}
+                <div class="lg:col-span-2 flex flex-col min-h-0 h-full gap-0">
+                    <a href="{{ $img1->url ?? $mainImageUrl }}"
+                       class="glightbox group relative block flex-1 min-h-[220px] lg:min-h-0 overflow-hidden rounded-t-2xl bg-gray-100 lg:rounded-b-none"
+                       data-gallery="tour-gallery-{{ $tour->id }}"
+                       role="listitem">
+                        <img src="{{ $img1->url ?? $mainImageUrl }}"
+                             alt="{{ $img1->alt ?? $tour->title }}"
+                             class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                             loading="eager"
+                             fetchpriority="high">
+                    </a>
+                    <div class="shrink-0 rounded-b-2xl bg-[#F5E14A] px-4 py-3.5 text-center lg:rounded-t-none">
+                        <p class="text-[15px] font-medium leading-snug text-neutral-900 font-sans">{{ $galleryPromo }}</p>
+                    </div>
+                </div>
+                {{-- Right: two stacked images + pill CTA --}}
+                <div class="flex flex-col gap-4 min-h-0 h-full lg:min-h-0">
+                    @if($galleryLightboxLinks)
+                        <a href="{{ $img2->url ?? $mainImageUrl }}"
+                           class="glightbox group relative block flex-1 min-h-[160px] lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100"
+                           data-gallery="tour-gallery-{{ $tour->id }}"
+                           role="listitem">
+                            <img src="{{ $img2->url ?? $mainImageUrl }}"
+                                 alt="{{ $img2->alt ?? $tour->title }}"
+                                 class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                                 loading="lazy">
+                        </a>
+                    @else
+                        <div class="relative flex-1 min-h-[160px] lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100">
+                            <img src="{{ $img2->url ?? $mainImageUrl }}"
+                                 alt=""
+                                 class="absolute inset-0 h-full w-full object-cover"
+                                 loading="lazy">
+                        </div>
+                    @endif
+                    <div class="relative flex-1 min-h-[160px] lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100">
+                        @if($galleryLightboxLinks)
+                            <a href="{{ $img3->url ?? $mainImageUrl }}"
+                               class="glightbox group absolute inset-0 block"
+                               data-gallery="tour-gallery-{{ $tour->id }}"
+                               role="listitem">
+                                <img src="{{ $img3->url ?? $mainImageUrl }}"
+                                     alt="{{ $img3->alt ?? $tour->title }}"
+                                     class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                                     loading="lazy">
+                            </a>
+                            <a href="{{ $img1->url ?? $mainImageUrl }}"
+                               class="glightbox absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#111827] shadow-md shadow-black/10 ring-1 ring-black/5 transition hover:bg-gray-50"
+                               data-gallery="tour-gallery-{{ $tour->id }}"
+                               aria-label="View all {{ $totalImages }} photos">
+                                <i class="fa-solid fa-camera text-[15px] text-[#111827]/80" aria-hidden="true"></i>
+                                <span>View {{ $totalImages }} {{ Str::plural('photo', $totalImages) }}</span>
+                            </a>
+                        @else
+                            <img src="{{ $img3->url ?? $mainImageUrl }}"
+                                 alt=""
+                                 class="absolute inset-0 h-full w-full object-cover"
+                                 loading="lazy">
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @if($totalImages > 3)
+                <div class="hidden" aria-hidden="true">
+                    @foreach($galleryImages->skip(3) as $extraImg)
+                        <a href="{{ $extraImg->url }}" class="glightbox" data-gallery="tour-gallery-{{ $tour->id }}">
+                            <img src="{{ $extraImg->url }}" alt="{{ $extraImg->alt ?? 'Travel package image' }}" loading="lazy">
+                        </a>
+                    @endforeach
                 </div>
             @endif
         </div>
@@ -109,7 +193,7 @@
     if ($tour->languages && count($tour->languages) > 0) $facts->push(['icon' => 'fa-language', 'label' => 'Language', 'value' => implode(', ', (array) $tour->languages)]);
 @endphp
 @if($facts->isNotEmpty())
-<section class="px-4 sm:px-6 md:px-[80px] -mt-7 relative z-10">
+<section class="px-4 sm:px-6 md:px-[80px] mt-6 md:mt-8 relative z-10">
     <div class="max-w-[1400px] mx-auto">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 flex flex-wrap gap-x-8 gap-y-4">
             @foreach($facts as $fact)
@@ -133,63 +217,6 @@
     <div class="max-w-[1400px] mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div class="lg:col-span-2 space-y-10">
-
-                {{-- Gallery --}}
-                @php
-                    $galleryImages = $tour->images->isEmpty() ? collect([(object)['url' => $mainImageUrl, 'alt' => $tour->title]]) : $tour->images;
-                    $img1 = $galleryImages->get(0);
-                    $img2 = $galleryImages->get(1);
-                    $img3 = $galleryImages->get(2);
-                    $img4 = $galleryImages->get(3);
-                    $totalImages = $galleryImages->count();
-                @endphp
-                <div class="tour-gallery">
-                <div class="tour-gallery-grid grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-hidden rounded-2xl">
-                    <a href="{{ $img1->url ?? $mainImageUrl }}" class="glightbox block overflow-hidden min-h-[220px] sm:min-h-[200px] lg:row-span-2 rounded-xl" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
-                        <img src="{{ $img1->url ?? $mainImageUrl }}" alt="{{ $img1->alt ?? $tour->title }}" class="w-full h-full min-h-[220px] sm:min-h-[200px] object-cover hover:scale-[1.03] transition-transform duration-500" loading="eager" fetchpriority="high">
-                    </a>
-                    <div class="tour-gallery-right grid grid-cols-2 grid-rows-[130px] sm:grid-cols-2 sm:grid-rows-2 sm:min-h-0 gap-3">
-                    @if($img2)
-                        <a href="{{ $img2->url }}" class="glightbox block overflow-hidden h-[130px] sm:h-auto sm:min-h-0 rounded-xl" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
-                            <img src="{{ $img2->url }}" alt="{{ $img2->alt ?? 'Travel package image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
-                        </a>
-                    @endif
-                    @if($img3)
-                        <div class="relative overflow-hidden h-[130px] sm:h-auto sm:min-h-0 rounded-xl">
-                            <a href="{{ $img3->url }}" class="glightbox block w-full h-full overflow-hidden" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
-                                <img src="{{ $img3->url }}" alt="{{ $img3->alt ?? 'Travel package image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
-                            </a>
-                            @if($totalImages > 4)
-                                <a href="{{ $img1->url ?? $mainImageUrl }}" class="glightbox sm:hidden absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 text-white text-xs font-medium hover:bg-black/75 transition z-10" data-gallery="tour-gallery-{{ $tour->id }}" aria-label="View all {{ $totalImages }} photos">
-                                    <i class="fa-solid fa-images text-xs"></i> View all
-                                </a>
-                            @endif
-                        </div>
-                    @endif
-                    @if($img4)
-                        <div class="hidden sm:block lg:col-span-2 relative overflow-hidden sm:min-h-0 rounded-xl">
-                            <a href="{{ $img4->url }}" class="glightbox block w-full h-full overflow-hidden" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
-                                <img src="{{ $img4->url }}" alt="{{ $img4->alt ?? 'Travel package image' }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
-                            </a>
-                            @if($totalImages > 4)
-                                <a style="z-index: 0;" href="{{ $img1->url ?? $mainImageUrl }}" class="glightbox hidden sm:flex absolute bottom-3 right-3 items-center gap-1.5 px-4 py-2 rounded-full bg-black/60 text-white text-sm font-medium hover:bg-black/75 transition z-10" data-gallery="tour-gallery-{{ $tour->id }}" aria-label="View all {{ $totalImages }} photos">
-                                    <i class="fa-solid fa-images text-sm"></i> View all
-                                </a>
-                            @endif
-                        </div>
-                    @endif
-                    </div>
-                </div>
-                @if($totalImages > 4)
-                    <div class="hidden">
-                        @foreach($galleryImages->skip(4) as $extraImg)
-                            <a href="{{ $extraImg->url }}" class="glightbox" data-gallery="tour-gallery-{{ $tour->id }}">
-                                <img src="{{ $extraImg->url }}" alt="{{ $extraImg->alt ?? 'Travel package image' }}" loading="lazy">
-                            </a>
-                        @endforeach
-                    </div>
-                @endif
-                </div>
 
                 {{-- Summary --}}
                 <div class="prose max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-p:leading-[1.8]">
