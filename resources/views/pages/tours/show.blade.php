@@ -64,13 +64,9 @@
     $img3 = $galleryImages->get(2) ?? $galleryImages->get(1) ?? $img1;
     $totalImages = $tour->images->isEmpty() ? 1 : $tour->images->count();
     $galleryLightboxLinks = $totalImages > 1;
-    $galleryPromo = trim((string) \App\Models\Setting::get('tour_gallery_promo_text', ''));
-    if ($galleryPromo === '') {
-        $galleryPromo = 'Flex cancellation: peace of mind for just $99 per person';
-    }
 @endphp
 
-{{-- Title + bento gallery (2/3 main + promo bar | 1/3 stacked thumbs + view all) --}}
+{{-- Title + bento gallery (2/3 main | 1/3 stacked thumbs + view all) --}}
 <section class="px-4 sm:px-6 md:px-[80px] pt-6 md:pt-10 pb-2">
     <div class="max-w-[1400px] mx-auto">
         <nav class="text-sm mb-4" aria-label="Breadcrumb">
@@ -95,19 +91,17 @@
 
         <div class="tour-gallery mt-8 md:mt-10">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-4 lg:h-[min(32rem,calc(100vh-12rem))] lg:max-h-[560px] lg:min-h-[380px]">
-                {{-- Left: hero image + promo bar (flush, shared corner radius) --}}
-                <div class="lg:col-span-2 flex flex-col min-h-0 h-full gap-0">
-                    <a href="{{ $img1->url ?? $mainImageUrl }}"
-                       class="glightbox group relative block flex-1 min-h-[220px] lg:min-h-0 overflow-hidden rounded-t-2xl bg-gray-100 lg:rounded-b-none"
-                       data-gallery="tour-gallery-{{ $tour->id }}"
-                       role="listitem">
-                        <img src="{{ $img1->url ?? $mainImageUrl }}"
-                             alt="{{ $img1->alt ?? $tour->title }}"
-                             class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                             loading="eager"
-                             fetchpriority="high">
-                    </a>
-                </div>
+                {{-- Left: main hero image --}}
+                <a href="{{ $img1->url ?? $mainImageUrl }}"
+                   class="glightbox group relative block h-full w-full min-h-[220px] overflow-hidden rounded-2xl bg-gray-100 lg:col-span-2 lg:min-h-0"
+                   data-gallery="tour-gallery-{{ $tour->id }}"
+                   role="listitem">
+                    <img src="{{ $img1->url ?? $mainImageUrl }}"
+                         alt="{{ $img1->alt ?? $tour->title }}"
+                         class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                         loading="eager"
+                         fetchpriority="high">
+                </a>
                 {{-- Right: two stacked images + pill CTA --}}
                 <div class="flex flex-col gap-4 min-h-0 h-full lg:min-h-0">
                     @if($galleryLightboxLinks)
