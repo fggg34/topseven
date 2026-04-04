@@ -19,6 +19,46 @@
 @section('description', \App\Models\Setting::get('page_contact_seo_description') ?: __('Get in touch with us.'))
 @if(\App\Models\Setting::get('page_contact_seo_og_image'))@section('og_image', \App\Models\Setting::get('page_contact_seo_og_image'))@endif
 
+@push('styles')
+<style>
+/* intl-tel-input: match contact form fields */
+.contact-intl-wrap {
+    --iti-border-color: #e5e7eb;
+    width: 100%;
+    display: block;
+}
+.contact-intl-wrap .iti__tel-input {
+    width: 100% !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid #e5e7eb !important;
+    background-color: #f9fafb !important;
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+    font-size: 0.9375rem !important;
+    line-height: 1.25rem !important;
+    color: #111827 !important;
+}
+.contact-intl-wrap .iti__tel-input:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #111827 !important;
+    border-color: transparent !important;
+}
+.contact-intl-wrap .iti__selected-country {
+    border-radius: 0.75rem 0 0 0.75rem;
+    background-color: #f3f4f6;
+}
+.contact-intl-wrap .iti__selected-dial-code {
+    color: #374151;
+    font-weight: 500;
+}
+.contact-intl-wrap .iti__dropdown-content {
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    border: 1px solid #e5e7eb;
+}
+</style>
+@endpush
+
 @section('content')
 
 {{-- Hero --}}
@@ -103,7 +143,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
+                <form id="contact-form" action="{{ route('contact.store') }}" method="POST" class="space-y-5">
                     @csrf
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
@@ -123,8 +163,9 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Phone') }} <span class="text-red-400">*</span></label>
-                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" required autocomplete="tel"
+                            <label for="contact-phone-input" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Phone') }} <span class="text-red-400">*</span></label>
+                            <input type="tel" name="phone" id="contact-phone-input" value="{{ old('phone') }}" required autocomplete="tel"
+                                data-initial-country="al"
                                 class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
                                 placeholder="{{ __('Your phone number') }}">
                             @error('phone')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
@@ -219,3 +260,7 @@
 </section>
 
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/contact-intl-tel.js'])
+@endpush

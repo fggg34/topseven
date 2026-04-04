@@ -11,6 +11,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -52,21 +53,8 @@ class ReviewResource extends Resource
                 TextInput::make('title'),
                 Textarea::make('comment')
                     ->columnSpanFull(),
-                Select::make('platform')
-                    ->label('Platform')
-                    ->options([
-                        'Getyourguide' => 'Getyourguide',
-                        'Tripadvisor' => 'Tripadvisor',
-                        'Tourradar' => 'Tourradar',
-                        'TourHq' => 'TourHq',
-                    ])
-                    ->placeholder('Select a platform'),
-                TextInput::make('platform_tour_url')
-                    ->label('Tour URL from platform')
-                    ->url()
-                    ->placeholder('https://...')
-                    ->maxLength(500)
-                    ->helperText('When user clicks the platform logo, they will be taken to this URL.'),
+                Hidden::make('platform_tour_url')
+                    ->dehydrateStateUsing(static fn () => null),
                 Toggle::make('is_approved')
                     ->required(),
             ]);
