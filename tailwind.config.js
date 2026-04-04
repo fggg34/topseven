@@ -13,7 +13,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                serif: ['Playfair Display', ...defaultTheme.fontFamily.serif],
+                serif: ['Cormorant Garamond', ...defaultTheme.fontFamily.serif],
             },
             colors: {
                 brand: {
