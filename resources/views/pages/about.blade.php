@@ -1,5 +1,27 @@
 @php
+    $aboutSectionOn = function (string $key, bool $default = true): bool {
+        $v = \App\Models\Setting::get($key);
+        if ($v === null || $v === '') {
+            return $default;
+        }
+
+        return filter_var($v, FILTER_VALIDATE_BOOLEAN);
+    };
+
+    $aboutResolveUrl = function (?string $stored, string $fallbackRoute): string {
+        $s = trim((string) $stored);
+        if ($s === '') {
+            return route($fallbackRoute);
+        }
+        if (str_starts_with($s, 'http://') || str_starts_with($s, 'https://')) {
+            return $s;
+        }
+
+        return str_starts_with($s, '/') ? url($s) : url('/' . ltrim($s, '/'));
+    };
+
     $heroTitle = \App\Models\Setting::get('page_about_hero_title', 'Our Story');
+    $heroSubtitle = \App\Models\Setting::get('page_about_hero_subtitle', 'The people, the passion, and the places that make every journey unforgettable.');
     $heroImage = \App\Models\Setting::get('page_about_hero_image', '');
     $heroBg = $heroImage ? \Illuminate\Support\Facades\Storage::disk('public')->url($heroImage) : 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&h=600&fit=crop';
     $introLabel = \App\Models\Setting::get('page_about_intro_label', 'Nice to meet you');
@@ -20,34 +42,49 @@
             ['icon' => 'fa-seedling', 'title' => 'Respect the places we visit', 'description' => 'We work with local families and support the communities that make Albania special.'],
         ];
     }
-    $quoteText = \App\Models\Setting::get('page_about_quote_text', '');
+    $quoteText = trim((string) \App\Models\Setting::get('page_about_quote_text', ''));
+    $quoteImage = \App\Models\Setting::get('page_about_quote_image', '');
+    $quoteBg = $quoteImage ? \Illuminate\Support\Facades\Storage::disk('public')->url($quoteImage) : $heroBg;
     $expectLabel = \App\Models\Setting::get('page_about_expect_label', 'What to expect');
     $expectTitle = \App\Models\Setting::get('page_about_expect_title', "When you book with us, here's what you get");
+    $expectIntro = \App\Models\Setting::get('page_about_expect_intro', 'Every journey with us is built on these simple promises. No fine print, no surprises — just a great experience from start to finish.');
     $expectItems = \App\Models\Setting::get('page_about_expect_items', '');
     $expectItems = is_string($expectItems) ? (json_decode($expectItems, true) ?: []) : $expectItems;
-    if (empty($expectItems)) {
-        $expectItems = [
-            ['title' => 'Guides who actually love this', 'description' => "Our guides aren't reading from a script. They're locals who are genuinely passionate."],
-            ['title' => 'No surprise costs', 'description' => 'The price you see is the price you pay.'],
-            ['title' => 'Flexibility when life happens', 'description' => 'Plans change, we get it. We make rescheduling as painless as possible.'],
-            ['title' => 'A real person to talk to', 'description' => "Have a question? You'll reach a real person, not a chatbot."],
-        ];
-    }
+    $expectItems = is_array($expectItems) ? $expectItems : [];
     $expectImage1 = \App\Models\Setting::get('page_about_expect_image_1', '');
     $expectImage1Url = $expectImage1 ? \Illuminate\Support\Facades\Storage::disk('public')->url($expectImage1) : 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop';
     $expectImage2 = \App\Models\Setting::get('page_about_expect_image_2', '');
     $expectImage2Url = $expectImage2 ? \Illuminate\Support\Facades\Storage::disk('public')->url($expectImage2) : 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=500&fit=crop';
+    $stats = \App\Models\Setting::get('page_about_stats', '');
+    $stats = is_string($stats) ? (json_decode($stats, true) ?: []) : $stats;
+    if (empty($stats)) {
+        $stats = [
+            ['value' => '500+', 'label' => 'Travellers'],
+            ['value' => '50+', 'label' => 'Tours'],
+            ['value' => '12', 'label' => 'Destinations'],
+            ['value' => '4.9', 'label' => 'Rating'],
+        ];
+    }
+    $ctaTitle = \App\Models\Setting::get('page_about_cta_title', 'Ready for your next adventure?');
+    $ctaText = \App\Models\Setting::get('page_about_cta_text', 'Explore our hand-picked travel packages or tell us about your dream trip.');
+    $ctaPrimaryLabel = \App\Models\Setting::get('page_about_cta_primary_label', 'Browse travel packages');
+    $ctaSecondaryLabel = \App\Models\Setting::get('page_about_cta_secondary_label', 'Get in touch');
+    $ctaPrimaryUrl = $aboutResolveUrl(\App\Models\Setting::get('page_about_cta_primary_url', ''), 'tours.index');
+    $ctaSecondaryUrl = $aboutResolveUrl(\App\Models\Setting::get('page_about_cta_secondary_url', ''), 'contact');
     $siteName = \App\Models\Setting::get('site_name', config('app.name'));
+    $aboutOg = \App\Models\Setting::get('page_about_seo_og_image', '');
+    $aboutOgUrl = $aboutOg ? \Illuminate\Support\Facades\Storage::disk('public')->url($aboutOg) : null;
 @endphp
 @extends('layouts.site')
 
 @section('title', \App\Models\Setting::get('page_about_seo_title') ?: ('About Us - ' . config('app.name')))
 @section('description', \App\Models\Setting::get('page_about_seo_description') ?: 'The story behind our travel packages, our team, and why we love sharing Albania with you.')
-@if(\App\Models\Setting::get('page_about_seo_og_image'))@section('og_image', \App\Models\Setting::get('page_about_seo_og_image'))@endif
+@if($aboutOgUrl)@section('og_image', $aboutOgUrl)@endif
 
 @section('content')
 
 {{-- 1. Hero --}}
+@if($aboutSectionOn('page_about_section_hero_enabled'))
 <section class="relative w-full overflow-hidden rounded-b-[40px]" style="height: 560px;">
     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] hover:scale-[1.02]" style="background-image: url('{{ $heroBg }}');"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
@@ -61,13 +98,16 @@
                 </ol>
             </nav>
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.08]">{{ $heroTitle }}</h1>
-            <p class="mt-4 text-lg text-white/75 max-w-lg leading-relaxed">The people, the passion, and the places that make every journey unforgettable.</p>
+            @if($heroSubtitle)
+            <p class="mt-4 text-lg text-white/75 max-w-lg leading-relaxed">{{ $heroSubtitle }}</p>
+            @endif
         </div>
     </div>
 </section>
+@endif
 
 {{-- 2. Intro --}}
-@if($introTitle || $introContent)
+@if($aboutSectionOn('page_about_section_intro_enabled') && ($introTitle || $introContent))
 <section class="px-4 sm:px-6 md:px-[80px] py-16 md:py-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-20 items-start">
@@ -76,10 +116,17 @@
                     <p class="text-[15px] text-gray-500 mb-3">{{ $introLabel }}</p>
                 @endif
                 <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-gray-900 leading-[1.08]">{{ $introTitle }}</h2>
-                @if($introBadgeTitle)
-                <div class="inline-flex items-center gap-2 mt-6 rounded-full bg-gray-100 px-4 py-2">
-                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                    <span class="text-[13px] font-medium text-gray-700">{{ $introBadgeTitle }}</span>
+                @if($introBadgeTitle || $introBadgeSubtitle)
+                <div class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 mt-6 rounded-full bg-gray-100 px-4 py-2">
+                    @if($introBadgeTitle)
+                    <span class="inline-flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>
+                        <span class="text-[13px] font-medium text-gray-700">{{ $introBadgeTitle }}</span>
+                    </span>
+                    @endif
+                    @if($introBadgeSubtitle)
+                    <span class="text-[12px] text-gray-500">{{ $introBadgeSubtitle }}</span>
+                    @endif
                 </div>
                 @endif
             </div>
@@ -98,6 +145,7 @@
 @endif
 
 {{-- 3. Image mosaic --}}
+@if($aboutSectionOn('page_about_section_mosaic_enabled'))
 <section class="px-4 sm:px-6 md:px-[80px]">
     <div class="max-w-[1400px] mx-auto">
         <div class="grid grid-cols-12 gap-3 md:gap-4">
@@ -110,32 +158,29 @@
             <div class="col-span-6 md:col-span-5 rounded-[24px] overflow-hidden">
                 <img src="{{ $expectImage2Url }}" alt="Our destinations" class="w-full h-full object-cover" style="aspect-ratio: 1/1; min-height: 200px;">
             </div>
+            @if(!empty($stats))
             <div class="col-span-12 md:col-span-7 rounded-[24px] overflow-hidden bg-gray-900 flex items-center justify-center px-8 py-10" style="min-height: 200px;">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center w-full">
+                    @foreach($stats as $stat)
                     <div>
-                        <p class="text-3xl md:text-4xl font-bold text-white">500+</p>
-                        <p class="text-sm text-white/50 mt-1">Travellers</p>
+                        @if(!empty($stat['value']))
+                        <p class="text-3xl md:text-4xl font-bold text-white">{{ $stat['value'] }}</p>
+                        @endif
+                        @if(!empty($stat['label']))
+                        <p class="text-sm text-white/50 mt-1">{{ $stat['label'] }}</p>
+                        @endif
                     </div>
-                    <div>
-                        <p class="text-3xl md:text-4xl font-bold text-white">50+</p>
-                        <p class="text-sm text-white/50 mt-1">Tours</p>
-                    </div>
-                    <div>
-                        <p class="text-3xl md:text-4xl font-bold text-white">12</p>
-                        <p class="text-sm text-white/50 mt-1">Destinations</p>
-                    </div>
-                    <div>
-                        <p class="text-3xl md:text-4xl font-bold text-white">4.9</p>
-                        <p class="text-sm text-white/50 mt-1">Rating</p>
-                    </div>
+                    @endforeach
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </section>
+@endif
 
 {{-- 4. Values --}}
-@if(!empty($values))
+@if($aboutSectionOn('page_about_section_values_enabled') && !empty($values))
 <section class="px-4 sm:px-6 md:px-[80px] py-16 md:py-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="mb-10 md:mb-14">
@@ -166,11 +211,11 @@
 @endif
 
 {{-- 5. Quote --}}
-@if($quoteText)
+@if($aboutSectionOn('page_about_section_quote_enabled') && $quoteText)
 <section class="px-4 sm:px-6 md:px-[80px] pb-16 md:pb-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="relative rounded-[28px] overflow-hidden" style="min-height: 340px;">
-            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $heroBg }}');"></div>
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $quoteBg }}');"></div>
             <div class="absolute inset-0 bg-black/60"></div>
             <div class="relative flex items-center justify-center px-6 md:px-16 py-14 text-center" style="min-height: 340px;">
                 <div class="max-w-3xl">
@@ -187,7 +232,7 @@
 @endif
 
 {{-- 6. What to expect --}}
-<!-- @if(!empty($expectItems))
+@if($aboutSectionOn('page_about_section_expect_enabled', false) && !empty($expectItems))
 <section class="px-4 sm:px-6 md:px-[80px] pb-16 md:pb-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-20 items-start mb-12">
@@ -198,7 +243,9 @@
                 <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-gray-900 leading-[1.08]">{{ $expectTitle }}</h2>
             </div>
             <div class="lg:col-span-3">
-                <p class="text-[17px] text-gray-600 leading-relaxed">Every journey with us is built on these simple promises. No fine print, no surprises &mdash; just a great experience from start to finish.</p>
+                @if($expectIntro)
+                <p class="text-[17px] text-gray-600 leading-relaxed">{{ $expectIntro }}</p>
+                @endif
             </div>
         </div>
 
@@ -219,9 +266,10 @@
         </div>
     </div>
 </section>
-@endif -->
+@endif
 
 {{-- 7. CTA --}}
+@if($aboutSectionOn('page_about_section_cta_enabled'))
 <section class="px-4 sm:px-6 md:px-[80px] pb-16 md:pb-24">
     <div class="max-w-[1400px] mx-auto">
         <div class="relative overflow-hidden rounded-[28px] bg-gray-900 px-8 md:px-16 py-14 md:py-20 shadow-xl shadow-black/20">
@@ -229,20 +277,23 @@
             <div class="pointer-events-none absolute -bottom-20 -right-8 h-56 w-56 rounded-full bg-lime-400/[0.18] blur-3xl sm:h-72 sm:w-72 md:-bottom-24 md:-right-6" aria-hidden="true"></div>
             <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div class="max-w-lg text-center md:text-left">
-                    <h2 class="text-3xl md:text-[42px] font-bold text-white leading-[1.1] tracking-tight mb-3">Ready for your next adventure?</h2>
-                    <p class="text-white/60 text-[17px] leading-relaxed">Explore our hand-picked travel packages or tell us about your dream trip.</p>
+                    <h2 class="text-3xl md:text-[42px] font-bold text-white leading-[1.1] tracking-tight mb-3">{{ $ctaTitle }}</h2>
+                    @if($ctaText)
+                    <p class="text-white/60 text-[17px] leading-relaxed">{{ $ctaText }}</p>
+                    @endif
                 </div>
                 <div class="flex flex-wrap justify-center md:justify-end gap-3">
-                    <a href="{{ route('tours.index') }}" class="inline-flex items-center rounded-full bg-white text-gray-900 text-sm font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors">
-                        Browse travel packages
+                    <a href="{{ $ctaPrimaryUrl }}" class="inline-flex items-center rounded-full bg-white text-gray-900 text-sm font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors">
+                        {{ $ctaPrimaryLabel }}
                     </a>
-                    <a href="{{ route('contact') }}" class="inline-flex items-center rounded-full border border-white/30 text-white text-sm font-semibold px-7 py-3.5 hover:bg-white/10 transition-colors">
-                        Get in touch
+                    <a href="{{ $ctaSecondaryUrl }}" class="inline-flex items-center rounded-full border border-white/30 text-white text-sm font-semibold px-7 py-3.5 hover:bg-white/10 transition-colors">
+                        {{ $ctaSecondaryLabel }}
                     </a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+@endif
 
 @endsection
