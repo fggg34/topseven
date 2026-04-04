@@ -13,7 +13,7 @@
     $ctaUrl = str_starts_with($ctaUrlRaw ?? '', 'http') ? $ctaUrlRaw : url($ctaUrlRaw ?: '/tours');
 @endphp
 
-<section class="home-flash-sale-section mx-auto px-4 sm:px-6 lg:px-[80px] pt-14 pb-14">
+<section class="home-flash-sale-section w-full px-4 sm:px-6 lg:px-[80px] pt-14 pb-14">
     <div class="mb-6 md:mb-8">
         <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-semibold text-gray-700 tracking-tight leading-tight">
             @if($highlight !== '' && $highlight !== null && str_contains($headline, (string) $highlight))

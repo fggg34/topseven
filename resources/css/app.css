@@ -140,6 +140,16 @@
 }
 
 /* Home page Swipers - ensure proper containment */
+.home-flash-sale-swiper {
+  overflow: visible !important;
+  width: 100%;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .home-flash-sale-swiper {
+    overflow: hidden !important;
+  }
+}
 .featured-tours-swiper {
   overflow: visible !important;
   width: 100%;

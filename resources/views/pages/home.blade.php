@@ -281,22 +281,27 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         });
     }
-    if (window.Swiper && document.querySelector('.home-flash-sale-swiper')) {
-        new window.Swiper('.home-flash-sale-swiper', {
-            modules: [window.SwiperNavigation],
-            slidesPerView: 1.15,
-            spaceBetween: 16,
-            watchOverflow: true,
-            navigation: {
-                prevEl: '.home-flash-sale-prev',
-                nextEl: '.home-flash-sale-next',
-            },
-            breakpoints: {
-                480: { slidesPerView: 1.35, spaceBetween: 16 },
-                640: { slidesPerView: 2.15, spaceBetween: 16 },
-                1024: { slidesPerView: 3.15, spaceBetween: 16 },
-                1280: { slidesPerView: 4.15, spaceBetween: 16 },
-            },
+    if (window.Swiper) {
+        document.querySelectorAll('.home-flash-sale-swiper').forEach(function (el) {
+            var section = el.closest('.home-flash-sale-section');
+            var prev = section ? section.querySelector('.home-flash-sale-prev') : null;
+            var next = section ? section.querySelector('.home-flash-sale-next') : null;
+            new window.Swiper(el, {
+                modules: [window.SwiperNavigation],
+                slidesPerView: 1.15,
+                spaceBetween: 16,
+                watchOverflow: true,
+                navigation: {
+                    prevEl: prev,
+                    nextEl: next,
+                },
+                breakpoints: {
+                    480: { slidesPerView: 1.35, spaceBetween: 16 },
+                    640: { slidesPerView: 2.15, spaceBetween: 16 },
+                    1024: { slidesPerView: 3.15, spaceBetween: 16 },
+                    1280: { slidesPerView: 4.15, spaceBetween: 16 },
+                },
+            });
         });
     }
     if (window.Swiper && document.querySelector('.featured-tours-swiper')) {

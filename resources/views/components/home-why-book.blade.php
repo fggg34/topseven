@@ -9,7 +9,7 @@
 
 @if($cards->isNotEmpty())
 <section class="home-why-book w-full bg-gray-100 py-16 md:py-20">
-    <div class="w-full max-w-none px-4 sm:px-6 md:px-[80px]">
+    <div class="w-full max-w-none px-4 sm:px-6 lg:px-[80px]">
         <h2 class="text-4xl sm:text-5xl md:text-[2.75rem] lg:text-6xl font-bold text-gray-900 text-left tracking-tight leading-[1.1] mb-12 md:mb-16 mx-auto">
             {{ $heading }}
         </h2>
