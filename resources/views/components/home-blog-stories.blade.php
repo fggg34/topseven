@@ -11,7 +11,7 @@
         Travel stories to inspire you.
     </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         @foreach($posts as $post)
             @php
                 $imageUrl = $post->featured_image
