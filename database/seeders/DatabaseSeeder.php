@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             TourCategorySeeder::class,
             SettingSeeder::class,
             HomepageHeroSeeder::class,
+            WorldCountriesSeeder::class,
         ]);
 
         $admin = User::firstOrCreate(

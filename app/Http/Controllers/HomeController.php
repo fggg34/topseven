@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
 use App\Models\BlogPost;
+use App\Models\Country;
 use App\Models\HomepageHero;
 use App\Models\HomepageSeasonalBanner;
 use App\Models\HomepageSecondarySpotlightTour;
@@ -32,7 +32,11 @@ class HomeController extends Controller
             ->get()
             ->filter(fn (HomepageSpotlightTour $row) => $row->tour !== null)
             ->values();
-        $countries = Country::active()->with(['tours' => fn ($q) => $q->where('is_active', true)->select('id', 'price')])->orderBy('name')->get();
+        $countries = Country::active()
+            ->withActiveTours()
+            ->with(['tours' => fn ($q) => $q->where('is_active', true)->select('id', 'price')])
+            ->orderBy('name')
+            ->get();
         $homepageFlashSaleToursSecondary = HomepageSecondarySpotlightTour::query()
             ->with([
                 'tour' => fn ($q) => $q
@@ -73,14 +77,6 @@ class HomeController extends Controller
             ->orderByDesc('tours_count')
             ->limit(10)
             ->get();
-
-        if ($whereNextCountries->isEmpty()) {
-            $whereNextCountries = Country::active()
-                ->withCount(['tours' => fn ($q) => $q->where('is_active', true)])
-                ->orderByDesc('tours_count')
-                ->limit(10)
-                ->get();
-        }
 
         $whyBookHeading = Setting::get('homepage_why_book_heading', 'Why thousands book with us.');
         $whyBookCards = HomepageWhyBookCard::query()->orderBy('sort_order')->get();

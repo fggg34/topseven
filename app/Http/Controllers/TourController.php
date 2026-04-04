@@ -69,7 +69,7 @@ class TourController extends Controller
 
         $tours = $query->paginate(12)->withQueryString();
         $categories = TourCategory::orderBy('sort_order')->get();
-        $countries = Country::active()->orderBy('name')->get();
+        $countries = Country::active()->withActiveTours()->orderBy('name')->get();
         $wishlistedIds = auth()->user()?->wishlistTours()->pluck('tours.id')->toArray() ?? [];
 
         $durationOptions = Tour::where('is_active', true)
@@ -117,6 +117,12 @@ class TourController extends Controller
             ? $tour->reviews()->where('user_id', auth()->id())->exists()
             : false;
 
-        return view('pages.tours.show', compact('tour', 'userHasReviewed'));
+        $enquiryDialCountries = Country::query()
+            ->whereNotNull('calling_code')
+            ->whereNotNull('iso_alpha2')
+            ->orderBy('name')
+            ->get(['id', 'name', 'iso_alpha2', 'calling_code']);
+
+        return view('pages.tours.show', compact('tour', 'userHasReviewed', 'enquiryDialCountries'));
     }
 }

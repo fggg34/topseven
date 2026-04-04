@@ -46,6 +46,17 @@ class CountryResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
+                TextInput::make('iso_alpha2')
+                    ->label('ISO country code')
+                    ->maxLength(2)
+                    ->extraInputAttributes(['class' => 'uppercase', 'style' => 'text-transform:uppercase'])
+                    ->unique(ignoreRecord: true)
+                    ->helperText('Two-letter code (e.g. AL, IT). Used for enquiry phone prefixes and data matching.'),
+                TextInput::make('calling_code')
+                    ->label('Calling code')
+                    ->maxLength(8)
+                    ->placeholder('355')
+                    ->helperText('Digits only, no +. Shown on the tour enquiry form for this country.'),
                 TextInput::make('country')
                     ->label('Region / subtitle')
                     ->required()
@@ -53,7 +64,7 @@ class CountryResource extends Resource
                     ->helperText('Shown as a small label under the destination name (e.g. continent or tagline).'),
                 Toggle::make('is_active')
                     ->default(true)
-                    ->helperText('Inactive countries are hidden from the homepage hero search and tour filters.'),
+                    ->helperText('Inactive countries are hidden from public destination pickers, filters, and the countries index (only active destinations with at least one live tour are listed publicly).'),
                 RichEditor::make('description')
                     ->label('Description')
                     ->columnSpanFull(),
@@ -95,6 +106,14 @@ class CountryResource extends Resource
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('iso_alpha2')
+                    ->label('ISO')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('calling_code')
+                    ->label('Dial')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->label('Active'),

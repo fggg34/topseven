@@ -18,6 +18,8 @@ class Country extends Model
     protected $fillable = [
         'name',
         'slug',
+        'iso_alpha2',
+        'calling_code',
         'is_active',
         'country',
         'description',
@@ -38,6 +40,17 @@ class Country extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * Destinations that have at least one active tour (for public listings & search).
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<static>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<static>
+     */
+    public function scopeWithActiveTours($query)
+    {
+        return $query->whereHas('tours', fn ($q) => $q->where('is_active', true));
     }
 
     public function getSlugOptions(): SlugOptions

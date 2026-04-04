@@ -9,7 +9,9 @@ class CountryController extends Controller
     public function index()
     {
         $countries = Country::query()
-            ->withCount(['tours'])
+            ->active()
+            ->withActiveTours()
+            ->withCount(['tours' => fn ($q) => $q->where('is_active', true)])
             ->orderBy('name')
             ->get();
 

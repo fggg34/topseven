@@ -304,43 +304,39 @@
 
                 {{-- Included / Not included --}}
                 @if($tour->included || $tour->not_included)
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    @if($tour->included)
-                    <div class="bg-emerald-50/50 rounded-2xl p-6">
-                        <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center">
-                                <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                            </span>
-                            Included
-                        </h2>
-                        <ul class="space-y-2.5">
-                            @foreach((array) $tour->included as $item)
-                            <li class="flex items-start gap-2.5 text-[15px] text-gray-700">
-                                <i class="fa-solid fa-check text-emerald-500 text-xs mt-1.5"></i>
-                                {{ $item }}
-                            </li>
-                            @endforeach
-                        </ul>
+                <div class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 md:divide-x divide-gray-100">
+                        @if($tour->included)
+                        <div class="p-6 md:p-8">
+                            <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-5">Included</h2>
+                            <ul class="space-y-0 divide-y divide-gray-100">
+                                @foreach((array) $tour->included as $item)
+                                <li class="flex items-start gap-3 py-3 first:pt-0 text-[15px] text-gray-800 leading-snug">
+                                    <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100">
+                                        <i class="fa-solid fa-check text-[10px]" aria-hidden="true"></i>
+                                    </span>
+                                    <span>{{ $item }}</span>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+                        @if($tour->not_included)
+                        <div class="p-6 md:p-8 {{ $tour->included ? '' : 'md:col-span-2' }}">
+                            <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-5">Not included</h2>
+                            <ul class="space-y-0 divide-y divide-gray-100">
+                                @foreach((array) $tour->not_included as $item)
+                                <li class="flex items-start gap-3 py-3 first:pt-0 text-[15px] text-gray-600 leading-snug">
+                                    <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-50 text-gray-400 ring-1 ring-gray-100">
+                                        <i class="fa-solid fa-minus text-[10px]" aria-hidden="true"></i>
+                                    </span>
+                                    <span>{{ $item }}</span>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
-                    @endif
-                    @if($tour->not_included)
-                    <div class="bg-red-50/50 rounded-2xl p-6">
-                        <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-lg bg-red-500 text-white flex items-center justify-center">
-                                <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                            </span>
-                            Not included
-                        </h2>
-                        <ul class="space-y-2.5">
-                            @foreach((array) $tour->not_included as $item)
-                            <li class="flex items-start gap-2.5 text-[15px] text-gray-700">
-                                <i class="fa-solid fa-xmark text-red-400 text-xs mt-1.5"></i>
-                                {{ $item }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                 </div>
                 @endif
 
@@ -538,10 +534,27 @@
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                                    <input type="tel" name="phone" value="{{ old('phone') }}"
-                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
-                                        placeholder="+355 ...">
-                                    @error('phone')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                                    @if(($enquiryDialCountries ?? collect())->isNotEmpty())
+                                        <div class="flex flex-col sm:flex-row gap-2">
+                                            <select name="phone_country"
+                                                class="sm:w-[min(100%,14rem)] shrink-0 rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
+                                                <option value="">Country code</option>
+                                                @foreach($enquiryDialCountries as $dc)
+                                                    <option value="{{ $dc->iso_alpha2 }}" @selected(old('phone_country') === $dc->iso_alpha2)>{{ $dc->name }} (+{{ $dc->calling_code }})</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="tel" name="phone_national" value="{{ old('phone_national') }}" inputmode="numeric" autocomplete="tel-national"
+                                                class="min-w-0 flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                                placeholder="National number">
+                                        </div>
+                                        @error('phone_country')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                                        @error('phone_national')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                                    @else
+                                        <input type="tel" name="phone" value="{{ old('phone') }}"
+                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                            placeholder="+355 …">
+                                        @error('phone')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                                    @endif
                                 </div>
 
                                 @if($tour->homepage_card_date_from || $tour->homepage_card_date_to)
