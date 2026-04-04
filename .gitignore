@@ -1,3 +1,4 @@
+*.log
 .DS_Store
 /.phpunit.cache
 /node_modules
@@ -28,3 +29,7 @@ Archive.zip
 
 # Optional: exclude from commits (remove this line if you want to commit the command)
 /app/Console/Commands/AddAdminUser.php
+
+# Laravel runtime (never commit — causes merge noise and pull conflicts)
+/storage/framework/views/*
+/storage/logs/*.log
