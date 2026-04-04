@@ -43,13 +43,62 @@
 >
     <nav class="w-full px-4 sm:px-6 lg:px-[80px] pt-5 pb-4">
         <div class="flex items-center justify-between">
-            {{-- Left: nav links --}}
-            <nav class="hidden md:flex items-center gap-8 text-sm lg:text-base font-medium tracking-wide">
+            {{-- Left: nav links (dropdowns match hero destination panel: white panel, shadow, lime active row) --}}
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-sm lg:text-base font-medium tracking-wide">
                 @foreach($navItems as $item)
-                    <a href="{{ $resolveUrl(($item['type'] ?? 'link') === 'dropdown' ? (($item['children'][0]['url'] ?? '#')) : ($item['url'] ?? '#')) }}"
-                       class="{{ $headerOverlay ? 'text-white/85 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors">
-                        {{ $item['label'] ?? '' }}
-                    </a>
+                    @php
+                        $isDropdown = ($item['type'] ?? 'link') === 'dropdown' && ! empty($item['children'] ?? []);
+                    @endphp
+                    @if($isDropdown)
+                        <div class="relative" x-data="{ open: false }" @keydown.escape.window="open = false">
+                            <button type="button"
+                                    id="nav-menu-trigger-{{ $loop->index }}"
+                                    @click="open = !open"
+                                    :aria-expanded="open"
+                                    aria-haspopup="true"
+                                    aria-controls="nav-menu-panel-{{ $loop->index }}"
+                                    class="inline-flex items-center gap-1.5 {{ $headerOverlay ? 'text-white/85 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors py-1">
+                                <span>{{ $item['label'] ?? '' }}</span>
+                                <svg class="w-4 h-4 opacity-70 flex-shrink-0 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div id="nav-menu-panel-{{ $loop->index }}"
+                                 x-show="open"
+                                 x-cloak
+                                 x-transition:enter="transition ease-out duration-150"
+                                 x-transition:enter-start="opacity-0 -translate-y-1"
+                                 x-transition:enter-end="opacity-100 translate-y-0"
+                                 x-transition:leave="transition ease-in duration-100"
+                                 x-transition:leave-start="opacity-100 translate-y-0"
+                                 x-transition:leave-end="opacity-0 -translate-y-1"
+                                 @click.outside="open = false"
+                                 class="absolute left-0 top-full mt-2 z-[60] min-w-[240px] max-w-[min(100vw-2rem,320px)] bg-white rounded-xl shadow-xl border border-gray-200 py-1.5"
+                                 style="display: none;">
+                                <div class="max-h-64 overflow-y-auto">
+                                    @foreach($item['children'] as $child)
+                                        @php
+                                            $childHref = $resolveUrl($child['url'] ?? '');
+                                            $childPath = parse_url($childHref, PHP_URL_PATH);
+                                            $childPathNorm = $childPath === null || $childPath === '' ? '/' : '/'.ltrim($childPath, '/');
+                                            $reqPath = '/'.ltrim(request()->path(), '/');
+                                            $navChildActive = rtrim($childPathNorm, '/') === rtrim($reqPath, '/') || ($childPathNorm !== '/' && request()->is(trim($childPathNorm, '/')));
+                                        @endphp
+                                        <a href="{{ $childHref }}"
+                                           @click="open = false"
+                                           class="flex items-center px-4 py-2.5 text-sm transition-colors {{ $navChildActive ? 'bg-lime-50 text-lime-700 font-medium' : 'text-gray-700 hover:bg-gray-50' }}">
+                                            {{ $child['label'] ?? '' }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <a href="{{ $resolveUrl($item['url'] ?? '#') }}"
+                           class="{{ $headerOverlay ? 'text-white/85 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors py-1">
+                            {{ $item['label'] ?? '' }}
+                        </a>
+                    @endif
                 @endforeach
             </nav>
 
@@ -128,9 +177,14 @@
         <div class="flex-1 overflow-y-auto py-4">
             @foreach($navItems as $item)
                 @if(($item['type'] ?? 'link') === 'dropdown' && !empty($item['children'] ?? []))
-                    @foreach($item['children'] as $child)
-                        <a href="{{ $resolveUrl($child['url'] ?? '') }}" @click="mobileOpen = false" class="block px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50">{{ $child['label'] ?? '' }}</a>
-                    @endforeach
+                    <div class="mb-1">
+                        <p class="px-5 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">{{ $item['label'] ?? '' }}</p>
+                        <div class="rounded-xl mx-3 border border-gray-100 bg-gray-50/80 overflow-hidden">
+                            @foreach($item['children'] as $child)
+                                <a href="{{ $resolveUrl($child['url'] ?? '') }}" @click="mobileOpen = false" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-white border-b border-gray-100/80 last:border-0">{{ $child['label'] ?? '' }}</a>
+                            @endforeach
+                        </div>
+                    </div>
                 @else
                     <a href="{{ $resolveUrl($item['url'] ?? '') }}" @click="mobileOpen = false" class="block px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50">{{ $item['label'] ?? '' }}</a>
                 @endif
