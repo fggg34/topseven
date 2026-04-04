@@ -11,12 +11,12 @@ class WishlistController extends Controller
     public function store(Tour $tour)
     {
         $tour->wishlistedBy()->syncWithoutDetaching([auth()->id()]);
-        return back()->with('success', 'Added to wishlist.');
+        return back()->with('success', __('Added to wishlist.'));
     }
 
     public function destroy(Tour $tour)
     {
         $tour->wishlistedBy()->detach(auth()->id());
-        return back()->with('success', 'Removed from wishlist.');
+        return back()->with('success', __('Removed from wishlist.'));
     }
 }

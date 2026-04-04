@@ -23,7 +23,7 @@ class ReviewController extends Controller
 
         $existing = Review::where('tour_id', $tour->id)->where('user_id', auth()->id())->first();
         if ($existing) {
-            return back()->with('error', 'You have already reviewed this tour.');
+            return back()->with('error', __('You have already reviewed this tour.'));
         }
 
         Review::create([
@@ -35,6 +35,6 @@ class ReviewController extends Controller
             'is_approved' => false,
         ]);
 
-        return back()->with('success', 'Thank you! Your review has been submitted and will appear after approval.');
+        return back()->with('success', __('Thank you! Your review has been submitted and will appear after approval.'));
     }
 }

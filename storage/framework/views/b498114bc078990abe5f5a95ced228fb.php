@@ -1,5 +1,5 @@
-<?php $__env->startSection('title', \App\Models\Setting::get('homepage_seo_title') ?: (\App\Models\Setting::get('site_name', config('app.name')) . ' - ' . \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))); ?>
-<?php $__env->startSection('description', \App\Models\Setting::get('homepage_seo_description') ?: \App\Models\Setting::get('hero_subtitle', 'Explore stunning destinations with expert guides.')); ?>
+<?php $__env->startSection('title', \App\Models\Setting::get('homepage_seo_title') ?: (\App\Models\Setting::get('site_name', config('app.name')) . ' - ' . \App\Models\Setting::get('site_tagline', __('Discover your next adventure')))); ?>
+<?php $__env->startSection('description', \App\Models\Setting::get('homepage_seo_description') ?: \App\Models\Setting::get('hero_subtitle', __('Explore stunning destinations with expert guides.'))); ?>
 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(\App\Models\Setting::get('homepage_seo_og_image')): ?><?php $__env->startSection('og_image', \App\Models\Setting::get('homepage_seo_og_image')); ?><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
 <?php $__env->startSection('hero'); ?>
@@ -8,12 +8,12 @@
         ? $heroSlides
         : collect([
             (object) [
-                'title' => "Europe's Best Travel Packages & Things to Do",
-                'subtitle' => 'Book unforgettable trips with local experts.',
+                'title' => __("Europe's Best Travel Packages & Things to Do"),
+                'subtitle' => __('Book unforgettable trips with local experts.'),
                 'banner_type' => 'image',
                 'banner_image_url' => 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920',
                 'banner_video_url' => null,
-                'cta_text' => 'Book now',
+                'cta_text' => __('Book now'),
                 'cta_url' => route('tours.index'),
             ],
         ]);
@@ -184,15 +184,16 @@
 <section class="home-testimonials-section px-4 sm:px-6 lg:px-[80px] pt-16 pb-16">
     <div class="mx-auto w-full max-w-[1400px]">
         <h2 class="text-center text-3xl md:text-[40px] font-semibold text-[#2f2419] tracking-tight mb-7">
-            What do Top 7 Agency travellers say
+            <?php echo e(__('What do Top 7 Agency travellers say')); ?>
+
         </h2>
 
         <div class="relative overflow-visible">
 
-            <button type="button" class="home-testimonials-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Previous review">
+            <button type="button" class="home-testimonials-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="<?php echo e(__('Previous review')); ?>">
                 <i class="fa-solid fa-arrow-left text-sm"></i>
             </button>
-            <button type="button" class="home-testimonials-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="Next review">
+            <button type="button" class="home-testimonials-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white text-gray-500 border border-gray-100 shadow-[0_10px_22px_rgba(15,23,42,0.12)] flex items-center justify-center hover:text-gray-700 transition-colors" aria-label="<?php echo e(__('Next review')); ?>">
                 <i class="fa-solid fa-arrow-right text-sm"></i>
             </button>
 
@@ -204,7 +205,7 @@
                     <?php
                         $name = $review->display_name;
                         $safeComment = trim((string) $review->comment);
-                        $comment = $safeComment !== '' ? $safeComment : 'Great service, smooth planning, and an unforgettable trip from start to finish.';
+                        $comment = $safeComment !== '' ? $safeComment : __('Great service, smooth planning, and an unforgettable trip from start to finish.');
                         $title = trim((string) ($review->title ?? '')) ?: $comment;
                     ?>
                     <div class="swiper-slide">

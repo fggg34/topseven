@@ -1,6 +1,6 @@
 <x-guest-layout>
     <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#111827] tracking-tight leading-tight mb-2">{{ __('Log in') }}</h1>
-    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">Welcome back — access your enquiries and saved travel packages.</p>
+    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">{{ __('Welcome back — access your enquiries and saved travel packages.') }}</p>
 
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

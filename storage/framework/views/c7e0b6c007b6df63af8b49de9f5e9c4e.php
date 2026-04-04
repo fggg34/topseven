@@ -11,7 +11,7 @@
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
     <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#111827] tracking-tight leading-tight mb-2"><?php echo e(__('Register')); ?></h1>
-    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">Create an account to save travel packages and track your package enquiries.</p>
+    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed"><?php echo e(__('Create an account to save travel packages and track your package enquiries.')); ?></p>
 
     <form method="POST" action="<?php echo e(route('register')); ?>" class="space-y-5">
         <?php echo csrf_field(); ?>

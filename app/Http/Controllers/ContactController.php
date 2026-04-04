@@ -37,6 +37,6 @@ class ContactController extends Controller
             throw ValidationException::withMessages(['email' => ['Unable to send message. Please try again or email us directly.']]);
         }
 
-        return back()->with('success', 'Thank you! Your message has been sent.');
+        return back()->with('success', __('Thank you! Your message has been sent.'));
     }
 }

@@ -11,7 +11,7 @@
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
     <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#111827] tracking-tight leading-tight mb-2"><?php echo e(__('Log in')); ?></h1>
-    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">Welcome back — access your enquiries and saved travel packages.</p>
+    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed"><?php echo e(__('Welcome back — access your enquiries and saved travel packages.')); ?></p>
 
     <?php if (isset($component)) { $__componentOriginal7c1bf3a9346f208f66ee83b06b607fb5 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal7c1bf3a9346f208f66ee83b06b607fb5 = $attributes; } ?>

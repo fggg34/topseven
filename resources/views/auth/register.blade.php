@@ -1,6 +1,6 @@
 <x-guest-layout>
     <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#111827] tracking-tight leading-tight mb-2">{{ __('Register') }}</h1>
-    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">Create an account to save travel packages and track your package enquiries.</p>
+    <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">{{ __('Create an account to save travel packages and track your package enquiries.') }}</p>
 
     <form method="POST" action="{{ route('register') }}" class="space-y-5">
         @csrf

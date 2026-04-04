@@ -31,14 +31,14 @@
                 <form method="POST" action="{{ route('wishlist.destroy', $tour) }}" class="absolute top-4 right-4 z-20" onclick="event.preventDefault(); event.stopPropagation(); this.submit();">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-rose-400 hover:bg-white/30 transition-colors" aria-label="Remove from wishlist">
+                    <button type="submit" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-rose-400 hover:bg-white/30 transition-colors" aria-label="{{ __('Remove from wishlist') }}">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M6.25 3.333a4.583 4.583 0 0 0-4.583 4.584c0 4.583 5.416 8.75 8.333 9.716 2.917-.966 8.333-5.133 8.333-9.716A4.583 4.583 0 0 0 10 5.28a4.578 4.578 0 0 0-3.75-1.948Z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </button>
                 </form>
             @else
                 <form method="POST" action="{{ route('wishlist.store', $tour) }}" class="absolute top-4 right-4 z-20" onclick="event.preventDefault(); event.stopPropagation(); this.submit();">
                     @csrf
-                    <button type="submit" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:text-rose-400 hover:bg-white/30 transition-colors" aria-label="Add to wishlist">
+                    <button type="submit" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:text-rose-400 hover:bg-white/30 transition-colors" aria-label="{{ __('Add to wishlist') }}">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M6.25 3.333a4.583 4.583 0 0 0-4.583 4.584c0 4.583 5.416 8.75 8.333 9.716 2.917-.966 8.333-5.133 8.333-9.716A4.583 4.583 0 0 0 10 5.28a4.578 4.578 0 0 0-3.75-1.948Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </button>
                 </form>
@@ -51,7 +51,7 @@
             </h3>
             <div class="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
                 <span class="text-[15px] sm:text-base font-bold text-white tabular-nums tracking-tight">
-                    From {{ $currency }}{{ number_format($sale, $decimals) }}
+                    {{ __('From') }} {{ $currency }}{{ number_format($sale, $decimals) }}
                 </span>
                 @if($hasCompare)
                     <span class="text-sm sm:text-[15px] font-normal text-white/75 line-through tabular-nums">
@@ -68,10 +68,10 @@
     $reviewCount = $tour->approvedReviews->count();
 
     $durationLabel = $tour->duration_days
-        ? $tour->duration_days . ' day' . ($tour->duration_days > 1 ? 's' : '')
+        ? $tour->duration_days . ' ' . ($tour->duration_days === 1 ? __('day') : __('days'))
         : ($tour->duration_hours
-            ? ($tour->duration_hours >= 1 ? floor($tour->duration_hours) . ' h' : '') .
-              ($tour->duration_hours != floor($tour->duration_hours) ? ' ' . round(($tour->duration_hours - floor($tour->duration_hours)) * 60) . ' min' : '')
+            ? ($tour->duration_hours >= 1 ? floor($tour->duration_hours) . ' ' . __('h') : '') .
+              ($tour->duration_hours != floor($tour->duration_hours) ? ' ' . round(($tour->duration_hours - floor($tour->duration_hours)) * 60) . ' ' . __('min') : '')
             : null);
 
     $hasDiscount = $tour->base_price && $tour->price && $tour->base_price > $tour->price;
@@ -92,24 +92,24 @@
             @if($tour->season)
                 <div class="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
                     @if($tour->is_featured)
-                        <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold bg-brand-btn text-white rounded-md backdrop-blur-sm">Best Seller</span>
+                        <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold bg-brand-btn text-white rounded-md backdrop-blur-sm">{{ __('Best Seller') }}</span>
                     @endif
                     @php
-                        $seasonLabels = ['summer' => 'Summer', 'winter' => 'Winter', 'all_season' => 'All Season'];
+                        $seasonLabels = ['summer' => __('Summer'), 'winter' => __('Winter'), 'all_season' => __('All Season')];
                         $seasonColors = ['summer' => 'bg-amber-500/90', 'winter' => 'bg-sky-500/90', 'all_season' => 'bg-emerald-600/90'];
                     @endphp
                     <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold {{ $seasonColors[$tour->season] ?? 'bg-gray-700/90' }} text-white rounded-md backdrop-blur-sm">{{ $seasonLabels[$tour->season] ?? $tour->season }}</span>
                 </div>
             @elseif($tour->is_featured)
                 <div class="absolute bottom-3 left-3">
-                    <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold bg-brand-btn text-white rounded-md backdrop-blur-sm">Best Seller</span>
+                    <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold bg-brand-btn text-white rounded-md backdrop-blur-sm">{{ __('Best Seller') }}</span>
                 </div>
             @endif
 
             {{-- Discount badge --}}
             @if($hasDiscount && $discountPercent >= 5)
                 <div class="absolute top-3 left-3">
-                    <span class="inline-flex items-center px-2 py-0.5 text-[11px] font-bold bg-red-500 text-white rounded">{{ $discountPercent }}% Off</span>
+                    <span class="inline-flex items-center px-2 py-0.5 text-[11px] font-bold bg-red-500 text-white rounded">{{ $discountPercent }}% {{ __('Off') }}</span>
                 </div>
             @endif
 
@@ -119,14 +119,14 @@
                     <form method="POST" action="{{ route('wishlist.destroy', $tour) }}" class="absolute top-3 right-3 z-10" onclick="event.preventDefault(); event.stopPropagation(); this.submit();">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-rose-500 hover:bg-white/30 transition-colors" aria-label="Remove from wishlist">
+                        <button type="submit" class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-rose-500 hover:bg-white/30 transition-colors" aria-label="{{ __('Remove from wishlist') }}">
                             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M6.25 3.333a4.583 4.583 0 0 0-4.583 4.584c0 4.583 5.416 8.75 8.333 9.716 2.917-.966 8.333-5.133 8.333-9.716A4.583 4.583 0 0 0 10 5.28a4.578 4.578 0 0 0-3.75-1.948Z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
                     </form>
                 @else
                     <form method="POST" action="{{ route('wishlist.store', $tour) }}" class="absolute top-3 right-3 z-10" onclick="event.preventDefault(); event.stopPropagation(); this.submit();">
                         @csrf
-                        <button type="submit" class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:text-rose-500 hover:bg-white/30 transition-colors" aria-label="Add to wishlist">
+                        <button type="submit" class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:text-rose-500 hover:bg-white/30 transition-colors" aria-label="{{ __('Add to wishlist') }}">
                             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M6.25 3.333a4.583 4.583 0 0 0-4.583 4.584c0 4.583 5.416 8.75 8.333 9.716 2.917-.966 8.333-5.133 8.333-9.716A4.583 4.583 0 0 0 10 5.28a4.578 4.578 0 0 0-3.75-1.948Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
                     </form>
@@ -171,7 +171,7 @@
                 </div>
 
                 <div class="flex items-baseline gap-1.5 text-right">
-                    <span class="text-xs text-gray-400">From</span>
+                    <span class="text-xs text-gray-400">{{ __('From') }}</span>
                     @if($hasDiscount)
                         <span class="text-xs text-gray-400 line-through">{{ $currency }}{{ number_format($tour->base_price, 0) }}</span>
                     @endif

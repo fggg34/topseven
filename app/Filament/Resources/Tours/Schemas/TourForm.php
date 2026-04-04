@@ -181,9 +181,6 @@ class TourForm
                                         TagsInput::make('languages')->placeholder('Add language'),
                                     ])
                                     ->columns(2),
-                            ]),
-                        Tab::make('Availability')
-                            ->schema([
                                 Section::make('Availability window')
                                     ->description('Date range when this tour can be booked. Leave empty for no limit.')
                                     ->schema([
@@ -214,6 +211,21 @@ class TourForm
                                             ->placeholder('Add date (YYYY-MM-DD)')
                                             ->helperText('Dates when tour is not available (e.g. 2025-12-25)'),
                                     ]),
+                                Section::make('Day-by-day itinerary')
+                                    ->schema([
+                                        Repeater::make('itineraries')
+                                            ->relationship()
+                                            ->schema([
+                                                TextInput::make('day')->numeric()->nullable()->suffix('Day'),
+                                                TextInput::make('title')->required(),
+                                                RichEditor::make('description')->label('Description'),
+                                                TextInput::make('sort_order')->numeric()->default(0),
+                                            ])
+                                            ->defaultItems(0)
+                                            ->columnSpanFull()
+                                            ->reorderable()
+                                            ->reorderableWithButtons(),
+                                    ]),
                             ]),
                         Tab::make('Included / Excluded')
                             ->schema([
@@ -229,9 +241,6 @@ class TourForm
                                             ->placeholder('Add item')
                                             ->splitKeys(['Tab', 'Enter']),
                                     ]),
-                            ]),
-                        Tab::make('Extras')
-                            ->schema([
                                 Section::make('What to bring')
                                     ->description('Items guests should bring on the tour. Add multiple options.')
                                     ->schema([
@@ -285,24 +294,6 @@ class TourForm
                                             ->reorderableWithButtons()
                                             ->columnSpanFull()
                                             ->helperText('Each item is a key experience. Drag to reorder.'),
-                                    ]),
-                            ]),
-                        Tab::make('Itinerary')
-                            ->schema([
-                                Section::make('Day-by-day itinerary')
-                                    ->schema([
-                                        Repeater::make('itineraries')
-                                            ->relationship()
-                                            ->schema([
-                                                TextInput::make('day')->numeric()->nullable()->suffix('Day'),
-                                                TextInput::make('title')->required(),
-                                                RichEditor::make('description')->label('Description'),
-                                                TextInput::make('sort_order')->numeric()->default(0),
-                                            ])
-                                            ->defaultItems(0)
-                                            ->columnSpanFull()
-                                            ->reorderable()
-                                            ->reorderableWithButtons(),
                                     ]),
                             ]),
                         Tab::make('SEO')

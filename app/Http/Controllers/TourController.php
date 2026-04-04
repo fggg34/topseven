@@ -77,10 +77,10 @@ class TourController extends Controller
             ->get()
             ->map(function ($t) {
                 if ($t->duration_days) {
-                    return ['value' => $t->duration_days, 'label' => $t->duration_days.' '.($t->duration_days === 1 ? 'day' : 'days'), 'sort' => $t->duration_days * 24];
+                    return ['value' => $t->duration_days, 'label' => $t->duration_days.' '.($t->duration_days === 1 ? __('day') : __('days')), 'sort' => $t->duration_days * 24];
                 }
                 if ($t->duration_hours) {
-                    return ['value' => $t->duration_hours, 'label' => $t->duration_hours.' '.($t->duration_hours === 1 ? 'hour' : 'hours'), 'sort' => $t->duration_hours];
+                    return ['value' => $t->duration_hours, 'label' => $t->duration_hours.' '.($t->duration_hours === 1 ? __('hour') : __('hours')), 'sort' => $t->duration_hours];
                 }
 
                 return null;
@@ -96,9 +96,9 @@ class TourController extends Controller
         ];
 
         $seasonOptions = collect([
-            ['value' => 'summer', 'label' => 'Summer'],
-            ['value' => 'winter', 'label' => 'Winter'],
-            ['value' => 'all_season', 'label' => 'All Season'],
+            ['value' => 'summer', 'label' => __('Summer')],
+            ['value' => 'winter', 'label' => __('Winter')],
+            ['value' => 'all_season', 'label' => __('All Season')],
         ]);
 
         return view('pages.tours.index', compact('tours', 'categories', 'countries', 'wishlistedIds', 'durationOptions', 'priceRange', 'seasonOptions'));

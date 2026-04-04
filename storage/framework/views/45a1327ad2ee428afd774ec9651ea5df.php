@@ -10,19 +10,19 @@
     $navItems = is_string($navItems) ? (json_decode($navItems, true) ?: []) : $navItems;
     if (empty($navItems)) {
         $navItems = [
-            ['type' => 'dropdown', 'label' => 'Destinations', 'children' => [['label' => 'All Destinations', 'url' => '/countries']]],
-            ['type' => 'dropdown', 'label' => 'Travel Collections', 'children' => [
-                ['label' => 'All Travel Packages', 'url' => '/tours'],
-                ['label' => 'Popular Travel Packages', 'url' => '/tours?sort=popular'],
-                ['label' => 'Travel Stories', 'url' => '/blog'],
+            ['type' => 'dropdown', 'label' => __('Destinations'), 'children' => [['label' => __('All Destinations'), 'url' => '/countries']]],
+            ['type' => 'dropdown', 'label' => __('Travel Collections'), 'children' => [
+                ['label' => __('All Travel Packages'), 'url' => '/tours'],
+                ['label' => __('Popular Travel Packages'), 'url' => '/tours?sort=popular'],
+                ['label' => __('Travel Stories'), 'url' => '/blog'],
             ]],
-            ['type' => 'dropdown', 'label' => 'About', 'children' => [
-                ['label' => 'About Us', 'url' => '/about'],
-                ['label' => 'Blog', 'url' => '/blog'],
-                ['label' => 'Contact', 'url' => '/contact'],
+            ['type' => 'dropdown', 'label' => __('About'), 'children' => [
+                ['label' => __('About Us'), 'url' => '/about'],
+                ['label' => __('Blog'), 'url' => '/blog'],
+                ['label' => __('Contact'), 'url' => '/contact'],
             ]],
-            ['type' => 'link', 'label' => 'Create Your Trip', 'url' => '/tours'],
-            ['type' => 'link', 'label' => 'My Trips', 'url' => '/dashboard'],
+            ['type' => 'link', 'label' => __('Create Your Trip'), 'url' => '/tours'],
+            ['type' => 'link', 'label' => __('My Trips'), 'url' => '/dashboard'],
         ];
     }
     $resolveUrl = fn ($u) => (str_starts_with($u ?? '', 'http') ? $u : url($u ?? '#'));
@@ -118,7 +118,7 @@
             <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm lg:text-base font-medium">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($bookPhone): ?>
                     <a href="tel:<?php echo e($bookPhoneTel); ?>" class="<?php echo e($headerOverlay ? 'text-white/85 hover:text-white' : 'text-gray-700 hover:text-lime-700'); ?> transition-colors">
-                        Book now: <?php echo e($bookPhone); ?>
+                        <?php echo e(__('Book now: ')); ?><?php echo e($bookPhone); ?>
 
                     </a>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -127,14 +127,14 @@
                         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($facebookUrl): ?>
                             <a href="<?php echo e($facebookUrl); ?>" target="_blank" rel="noopener noreferrer"
                                class="<?php echo e($headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700'); ?> transition-colors"
-                               aria-label="Facebook">
+                               aria-label="<?php echo e(__('Facebook')); ?>">
                                 <i class="fa-brands fa-facebook-f text-lg lg:text-xl"></i>
                             </a>
                         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($instagramUrl): ?>
                             <a href="<?php echo e($instagramUrl); ?>" target="_blank" rel="noopener noreferrer"
                                class="<?php echo e($headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700'); ?> transition-colors"
-                               aria-label="Instagram">
+                               aria-label="<?php echo e(__('Instagram')); ?>">
                                 <i class="fa-brands fa-instagram text-xl lg:text-2xl"></i>
                             </a>
                         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -143,7 +143,7 @@
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                     <a href="<?php echo e(route('dashboard')); ?>"
                        class="<?php echo e($headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700'); ?> transition-colors inline-flex"
-                       title="My account" aria-label="My account">
+                       title="<?php echo e(__('My account')); ?>" aria-label="<?php echo e(__('My account')); ?>">
                         <?php if (isset($component)) { $__componentOriginal97cd70b27ebbfc72f0446b75665d1c91 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal97cd70b27ebbfc72f0446b75665d1c91 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.icons.user-circled','data' => ['class' => 'w-6 h-6 lg:w-[26px] lg:h-[26px] shrink-0']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -170,7 +170,7 @@
                 <?php else: ?>
                     <a href="<?php echo e(route('login')); ?>"
                        class="<?php echo e($headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700'); ?> transition-colors"
-                       title="Log in" aria-label="Log in">
+                       title="<?php echo e(__('Log in')); ?>" aria-label="<?php echo e(__('Log in')); ?>">
                         <i class="fa-regular fa-circle-user text-2xl lg:text-[26px] leading-none"></i>
                     </a>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -193,7 +193,7 @@
          x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
          class="md:hidden fixed top-0 right-0 bottom-0 z-[9999] w-72 max-w-[85vw] bg-white shadow-xl flex flex-col text-gray-800">
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-            <span class="text-sm font-medium text-gray-500">Menu</span>
+            <span class="text-sm font-medium text-gray-500"><?php echo e(__('Menu')); ?></span>
             <button @click="mobileOpen = false" type="button" class="p-2 -mr-2 text-gray-400 hover:text-gray-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -218,12 +218,12 @@
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($facebookUrl || $instagramUrl): ?>
                 <div class="flex items-center gap-5 px-5 pb-3">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($facebookUrl): ?>
-                        <a href="<?php echo e($facebookUrl); ?>" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="Facebook">
+                        <a href="<?php echo e($facebookUrl); ?>" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="<?php echo e(__('Facebook')); ?>">
                             <i class="fa-brands fa-facebook-f text-xl"></i>
                         </a>
                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($instagramUrl): ?>
-                        <a href="<?php echo e($instagramUrl); ?>" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="Instagram">
+                        <a href="<?php echo e($instagramUrl); ?>" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="<?php echo e(__('Instagram')); ?>">
                             <i class="fa-brands fa-instagram text-2xl"></i>
                         </a>
                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -253,21 +253,22 @@
 <?php if (isset($__componentOriginal97cd70b27ebbfc72f0446b75665d1c91)): ?>
 <?php $component = $__componentOriginal97cd70b27ebbfc72f0446b75665d1c91; ?>
 <?php unset($__componentOriginal97cd70b27ebbfc72f0446b75665d1c91); ?>
-<?php endif; ?> My account
+<?php endif; ?> <?php echo e(__('My account')); ?>
+
                     </a>
                 <?php else: ?>
-                    <a href="<?php echo e(route('login')); ?>" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors">Log in</a>
+                    <a href="<?php echo e(route('login')); ?>" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors"><?php echo e(__('Log in')); ?></a>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('register')): ?>
-                        <a href="<?php echo e(route('register')); ?>" @click="mobileOpen = false" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">Register</a>
+                        <a href="<?php echo e(route('register')); ?>" @click="mobileOpen = false" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors"><?php echo e(__('Register')); ?></a>
                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                 <form method="POST" action="<?php echo e(route('logout')); ?>" class="px-5 pb-2"><?php echo csrf_field(); ?>
-                    <button type="submit" class="text-sm text-gray-500 hover:text-red-600 transition-colors">Log out</button>
+                    <button type="submit" class="text-sm text-gray-500 hover:text-red-600 transition-colors"><?php echo e(__('Log out')); ?></button>
                 </form>
             <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-            <a href="<?php echo e(route('contact')); ?>" @click="mobileOpen = false" class="flex items-center gap-2 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50"><i class="fa-solid fa-envelope text-gray-400 w-5"></i>Contact</a>
+            <a href="<?php echo e(route('contact')); ?>" @click="mobileOpen = false" class="flex items-center gap-2 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50"><i class="fa-solid fa-envelope text-gray-400 w-5"></i><?php echo e(__('Contact')); ?></a>
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($bookPhone): ?>
                 <a href="tel:<?php echo e($bookPhoneTel); ?>" @click="mobileOpen = false" class="flex items-center gap-2 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50"><i class="fa-solid fa-phone text-gray-400 w-5"></i><?php echo e($bookPhone); ?></a>
             <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>

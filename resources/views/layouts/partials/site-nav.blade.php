@@ -10,19 +10,19 @@
     $navItems = is_string($navItems) ? (json_decode($navItems, true) ?: []) : $navItems;
     if (empty($navItems)) {
         $navItems = [
-            ['type' => 'dropdown', 'label' => 'Destinations', 'children' => [['label' => 'All Destinations', 'url' => '/countries']]],
-            ['type' => 'dropdown', 'label' => 'Travel Collections', 'children' => [
-                ['label' => 'All Travel Packages', 'url' => '/tours'],
-                ['label' => 'Popular Travel Packages', 'url' => '/tours?sort=popular'],
-                ['label' => 'Travel Stories', 'url' => '/blog'],
+            ['type' => 'dropdown', 'label' => __('Destinations'), 'children' => [['label' => __('All Destinations'), 'url' => '/countries']]],
+            ['type' => 'dropdown', 'label' => __('Travel Collections'), 'children' => [
+                ['label' => __('All Travel Packages'), 'url' => '/tours'],
+                ['label' => __('Popular Travel Packages'), 'url' => '/tours?sort=popular'],
+                ['label' => __('Travel Stories'), 'url' => '/blog'],
             ]],
-            ['type' => 'dropdown', 'label' => 'About', 'children' => [
-                ['label' => 'About Us', 'url' => '/about'],
-                ['label' => 'Blog', 'url' => '/blog'],
-                ['label' => 'Contact', 'url' => '/contact'],
+            ['type' => 'dropdown', 'label' => __('About'), 'children' => [
+                ['label' => __('About Us'), 'url' => '/about'],
+                ['label' => __('Blog'), 'url' => '/blog'],
+                ['label' => __('Contact'), 'url' => '/contact'],
             ]],
-            ['type' => 'link', 'label' => 'Create Your Trip', 'url' => '/tours'],
-            ['type' => 'link', 'label' => 'My Trips', 'url' => '/dashboard'],
+            ['type' => 'link', 'label' => __('Create Your Trip'), 'url' => '/tours'],
+            ['type' => 'link', 'label' => __('My Trips'), 'url' => '/dashboard'],
         ];
     }
     $resolveUrl = fn ($u) => (str_starts_with($u ?? '', 'http') ? $u : url($u ?? '#'));
@@ -116,7 +116,7 @@
             <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm lg:text-base font-medium">
                 @if($bookPhone)
                     <a href="tel:{{ $bookPhoneTel }}" class="{{ $headerOverlay ? 'text-white/85 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors">
-                        Book now: {{ $bookPhone }}
+                        {{ __('Book now: ') }}{{ $bookPhone }}
                     </a>
                 @endif
                 @if($facebookUrl || $instagramUrl)
@@ -124,14 +124,14 @@
                         @if($facebookUrl)
                             <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer"
                                class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors"
-                               aria-label="Facebook">
+                               aria-label="{{ __('Facebook') }}">
                                 <i class="fa-brands fa-facebook-f text-lg lg:text-xl"></i>
                             </a>
                         @endif
                         @if($instagramUrl)
                             <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer"
                                class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors"
-                               aria-label="Instagram">
+                               aria-label="{{ __('Instagram') }}">
                                 <i class="fa-brands fa-instagram text-xl lg:text-2xl"></i>
                             </a>
                         @endif
@@ -140,13 +140,13 @@
                 @auth
                     <a href="{{ route('dashboard') }}"
                        class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors inline-flex"
-                       title="My account" aria-label="My account">
+                       title="{{ __('My account') }}" aria-label="{{ __('My account') }}">
                         <x-icons.user-circled class="w-6 h-6 lg:w-[26px] lg:h-[26px] shrink-0" />
                     </a>
                 @else
                     <a href="{{ route('login') }}"
                        class="{{ $headerOverlay ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-lime-700' }} transition-colors"
-                       title="Log in" aria-label="Log in">
+                       title="{{ __('Log in') }}" aria-label="{{ __('Log in') }}">
                         <i class="fa-regular fa-circle-user text-2xl lg:text-[26px] leading-none"></i>
                     </a>
                 @endauth
@@ -169,7 +169,7 @@
          x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
          class="md:hidden fixed top-0 right-0 bottom-0 z-[9999] w-72 max-w-[85vw] bg-white shadow-xl flex flex-col text-gray-800">
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-            <span class="text-sm font-medium text-gray-500">Menu</span>
+            <span class="text-sm font-medium text-gray-500">{{ __('Menu') }}</span>
             <button @click="mobileOpen = false" type="button" class="p-2 -mr-2 text-gray-400 hover:text-gray-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -194,12 +194,12 @@
             @if($facebookUrl || $instagramUrl)
                 <div class="flex items-center gap-5 px-5 pb-3">
                     @if($facebookUrl)
-                        <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="Facebook">
+                        <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="{{ __('Facebook') }}">
                             <i class="fa-brands fa-facebook-f text-xl"></i>
                         </a>
                     @endif
                     @if($instagramUrl)
-                        <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="Instagram">
+                        <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="text-gray-700 hover:text-lime-700 transition-colors" aria-label="{{ __('Instagram') }}">
                             <i class="fa-brands fa-instagram text-2xl"></i>
                         </a>
                     @endif
@@ -208,21 +208,21 @@
             <div class="px-5 pb-3 flex items-center gap-4 border-b border-gray-100">
                 @auth
                     <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors flex items-center gap-2">
-                        <x-icons.user-circled class="w-[1.125rem] h-[1.125rem] shrink-0 text-gray-500" /> My account
+                        <x-icons.user-circled class="w-[1.125rem] h-[1.125rem] shrink-0 text-gray-500" /> {{ __('My account') }}
                     </a>
                 @else
-                    <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors">Log in</a>
+                    <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-sm font-medium text-gray-800 hover:text-lime-700 transition-colors">{{ __('Log in') }}</a>
                     @if(Route::has('register'))
-                        <a href="{{ route('register') }}" @click="mobileOpen = false" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">Register</a>
+                        <a href="{{ route('register') }}" @click="mobileOpen = false" class="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">{{ __('Register') }}</a>
                     @endif
                 @endauth
             </div>
             @auth
                 <form method="POST" action="{{ route('logout') }}" class="px-5 pb-2">@csrf
-                    <button type="submit" class="text-sm text-gray-500 hover:text-red-600 transition-colors">Log out</button>
+                    <button type="submit" class="text-sm text-gray-500 hover:text-red-600 transition-colors">{{ __('Log out') }}</button>
                 </form>
             @endauth
-            <a href="{{ route('contact') }}" @click="mobileOpen = false" class="flex items-center gap-2 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50"><i class="fa-solid fa-envelope text-gray-400 w-5"></i>Contact</a>
+            <a href="{{ route('contact') }}" @click="mobileOpen = false" class="flex items-center gap-2 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50"><i class="fa-solid fa-envelope text-gray-400 w-5"></i>{{ __('Contact') }}</a>
             @if($bookPhone)
                 <a href="tel:{{ $bookPhoneTel }}" @click="mobileOpen = false" class="flex items-center gap-2 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50"><i class="fa-solid fa-phone text-gray-400 w-5"></i>{{ $bookPhone }}</a>
             @endif

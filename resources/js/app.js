@@ -50,6 +50,7 @@ Alpine.data('heroSearchForm', (config) => ({
   selectedDate: config.initialDate || '',
   countryOpen: false,
   monthOpen: false,
+  ui: config.ui || { destination: 'Destination', when: 'When', locale: 'sq' },
   get selectedCountryName() {
     if (!this.selectedCountry) return '';
     const c = this.countries.find(x => x.slug === this.selectedCountry);
@@ -62,7 +63,8 @@ Alpine.data('heroSearchForm', (config) => ({
     const parts = String(this.selectedDate).split('-');
     if (parts.length >= 2) {
       const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, 1);
-      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      const loc = this.ui.locale || 'sq';
+      return d.toLocaleDateString(loc, { month: 'long', year: 'numeric' });
     }
     return '';
   },

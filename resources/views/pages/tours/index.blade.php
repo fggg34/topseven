@@ -8,31 +8,43 @@
 </style>
 @endpush
 
-@section('title', 'Travel Packages - ' . config('app.name'))
-@section('description', 'Browse our selection of travel packages and book your next adventure.')
+@section('title', __('Travel Packages') . ' - ' . config('app.name'))
+@section('description', __('Browse our selection of travel packages and book your next adventure.'))
 
 @section('content')
+@php
+    $toursFilterLabels = [
+        'destination' => __('Destination'),
+        'duration' => __('Duration'),
+        'sortOptions' => [
+            ['value' => 'popular', 'label' => __('Most Popular')],
+            ['value' => 'newest', 'label' => __('Newest')],
+            ['value' => 'price_low', 'label' => __('Price: Low to High')],
+            ['value' => 'price_high', 'label' => __('Price: High to Low')],
+        ],
+    ];
+@endphp
 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
     <header class="pt-10 pb-8 md:pt-12 md:pb-10">
-        <nav class="text-sm" aria-label="Breadcrumb">
+        <nav class="text-sm" aria-label="{{ __('Breadcrumb') }}">
             <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
-                <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">Home</a></li>
+                <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">{{ __('Home') }}</a></li>
                 <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
-                <li class="text-[#111827] font-medium">Travel Packages</li>
+                <li class="text-[#111827] font-medium">{{ __('Travel Packages') }}</li>
             </ol>
         </nav>
         <div class="mt-6 md:mt-8 max-w-3xl">
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#111827] tracking-tight leading-[1.1]">
-                Explore our travel packages
+                {{ __('Explore our travel packages') }}
             </h1>
             <p class="mt-4 text-base md:text-lg text-[#6a6a6a] leading-relaxed">
-                Handpicked experiences designed to immerse you in culture, nature, and unforgettable moments.
+                {{ __('Handpicked experiences designed to immerse you in culture, nature, and unforgettable moments.') }}
             </p>
             <div class="mt-6 h-1 w-14 rounded-full bg-lime-600" aria-hidden="true"></div>
         </div>
     </header>
 
-    <div class="pb-10 pt-2" x-data="tourFilters()" x-init="init()">
+    <div class="pb-10 pt-2" x-data="tourFilters(@js($toursFilterLabels))" x-init="init()">
 
     <div class="tours-filter-bar flex flex-wrap items-center gap-3 pb-7 border-b border-[#e6e1d8]">
 
@@ -42,7 +54,7 @@
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
                 :class="selectedCountry ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
                 <i class="fa-solid fa-location-dot text-xs"></i>
-                <span x-text="selectedCountry ? (destinations.find(c => c.slug === selectedCountry)?.name || 'Destination') : 'Destination'"></span>
+                <span x-text="selectedCountry ? (destinations.find(c => c.slug === selectedCountry)?.name || labels.destination) : labels.destination"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
             </button>
             <div x-show="openDestination" @click.outside="openDestination = false" x-transition
@@ -50,7 +62,7 @@
                 <button @click="selectedCountry = ''; openDestination = false; applyFilters()"
                     class="w-full text-left px-5 py-2.5 text-sm transition-colors"
                     :class="!selectedCountry ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'">
-                    All destinations
+                    {{ __('All destinations') }}
                 </button>
                 @foreach($countries as $c)
                     <button @click="selectedCountry = '{{ $c->slug }}'; openDestination = false; applyFilters()"
@@ -67,7 +79,7 @@
             <button @click="open = !open" type="button"
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
                 :class="selectedDurations.length > 0 ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
-                <span x-text="selectedDurations.length > 0 ? 'Duration (' + selectedDurations.length + ')' : 'Duration'"></span>
+                <span x-text="selectedDurations.length > 0 ? (labels.duration + ' (' + selectedDurations.length + ')') : labels.duration"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
             </button>
             <div x-show="open" @click.outside="open = false" x-transition
@@ -82,25 +94,25 @@
                     </label>
                 @endforeach
                 @if($durationOptions->isEmpty())
-                    <p class="px-4 py-2.5 text-sm text-[#aaa]">No options available</p>
+                    <p class="px-4 py-2.5 text-sm text-[#aaa]">{{ __('No options available') }}</p>
                 @endif
             </div>
         </div>
 
         @if(request('country') || request()->has('duration'))
-            <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">Clear</a>
+            <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">{{ __('Clear') }}</a>
         @endif
     </div>
 
     <div class="flex items-center justify-between mt-8 mb-8">
         <p class="text-sm text-[#6a6a6a]">
-            <span class="font-semibold text-[#111827]">{{ $tours->total() }}</span> travel packages available
+            <span class="font-semibold text-[#111827]">{{ $tours->total() }}</span> {{ __('travel packages available') }}
         </p>
 
         <div class="relative" x-data="{ open: false }">
             <button @click="open = !open" type="button"
                 class="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d1cdc4] bg-white text-sm text-[#111827] hover:border-[#111827] transition-colors">
-                <span>Sort: <span class="font-semibold" x-text="sortLabel()">Most Popular</span></span>
+                <span>{{ __('Sort: ') }}<span class="font-semibold" x-text="sortLabel()">{{ __('Most Popular') }}</span></span>
                 <i class="fa-solid fa-chevron-down text-[9px] text-[#111827]/50"></i>
             </button>
             <div x-show="open" @click.outside="open = false" x-transition
@@ -128,7 +140,7 @@
             <x-tour-card variant="flash" :tour="$tour" :queryParams="$searchParams" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
         @empty
             <div class="col-span-full text-center py-20">
-                <p class="text-lg text-[#6a6a6a] font-serif">No travel packages found. Try adjusting your filters.</p>
+                <p class="text-lg text-[#6a6a6a] font-serif">{{ __('No travel packages found. Try adjusting your filters.') }}</p>
             </div>
         @endforelse
     </div>
@@ -142,14 +154,19 @@
 
 @push('scripts')
 <script>
-function tourFilters() {
+function tourFilters(labels) {
+    labels = labels || {};
     return {
+        labels: {
+            destination: labels.destination || 'Destination',
+            duration: labels.duration || 'Duration',
+        },
         selectedCountry: '{{ request('country', '') ?: request('city', '') }}',
         openDestination: false,
         destinations: @json($countries->map(fn($c) => ['slug' => $c->slug, 'name' => $c->name])->values()),
         selectedDurations: @json(array_map('strval', (array) request('duration', []))),
         currentSort: '{{ request('sort', 'popular') }}',
-        sortOptions: [
+        sortOptions: labels.sortOptions || [
             { value: 'popular', label: 'Most Popular' },
             { value: 'newest', label: 'Newest' },
             { value: 'price_low', label: 'Price: Low to High' },
@@ -170,7 +187,7 @@ function tourFilters() {
 
         sortLabel() {
             const found = this.sortOptions.find(o => o.value === this.currentSort);
-            return found ? found.label : 'Most Popular';
+            return found ? found.label : (this.sortOptions[0]?.label || '');
         },
 
         applyFilters() {

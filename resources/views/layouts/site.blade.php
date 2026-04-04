@@ -6,14 +6,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('meta')
     <title>@yield('title', config('app.name'))</title>
-    <meta name="description" content="@yield('description', \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))">
+    <meta name="description" content="@yield('description', \App\Models\Setting::get('site_tagline', __('Discover your next adventure')))">
     <link rel="canonical" href="{{ request()->url() }}">
     @php
         $ogImage = trim((string) view()->yieldContent('og_image'));
         $ogImage = $ogImage ?: \App\Models\Setting::get('seo_og_image', '');
         $ogImageUrl = $ogImage ? asset('storage/' . ltrim($ogImage, '/')) : '';
         $ogTitle = strip_tags(trim((string) view()->yieldContent('title', ''))) ?: \App\Models\Setting::get('seo_default_title', \App\Models\Setting::get('site_name', config('app.name')));
-        $ogDescription = strip_tags(trim((string) view()->yieldContent('description', ''))) ?: \App\Models\Setting::get('seo_default_description', \App\Models\Setting::get('site_tagline', 'Discover your next adventure'));
+        $ogDescription = strip_tags(trim((string) view()->yieldContent('description', ''))) ?: \App\Models\Setting::get('seo_default_description', \App\Models\Setting::get('site_tagline', __('Discover your next adventure')));
     @endphp
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ $ogTitle }}">

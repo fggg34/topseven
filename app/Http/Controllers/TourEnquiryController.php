@@ -35,6 +35,6 @@ class TourEnquiryController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        return back()->with('enquiry_success', 'Thank you! Your enquiry has been submitted. We will get back to you shortly.');
+        return back()->with('enquiry_success', __('Thank you! Your enquiry has been submitted. We will get back to you shortly.'));
     }
 }

@@ -10,12 +10,12 @@
     $footerMenu1 = \App\Models\Setting::get('footer_menu_1', '');
     $footerMenu1 = is_string($footerMenu1) ? (json_decode($footerMenu1, true) ?: []) : $footerMenu1;
     if (empty($footerMenu1) || ! isset($footerMenu1['title'])) {
-        $footerMenu1 = ['title' => 'Company', 'items' => []];
+        $footerMenu1 = ['title' => __('Company'), 'items' => []];
     }
     $footerMenu2 = \App\Models\Setting::get('footer_menu_2', '');
     $footerMenu2 = is_string($footerMenu2) ? (json_decode($footerMenu2, true) ?: []) : $footerMenu2;
     if (empty($footerMenu2) || ! isset($footerMenu2['title'])) {
-        $footerMenu2 = ['title' => 'Popular Destinations', 'items' => []];
+        $footerMenu2 = ['title' => __('Popular Destinations'), 'items' => []];
     }
     $resolveUrl = fn ($u) => (str_starts_with($u ?? '', 'http') ? $u : url($u ?? '#'));
 ?>
@@ -27,8 +27,8 @@
                 <div class="hidden lg:block lg:col-span-4 h-full bg-cover bg-center footer-newsletter-image-clip" style="background-image:url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80')"></div>
                 <div class="lg:col-span-4 flex items-center px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
                     <div>
-                        <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]">The latest ideas in luxury travel</h3>
-                        <p class="mt-2 text-sm text-[#555]">Join our weekly travel newsletter</p>
+                        <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]"><?php echo e(__('The latest ideas in luxury travel')); ?></h3>
+                        <p class="mt-2 text-sm text-[#555]"><?php echo e(__('Join our weekly travel newsletter')); ?></p>
                     </div>
                 </div>
                 <div class="lg:col-span-4 px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
@@ -37,8 +37,8 @@
                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     <form method="POST" action="<?php echo e(route('newsletter.subscribe')); ?>" class="space-y-2">
                         <?php echo csrf_field(); ?>
-                        <input type="text" name="full_name" value="<?php echo e(old('full_name')); ?>" placeholder="Full name" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
-                        <input type="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="Email address" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
+                        <input type="text" name="full_name" value="<?php echo e(old('full_name')); ?>" placeholder="<?php echo e(__('Full name')); ?>" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
+                        <input type="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="<?php echo e(__('Email address')); ?>" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
                         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -51,11 +51,12 @@ endif;
 unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                         <label class="flex items-start gap-2 text-[11px] text-[#666] leading-snug">
                             <input type="checkbox" name="opt_in" value="1" checked class="mt-0.5 border-[#cbc4b8]">
-                            <span>I would like to receive weekly travel inspiration and ideas from <?php echo e($siteName); ?>'s newsletter</span>
+                            <span><?php echo e(__('I would like to receive weekly travel inspiration and ideas from the newsletter of :site', ['site' => $siteName])); ?></span>
                         </label>
                         <button type="submit" class="w-full h-10 bg-[#d9c9a8] hover:bg-[#cfbe9a] transition-colors text-[#1f1f1f] text-sm font-semibold inline-flex items-center justify-center gap-2">
                             <i class="fa-solid fa-envelope text-xs"></i>
-                            Subscribe
+                            <?php echo e(__('Subscribe')); ?>
+
                         </button>
                     </form>
                 </div>
@@ -63,8 +64,9 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
         </div>
 
         <div class="mt-5 text-sm text-[#4a4a4a]">
-            Are you a top travel specialist?
-            <a href="<?php echo e(route('contact')); ?>" class="text-[#111827] font-semibold hover:text-[#1f2937] hover:underline">Click here to contact us.</a>
+            <?php echo e(__('Are you a top travel specialist?')); ?>
+
+            <a href="<?php echo e(route('contact')); ?>" class="text-[#111827] font-semibold hover:text-[#1f2937] hover:underline"><?php echo e(__('Click here to contact us.')); ?></a>
         </div>
 
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -91,7 +93,7 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
             </div>
 
             <div>
-                <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3">Connect With Us</h4>
+                <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3"><?php echo e(__('Connect With Us')); ?></h4>
                 <div class="flex items-center gap-2">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($facebookUrl): ?><a href="<?php echo e($facebookUrl); ?>" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-facebook-f text-sm"></i></a><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($instagramUrl): ?><a href="<?php echo e($instagramUrl); ?>" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-instagram text-sm"></i></a><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -120,18 +122,19 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
 
         <div class="mt-8 pt-4 border-t border-[#ded8ce] flex flex-wrap items-center justify-between gap-4 text-[13px]">
             <p class="text-[#6a6a6a]">
-                Copyright &copy; <?php echo e(date('Y')); ?> <?php echo e($siteName); ?>. All rights reserved.
+                &copy; <?php echo e(date('Y')); ?> <?php echo e($siteName); ?>. <?php echo e(__('All rights reserved.')); ?>
+
             </p>
             <div class="flex flex-wrap items-center gap-5 text-[#111827]">
-                <a href="<?php echo e(route('contact')); ?>" class="hover:text-[#1f2937] hover:underline">Privacy Policy</a>
-                <a href="<?php echo e(route('contact')); ?>" class="hover:text-[#1f2937] hover:underline">Terms of Use</a>
-                <a href="<?php echo e(route('contact')); ?>" class="hover:text-[#1f2937] hover:underline">Contact Support</a>
+                <a href="<?php echo e(route('contact')); ?>" class="hover:text-[#1f2937] hover:underline"><?php echo e(__('Privacy Policy')); ?></a>
+                <a href="<?php echo e(route('contact')); ?>" class="hover:text-[#1f2937] hover:underline"><?php echo e(__('Terms of Use')); ?></a>
+                <a href="<?php echo e(route('contact')); ?>" class="hover:text-[#1f2937] hover:underline"><?php echo e(__('Contact Support')); ?></a>
             </div>
         </div>
     </div>
 </footer>
 
-<?php if (! $__env->hasRenderedOnce('0c6f53d7-c55f-4bd8-8ef8-23de3f402a01')): $__env->markAsRenderedOnce('0c6f53d7-c55f-4bd8-8ef8-23de3f402a01'); ?>
+<?php if (! $__env->hasRenderedOnce('7ce1e8b9-ac0a-49e5-a1b4-ab4f07fdcff6')): $__env->markAsRenderedOnce('7ce1e8b9-ac0a-49e5-a1b4-ab4f07fdcff6'); ?>
     <?php $__env->startPush('styles'); ?>
         <style>
             .footer-newsletter-image-clip {
