@@ -107,9 +107,6 @@
                              loading="eager"
                              fetchpriority="high">
                     </a>
-                    <div class="shrink-0 rounded-b-2xl bg-[#F5E14A] px-4 py-3.5 text-center lg:rounded-t-none">
-                        <p class="text-[15px] font-medium leading-snug text-neutral-900 font-sans">{{ $galleryPromo }}</p>
-                    </div>
                 </div>
                 {{-- Right: two stacked images + pill CTA --}}
                 <div class="flex flex-col gap-4 min-h-0 h-full lg:min-h-0">
