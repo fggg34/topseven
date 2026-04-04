@@ -24,7 +24,7 @@
         ],
     ];
 @endphp
-<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="w-full px-4 sm:px-6 lg:px-[80px]">
     <header class="pt-10 pb-8 md:pt-12 md:pb-10">
         <nav class="text-sm" aria-label="{{ __('Breadcrumb') }}">
             <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
