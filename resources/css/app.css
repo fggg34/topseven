@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: theme('fontFamily.serif');
+  }
+}
+
 /* Brand color palette: #78a032, #5a7825, #3c5019, #0f1406 */
 /* Headlines use #0f1406 - override utility classes in main content */
 @media (max-width: 767px) {
