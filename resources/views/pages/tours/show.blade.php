@@ -13,6 +13,41 @@
 <style>
 .prose ul { list-style: disc; padding-left: 17px; }
 .prose ul li { margin-bottom: 10px; }
+/* intl-tel-input: match enquiry card (flags + visible dial prefix) */
+.enquiry-intl-wrap {
+    --iti-border-color: #e5e7eb;
+    width: 100%;
+    display: block;
+}
+.enquiry-intl-wrap .iti__tel-input {
+    width: 100% !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid #e5e7eb !important;
+    background-color: #f9fafb !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    color: #111827 !important;
+}
+.enquiry-intl-wrap .iti__tel-input:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #111827 !important;
+    border-color: transparent !important;
+}
+.enquiry-intl-wrap .iti__selected-country {
+    border-radius: 0.75rem 0 0 0.75rem;
+    background-color: #f3f4f6;
+}
+.enquiry-intl-wrap .iti__selected-dial-code {
+    color: #374151;
+    font-weight: 500;
+}
+.enquiry-intl-wrap .iti__dropdown-content {
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    border: 1px solid #e5e7eb;
+}
 </style>
 @endpush
 
@@ -513,7 +548,10 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('tours.enquiry.store', $tour->slug) }}" method="POST" class="space-y-3.5">
+                            @php
+                                $phoneInitialCountry = strtolower(optional($tour->countries->first())->iso_alpha2 ?? 'gb');
+                            @endphp
+                            <form id="tour-enquiry-form" action="{{ route('tours.enquiry.store', $tour->slug) }}" method="POST" class="space-y-3.5">
                                 @csrf
 
                                 <div>
@@ -534,27 +572,13 @@
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                                    @if(($enquiryDialCountries ?? collect())->isNotEmpty())
-                                        <div class="flex flex-col sm:flex-row gap-2">
-                                            <select name="phone_country"
-                                                class="sm:w-[min(100%,14rem)] shrink-0 rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
-                                                <option value="">Country code</option>
-                                                @foreach($enquiryDialCountries as $dc)
-                                                    <option value="{{ $dc->iso_alpha2 }}" @selected(old('phone_country') === $dc->iso_alpha2)>{{ $dc->name }} (+{{ $dc->calling_code }})</option>
-                                                @endforeach
-                                            </select>
-                                            <input type="tel" name="phone_national" value="{{ old('phone_national') }}" inputmode="numeric" autocomplete="tel-national"
-                                                class="min-w-0 flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
-                                                placeholder="National number">
-                                        </div>
-                                        @error('phone_country')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                                        @error('phone_national')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                                    @else
-                                        <input type="tel" name="phone" value="{{ old('phone') }}"
-                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
-                                            placeholder="+355 …">
-                                        @error('phone')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                                    @endif
+                                    <input type="tel" name="phone" id="enquiry-phone-input" value="{{ old('phone') }}"
+                                        data-initial-country="{{ $phoneInitialCountry }}"
+                                        autocomplete="tel"
+                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                        placeholder="Your phone number">
+                                    <p class="mt-1.5 text-xs text-gray-500">Choose your country flag for the correct prefix. We store your full international number.</p>
+                                    @error('phone')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
 
                                 @if($tour->homepage_card_date_from || $tour->homepage_card_date_to)
@@ -634,5 +658,5 @@
 @endsection
 
 @push('scripts')
-@vite(['resources/js/tour-gallery.js'])
+@vite(['resources/js/tour-gallery.js', 'resources/js/enquiry-intl-tel.js'])
 @endpush

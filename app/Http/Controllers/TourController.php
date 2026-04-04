@@ -117,12 +117,6 @@ class TourController extends Controller
             ? $tour->reviews()->where('user_id', auth()->id())->exists()
             : false;
 
-        $enquiryDialCountries = Country::query()
-            ->whereNotNull('calling_code')
-            ->whereNotNull('iso_alpha2')
-            ->orderBy('name')
-            ->get(['id', 'name', 'iso_alpha2', 'calling_code']);
-
-        return view('pages.tours.show', compact('tour', 'userHasReviewed', 'enquiryDialCountries'));
+        return view('pages.tours.show', compact('tour', 'userHasReviewed'));
     }
 }
