@@ -580,21 +580,6 @@
                                     Send Enquiry
                                 </button>
                             </form>
-
-                            <div class="mt-5 pt-4 border-t border-gray-100 space-y-2.5">
-                                <div class="flex items-center gap-2.5 text-sm text-gray-500">
-                                    <i class="fa-solid fa-shield-halved text-gray-400 text-xs"></i>
-                                    No commitment required
-                                </div>
-                                <div class="flex items-center gap-2.5 text-sm text-gray-500">
-                                    <i class="fa-solid fa-clock text-gray-400 text-xs"></i>
-                                    We respond within 24 hours
-                                </div>
-                                <div class="flex items-center gap-2.5 text-sm text-gray-500">
-                                    <i class="fa-solid fa-user-tie text-gray-400 text-xs"></i>
-                                    Personal travel advisor
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
