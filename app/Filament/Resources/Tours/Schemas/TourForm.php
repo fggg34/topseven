@@ -161,73 +161,13 @@ class TourForm
                                             ->columnSpanFull(),
                                     ]),
                             ]),
-                        Tab::make('Included / Excluded')
+                        Tab::make('Included')
                             ->schema([
                                 Section::make('What\'s included')
                                     ->schema([
                                         TagsInput::make('included')
                                             ->placeholder('Add item (e.g. Guide, Transport)')
                                             ->splitKeys(['Tab', 'Enter']),
-                                    ]),
-                                Section::make('What\'s not included')
-                                    ->schema([
-                                        TagsInput::make('not_included')
-                                            ->placeholder('Add item')
-                                            ->splitKeys(['Tab', 'Enter']),
-                                    ]),
-                                Section::make('What to bring')
-                                    ->description('Items guests should bring on the tour. Add multiple options.')
-                                    ->schema([
-                                        TagsInput::make('what_to_bring')
-                                            ->placeholder('Add item (e.g. Comfortable shoes, Sunscreen)')
-                                            ->splitKeys(['Tab', 'Enter']),
-                                    ]),
-                                Section::make('Important notes')
-                                    ->description('Key information guests should know before booking.')
-                                    ->schema([
-                                        RichEditor::make('important_notes')
-                                            ->label('Important notes')
-                                            ->columnSpanFull()
-                                            ->toolbarButtons(['bold', 'italic', 'bulletList', 'orderedList', 'link']),
-                                    ]),
-                                Section::make('Season & difficulty')
-                                    ->description('When is this tour typically available? Difficulty level for participants.')
-                                    ->schema([
-                                        Select::make('season')
-                                            ->label('Availability (Season)')
-                                            ->options([
-                                                'all_season' => 'All season',
-                                                'summer' => 'Summer',
-                                                'winter' => 'Winter',
-                                            ])
-                                            ->placeholder('Select season')
-                                            ->nullable(),
-                                        Select::make('difficulty')
-                                            ->options([
-                                                'easy' => 'Easy',
-                                                'moderate' => 'Moderate',
-                                                'challenging' => 'Challenging',
-                                                'strenuous' => 'Strenuous',
-                                            ])
-                                            ->placeholder('Select difficulty')
-                                            ->nullable(),
-                                    ])
-                                    ->columns(2),
-                                Section::make('Tour highlights')
-                                    ->description('Key experiences the tour offers. Drag to reorder.')
-                                    ->schema([
-                                        Repeater::make('tour_highlights')
-                                            ->simple(
-                                                TextInput::make('text')
-                                                    ->label('Highlight')
-                                                    ->required()
-                                                    ->placeholder('e.g. Exclusive access to historical sites')
-                                            )
-                                            ->defaultItems(0)
-                                            ->reorderable()
-                                            ->reorderableWithButtons()
-                                            ->columnSpanFull()
-                                            ->helperText('Each item is a key experience. Drag to reorder.'),
                                     ]),
                             ]),
                         Tab::make('SEO')
