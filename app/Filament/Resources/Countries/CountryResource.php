@@ -51,12 +51,12 @@ class CountryResource extends Resource
                     ->maxLength(2)
                     ->extraInputAttributes(['class' => 'uppercase', 'style' => 'text-transform:uppercase'])
                     ->unique(ignoreRecord: true)
-                    ->helperText('Two-letter code (e.g. AL, IT). Used for enquiry phone prefixes and data matching.'),
+                    ->helperText('Two-letter code (e.g. AL, IT). Used for data matching and internal references.'),
                 TextInput::make('calling_code')
                     ->label('Calling code')
                     ->maxLength(8)
                     ->placeholder('355')
-                    ->helperText('Digits only, no +. Shown on the tour enquiry form for this country.'),
+                    ->helperText('Digits only, no +. Optional reference for this destination.'),
                 TextInput::make('country')
                     ->label('Region / subtitle')
                     ->required()

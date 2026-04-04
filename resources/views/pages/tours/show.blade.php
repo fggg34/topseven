@@ -567,9 +567,6 @@
                                 </div>
                             @endif
 
-                            @php
-                                $phoneInitialCountry = strtolower(optional($tour->countries->first())->iso_alpha2 ?? 'gb');
-                            @endphp
                             <form id="tour-enquiry-form" action="{{ route('tours.enquiry.store', $tour->slug) }}" method="POST" class="space-y-3.5">
                                 @csrf
 
@@ -592,11 +589,11 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Phone') }}</label>
                                     <input type="tel" name="phone" id="enquiry-phone-input" value="{{ old('phone') }}"
-                                        data-initial-country="{{ $phoneInitialCountry }}"
+                                        data-initial-country="al"
                                         autocomplete="tel"
                                         class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
                                         placeholder="{{ __('Your phone number') }}">
-                                    <p class="mt-1.5 text-xs text-gray-500">{{ __('Choose your country flag for the correct prefix. We store your full international number.') }}</p>
+                                    <p class="mt-1.5 text-xs text-gray-500">{{ __('Default +355 (Albania). You can change the flag for another country. We save your full international number.') }}</p>
                                     @error('phone')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
 

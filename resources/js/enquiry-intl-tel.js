@@ -12,7 +12,7 @@ function initEnquiryIntlTel() {
         return;
     }
 
-    const initialCountry = (input.dataset.initialCountry || 'gb').toLowerCase();
+    const initialCountry = (input.dataset.initialCountry || 'al').toLowerCase();
 
     const iti = intlTelInput(input, {
         initialCountry,
