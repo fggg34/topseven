@@ -149,6 +149,12 @@ class Tour extends Model
         return $this->belongsToMany(Country::class, 'city_tour', 'tour_id', 'city_id');
     }
 
+    public function hotels(): BelongsToMany
+    {
+        return $this->belongsToMany(Hotel::class, 'hotel_tour', 'tour_id', 'hotel_id')
+            ->orderBy('hotels.name');
+    }
+
     public function images(): HasMany
     {
         return $this->hasMany(TourImage::class)->orderBy('sort_order');
@@ -231,7 +237,7 @@ class Tour extends Model
 
     /**
      * Duplicate this tour as a draft with all fields and related data.
-     * Copies: images (same file refs), itineraries, pricing tiers, countries.
+     * Copies: images (same file refs), itineraries, pricing tiers, countries, hotels.
      * Does not copy: dates, availabilities, reviews.
      */
     public function duplicate(): self
@@ -241,7 +247,7 @@ class Tour extends Model
             'created_at',
             'updated_at',
         ]);
-        $copy->title = 'Copy of ' . $this->title;
+        $copy->title = 'Copy of '.$this->title;
         $copy->slug = null;
         $copy->is_active = false;
         $copy->is_featured = false;
@@ -283,6 +289,7 @@ class Tour extends Model
         }
 
         $copy->countries()->sync($this->countries->pluck('id'));
+        $copy->hotels()->sync($this->hotels->pluck('id'));
 
         return $copy;
     }

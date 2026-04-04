@@ -54,7 +54,7 @@ class TourController extends Controller
         }
         if ($request->has('season')) {
             $seasons = array_values(array_filter((array) $request->input('season', [])));
-            if (!empty($seasons)) {
+            if (! empty($seasons)) {
                 $query->whereIn('season', $seasons);
             }
         }
@@ -77,11 +77,12 @@ class TourController extends Controller
             ->get()
             ->map(function ($t) {
                 if ($t->duration_days) {
-                    return ['value' => $t->duration_days, 'label' => $t->duration_days . ' ' . ($t->duration_days === 1 ? 'day' : 'days'), 'sort' => $t->duration_days * 24];
+                    return ['value' => $t->duration_days, 'label' => $t->duration_days.' '.($t->duration_days === 1 ? 'day' : 'days'), 'sort' => $t->duration_days * 24];
                 }
                 if ($t->duration_hours) {
-                    return ['value' => $t->duration_hours, 'label' => $t->duration_hours . ' ' . ($t->duration_hours === 1 ? 'hour' : 'hours'), 'sort' => $t->duration_hours];
+                    return ['value' => $t->duration_hours, 'label' => $t->duration_hours.' '.($t->duration_hours === 1 ? 'hour' : 'hours'), 'sort' => $t->duration_hours];
                 }
+
                 return null;
             })
             ->filter()
@@ -106,7 +107,7 @@ class TourController extends Controller
     public function show(string $slug)
     {
         $tour = Tour::where('slug', $slug)->where('is_active', true)
-            ->with(['category', 'countries', 'images', 'pricingTiers', 'dates' => fn ($q) => $q->where('is_active', true)->where('date', '>=', now())->orderBy('date')])
+            ->with(['category', 'countries', 'hotels', 'images', 'pricingTiers', 'dates' => fn ($q) => $q->where('is_active', true)->where('date', '>=', now())->orderBy('date')])
             ->withCount(['approvedReviews'])
             ->firstOrFail();
 

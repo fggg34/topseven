@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -49,6 +50,11 @@ class Country extends Model
     public function tours(): BelongsToMany
     {
         return $this->belongsToMany(Tour::class, 'city_tour', 'city_id', 'tour_id');
+    }
+
+    public function hotels(): HasMany
+    {
+        return $this->hasMany(Hotel::class, 'country_id');
     }
 
     public function highlights(): BelongsToMany

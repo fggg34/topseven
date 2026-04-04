@@ -231,6 +231,62 @@
                     </div>
                 @endif
 
+                {{-- Hotels & resorts --}}
+                @if($tour->hotels->isNotEmpty())
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Where you&rsquo;ll stay</h2>
+                    <div class="space-y-8">
+                        @foreach($tour->hotels as $hotel)
+                            @php
+                                $galleryUrls = $hotel->gallery_urls ?? [];
+                                $hero = $hotel->featured_image_url ?? ($galleryUrls[0] ?? null) ?? 'https://placehold.co/800x480/e5e7eb/6b7280?text=' . urlencode($hotel->name);
+                                $isResort = $hotel->classification === \App\Models\Hotel::CLASSIFICATION_RESORT;
+                            @endphp
+                            <div class="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+                                <div class="grid grid-cols-1 md:grid-cols-5 gap-0">
+                                    <div class="md:col-span-2 min-h-[200px] md:min-h-[260px]">
+                                        @if(count($galleryUrls) > 0)
+                                            <img src="{{ $hero }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover min-h-[200px] md:min-h-[260px]" loading="lazy">
+                                        @elseif($hotel->featured_image_url)
+                                            <a href="{{ $hero }}" class="glightbox block h-full min-h-[200px] md:min-h-[260px]" data-gallery="hotel-gallery-{{ $hotel->id }}" aria-label="View {{ $hotel->name }} photo">
+                                                <img src="{{ $hero }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover min-h-[200px] md:min-h-[260px]" loading="lazy">
+                                            </a>
+                                        @else
+                                            <img src="{{ $hero }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover min-h-[200px] md:min-h-[260px]" loading="lazy">
+                                        @endif
+                                    </div>
+                                    <div class="md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
+                                        <div class="flex flex-wrap items-center gap-2 mb-3">
+                                            <h3 class="text-xl font-bold text-gray-900">{{ $hotel->name }}</h3>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold {{ $isResort ? 'bg-sky-100 text-sky-800' : 'bg-gray-100 text-gray-700' }}">
+                                                {{ $isResort ? 'Resort' : 'Hotel' }}
+                                            </span>
+                                        </div>
+                                        @if($hotel->description)
+                                        <div class="prose prose-sm max-w-none text-gray-600">
+                                            {!! $hotel->description !!}
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @if(count($galleryUrls) > 0)
+                                <div class="px-6 pb-6 md:px-8 md:pb-8 pt-0 border-t border-gray-100">
+                                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3 mt-5">Gallery</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                                        @foreach($galleryUrls as $gUrl)
+                                        <a href="{{ $gUrl }}" class="glightbox block aspect-[4/3] rounded-xl overflow-hidden ring-1 ring-black/5" data-gallery="hotel-gallery-{{ $hotel->id }}" role="listitem">
+                                            <img src="{{ $gUrl }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" loading="lazy">
+                                        </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
                 {{-- What to bring --}}
                 @if($tour->what_to_bring && count($tour->what_to_bring) > 0)
                 <div>
