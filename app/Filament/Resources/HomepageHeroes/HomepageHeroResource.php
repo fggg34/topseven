@@ -77,8 +77,14 @@ class HomepageHeroResource extends Resource
                     ->visible(fn ($get) => $get('banner_type') === 'image')
                     ->columnSpanFull(),
                 FileUpload::make('banner_video')
-                    ->label('Banner video (MP4)')
-                    ->acceptedFileTypes(['video/mp4'])
+                    ->label('Banner video')
+                    ->helperText('MP4 recommended. MOV/WebM allowed. Max size must fit server limits (PHP upload_max_filesize / post_max_size and web server).')
+                    ->acceptedFileTypes([
+                        'video/mp4',
+                        'video/quicktime',
+                        'video/webm',
+                    ])
+                    ->maxSize((int) (env('HOMEPAGE_HERO_VIDEO_MAX_KB') ?: 262144)) // KB; default 256 MB — keep in sync with LIVEWIRE_MAX_UPLOAD_KB
                     ->disk('public')
                     ->directory('heroes')
                     ->visibility('public')
