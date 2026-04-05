@@ -35,11 +35,16 @@
                     $fallbackImage = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920';
                     $ctaUrl = ! empty($slide->cta_url) ? $resolveUrl($slide->cta_url) : route('tours.index');
                 @endphp
+                @php
+                    $heroDataTitle = (string) ($slide->title ?? '');
+                    $heroDataSubtitle = preg_replace('/\s+/u', ' ', trim((string) ($slide->subtitle ?? '')));
+                    $heroDataCtaText = (string) ($slide->cta_text ?? '');
+                @endphp
                 <div class="{{ $heroSlideCount > 1 ? 'swiper-slide' : '' }}"
                      style="height:100%;position:relative"
-                     data-hero-title="{{ e($slide->title ?? '') }}"
-                     data-hero-subtitle="{{ e($slide->subtitle ?? '') }}"
-                     data-hero-cta-text="{{ e($slide->cta_text ?? '') }}"
+                     data-hero-title="{{ e($heroDataTitle) }}"
+                     data-hero-subtitle="{{ e($heroDataSubtitle) }}"
+                     data-hero-cta-text="{{ e($heroDataCtaText) }}"
                      data-hero-cta-url="{{ e($ctaUrl) }}">
                     @if($useVideo)
                         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
@@ -56,8 +61,8 @@
         </div>
     </div>
 
-    {{-- Overlay UI: above Swiper backgrounds (z-0); below global header (z-50) --}}
-    <div class="relative z-20 flex flex-col h-full w-full min-h-0 px-4 sm:px-6 lg:px-[80px] pt-20 md:pt-24 pointer-events-auto">
+    {{-- Overlay UI: must stack above Swiper (.swiper often gets z-index from library CSS + touch layer) --}}
+    <div class="home-hero-ui relative z-30 flex flex-col h-full w-full min-h-0 px-4 sm:px-6 lg:px-[80px] pt-20 md:pt-24 pointer-events-auto">
 
         {{-- Search bar (full width within padded area) --}}
         <div class="flex-shrink-0 w-full mt-2">
@@ -70,10 +75,10 @@
         {{-- Bottom: slide content + pagination --}}
         <div class="flex-shrink-0 pb-12 md:pb-16">
             <div class="w-full max-w-none">
-                <div class="flex items-end justify-between gap-8">
+                <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
                     {{-- Slide text (from first active slide; JS will swap for multi-slide) --}}
                     @php $firstSlide = $heroSlides->first(); @endphp
-                    <div class="max-w-3xl lg:max-w-4xl hero-slide-content min-w-0">
+                    <div class="max-w-3xl lg:max-w-4xl hero-slide-content min-w-0 order-2 sm:order-1">
                         <h1 id="hero-slide-title" class="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] mb-3 lg:mb-4 tracking-tight">{{ $firstSlide->title }}</h1>
                         <p id="hero-slide-subtitle" class="text-lg sm:text-xl md:text-xl lg:text-2xl text-white/90 mb-6 lg:mb-8 leading-relaxed @if(empty($firstSlide->subtitle)) hidden @endif">{{ $firstSlide->subtitle }}</p>
                         <a id="hero-slide-cta" href="{{ !empty($firstSlide->cta_url) ? $resolveUrl($firstSlide->cta_url) : route('tours.index') }}"
@@ -82,7 +87,7 @@
 
                     {{-- Pagination: Swiper requires swiper-pagination classes; keep in flex row via CSS override --}}
                     @if($heroSlideCount > 1)
-                        <div class="home-hero-pagination swiper-pagination swiper-pagination-horizontal shrink-0 mb-2"></div>
+                        <div class="home-hero-pagination swiper-pagination swiper-pagination-horizontal shrink-0 mb-2 order-1 sm:order-2 sm:self-end" role="tablist" aria-label="{{ __('Hero slides') }}"></div>
                     @endif
                 </div>
             </div>
@@ -163,6 +168,19 @@
 
 @push('styles')
 <style>
+    /* Background swiper: never capture clicks; keep below hero UI (Swiper CSS uses z-index: 1) */
+    .home-hero-swiper {
+        pointer-events: none !important;
+        z-index: 0 !important;
+    }
+    .home-hero-swiper .swiper-slide,
+    .home-hero-swiper .swiper-slide * {
+        pointer-events: none !important;
+    }
+    .home-hero-ui {
+        z-index: 30;
+        isolation: isolate;
+    }
     .home-hero-swiper,
     .home-hero-swiper .swiper-wrapper,
     .home-hero-swiper .swiper-slide {
@@ -182,7 +200,7 @@
         background: #ffffff;
         border-color: #ffffff;
     }
-    /* Keep bullets in the bottom-right flex row (Swiper defaults to full-width absolute) */
+    /* Bullets: visible row (Swiper defaults to absolute full-width) */
     .home-hero-section .home-hero-pagination.swiper-pagination {
         position: relative !important;
         left: auto !important;
@@ -190,8 +208,19 @@
         bottom: auto !important;
         top: auto !important;
         width: auto !important;
+        max-width: 100%;
         transform: none !important;
-        text-align: left;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        justify-content: flex-start !important;
+    }
+    @media (min-width: 640px) {
+        .home-hero-section .home-hero-pagination.swiper-pagination {
+            justify-content: flex-end !important;
+        }
     }
     .home-flash-sale-prev.swiper-button-disabled,
     .home-flash-sale-next.swiper-button-disabled {
@@ -234,9 +263,12 @@ document.addEventListener('DOMContentLoaded', function () {
         var ctaEl = document.getElementById('hero-slide-cta');
 
         function syncHeroCopy(swiper) {
-            var slide = swiper.slides[swiper.activeIndex];
-            if (!slide || !titleEl) return;
-            titleEl.textContent = slide.getAttribute('data-hero-title') || '';
+            if (!titleEl) return;
+            var idx = typeof swiper.realIndex === 'number' ? swiper.realIndex : swiper.activeIndex;
+            var slide = swiper.slides && swiper.slides[idx] ? swiper.slides[idx] : null;
+            if (!slide) return;
+            var title = slide.getAttribute('data-hero-title');
+            titleEl.textContent = title != null ? title : '';
             var sub = slide.getAttribute('data-hero-subtitle') || '';
             if (subtitleEl) {
                 if (sub) {
@@ -270,12 +302,16 @@ document.addEventListener('DOMContentLoaded', function () {
             pagination: pagEl ? {
                 el: pagEl,
                 clickable: true,
+                type: 'bullets',
             } : undefined,
             on: {
                 init: function (swiper) {
                     syncHeroCopy(swiper);
                 },
                 slideChange: function (swiper) {
+                    syncHeroCopy(swiper);
+                },
+                slideChangeTransitionEnd: function (swiper) {
                     syncHeroCopy(swiper);
                 },
             },
