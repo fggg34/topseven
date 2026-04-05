@@ -38,66 +38,62 @@
                     $fallbackImage = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920';
                     $ctaUrl = ! empty($slide->cta_url) ? $resolveUrl($slide->cta_url) : route('tours.index');
                 @endphp
-                @php
-                    $heroDataTitle = (string) ($slide->title ?? '');
-                    $heroDataSubtitle = preg_replace('/\s+/u', ' ', trim((string) ($slide->subtitle ?? '')));
-                    $heroDataCtaText = (string) ($slide->cta_text ?? '');
-                @endphp
-                <div class="{{ $heroSlideCount > 1 ? 'swiper-slide' : '' }}"
-                     style="height:100%;position:relative"
-                     data-hero-title="{{ e($heroDataTitle) }}"
-                     data-hero-subtitle="{{ e($heroDataSubtitle) }}"
-                     data-hero-cta-text="{{ e($heroDataCtaText) }}"
-                     data-hero-cta-url="{{ e($ctaUrl) }}">
+                <div @class([
+                    'swiper-slide' => $heroSlideCount > 1,
+                    'relative h-full min-h-0 overflow-hidden',
+                ]) style="height:100%;">
                     @if($useVideo)
-                        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+                        <video autoplay muted loop playsinline class="home-hero-media absolute inset-0 h-full w-full object-cover pointer-events-none">
                             <source src="{{ $videoUrl }}" type="video/mp4">
                         </video>
                     @elseif($useImage)
-                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $imageUrl }}');"></div>
+                        <div class="home-hero-media absolute inset-0 bg-cover bg-center pointer-events-none" style="background-image: url('{{ $imageUrl }}');"></div>
                     @else
-                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $fallbackImage }}');"></div>
+                        <div class="home-hero-media absolute inset-0 bg-cover bg-center pointer-events-none" style="background-image: url('{{ $fallbackImage }}');"></div>
                     @endif
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
+
+                    {{-- Copy lives inside the slide so it translates with the background --}}
+                    <div @class([
+                        'home-hero-slide-caption absolute inset-x-0 bottom-0 z-10 px-4 pt-8 sm:px-6 lg:px-[80px] pointer-events-auto',
+                        'pb-24 sm:pb-28 md:pb-32' => $heroSlideCount > 1,
+                        'pb-12 md:pb-16' => $heroSlideCount <= 1,
+                    ])>
+                        <div class="mx-auto w-full max-w-[1400px]">
+                            <div class="max-w-3xl lg:max-w-4xl">
+                                @if($loop->first)
+                                    <h1 class="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl mb-3 lg:mb-4">{{ $slide->title }}</h1>
+                                @else
+                                    <h2 class="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl mb-3 lg:mb-4">{{ $slide->title }}</h2>
+                                @endif
+                                @if(filled($slide->subtitle ?? null))
+                                    <p class="mb-6 text-lg leading-relaxed text-white/90 sm:text-xl md:text-xl lg:mb-8 lg:text-2xl">{{ $slide->subtitle }}</p>
+                                @endif
+                                @if(filled($slide->cta_text ?? null))
+                                    <a href="{{ $ctaUrl }}"
+                                       class="inline-flex items-center rounded-full border-2 border-white px-8 py-3.5 text-base font-semibold text-white transition-all duration-200 hover:bg-white hover:text-gray-900 lg:px-10 lg:py-4 lg:text-lg">{{ $slide->cta_text }}</a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
             @endforeach
         </div>
     </div>
 
-    {{-- UI layer: pinned to the same rectangle as the slides (not document flow below the media) --}}
-    <div class="home-hero-ui absolute inset-0 z-30 flex min-h-0 flex-col px-4 sm:px-6 lg:px-[80px] pt-20 md:pt-24 pointer-events-auto">
-        <div class="mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col">
-
-        {{-- Search bar (full width within padded area) --}}
-        <div class="flex-shrink-0 w-full mt-2">
+    {{-- Search: top strip only (does not cover slide copy) --}}
+    <div class="pointer-events-none absolute inset-x-0 top-0 z-30 px-4 pt-20 sm:px-6 md:pt-24 lg:px-[80px]">
+        <div class="pointer-events-auto mx-auto mt-2 w-full max-w-[1400px]">
             <x-hero-search-form :action="route('tours.index')" :countries="$countries ?? collect()" />
         </div>
-
-        {{-- Spacer --}}
-        <div class="flex-1"></div>
-
-        {{-- Bottom: slide content + pagination --}}
-        <div class="flex-shrink-0 pb-12 md:pb-16">
-            <div class="w-full max-w-none">
-                <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
-                    {{-- Slide text (from first active slide; JS will swap for multi-slide) --}}
-                    @php $firstSlide = $heroSlides->first(); @endphp
-                    <div class="max-w-3xl lg:max-w-4xl hero-slide-content min-w-0 order-2 sm:order-1">
-                        <h1 id="hero-slide-title" class="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] mb-3 lg:mb-4 tracking-tight">{{ $firstSlide->title }}</h1>
-                        <p id="hero-slide-subtitle" class="text-lg sm:text-xl md:text-xl lg:text-2xl text-white/90 mb-6 lg:mb-8 leading-relaxed @if(empty($firstSlide->subtitle)) hidden @endif">{{ $firstSlide->subtitle }}</p>
-                        <a id="hero-slide-cta" href="{{ !empty($firstSlide->cta_url) ? $resolveUrl($firstSlide->cta_url) : route('tours.index') }}"
-                           class="inline-flex items-center px-8 py-3.5 lg:px-10 lg:py-4 rounded-full border-2 border-white text-white text-base lg:text-lg font-semibold hover:bg-white hover:text-gray-900 transition-all duration-200 @if(empty($firstSlide->cta_text)) hidden @endif">{{ $firstSlide->cta_text }}</a>
-                    </div>
-
-                    {{-- Pagination: Swiper requires swiper-pagination classes; keep in flex row via CSS override --}}
-                    @if($heroSlideCount > 1)
-                        <div class="home-hero-pagination swiper-pagination swiper-pagination-horizontal shrink-0 mb-2 order-1 sm:order-2 sm:self-end" role="tablist" aria-label="{{ __('Hero slides') }}"></div>
-                    @endif
-                </div>
-            </div>
-        </div>
-        </div>
     </div>
+
+    {{-- Pagination only; pointer-events-none wrapper so slide captions stay visible & clickable --}}
+    @if($heroSlideCount > 1)
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-end px-4 pb-10 sm:px-6 sm:pb-12 md:pb-16 lg:px-[80px]">
+            <div class="home-hero-pagination swiper-pagination swiper-pagination-horizontal pointer-events-auto" role="tablist" aria-label="{{ __('Hero slides') }}"></div>
+        </div>
+    @endif
 </section>
 @endsection
 
@@ -173,14 +169,13 @@
 
 @push('styles')
 <style>
-    /* Background swiper: never capture clicks; keep below hero UI (Swiper CSS uses z-index: 1) */
+    /* Swiper below search/pagination; media ignores clicks (swipe hits slide), captions/links stay clickable */
     .home-hero-swiper {
-        pointer-events: none !important;
         z-index: 0 !important;
+        pointer-events: auto;
     }
-    .home-hero-swiper .swiper-slide,
-    .home-hero-swiper .swiper-slide * {
-        pointer-events: none !important;
+    .home-hero-swiper .home-hero-media {
+        pointer-events: none;
     }
     .home-hero-swiper,
     .home-hero-swiper .swiper-wrapper,
@@ -259,39 +254,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var heroSlideCount = heroSwiperEl.querySelectorAll('.swiper-slide').length;
         var heroSection = document.querySelector('.home-hero-section');
         var pagEl = heroSection ? heroSection.querySelector('.home-hero-pagination') : null;
-        var titleEl = document.getElementById('hero-slide-title');
-        var subtitleEl = document.getElementById('hero-slide-subtitle');
-        var ctaEl = document.getElementById('hero-slide-cta');
-
-        function syncHeroCopy(swiper) {
-            if (!titleEl) return;
-            var idx = typeof swiper.realIndex === 'number' ? swiper.realIndex : swiper.activeIndex;
-            var slide = swiper.slides && swiper.slides[idx] ? swiper.slides[idx] : null;
-            if (!slide) return;
-            var title = slide.getAttribute('data-hero-title');
-            titleEl.textContent = title != null ? title : '';
-            var sub = slide.getAttribute('data-hero-subtitle') || '';
-            if (subtitleEl) {
-                if (sub) {
-                    subtitleEl.textContent = sub;
-                    subtitleEl.classList.remove('hidden');
-                } else {
-                    subtitleEl.textContent = '';
-                    subtitleEl.classList.add('hidden');
-                }
-            }
-            var ctaText = slide.getAttribute('data-hero-cta-text') || '';
-            var ctaUrl = slide.getAttribute('data-hero-cta-url') || '#';
-            if (ctaEl) {
-                if (ctaText) {
-                    ctaEl.textContent = ctaText;
-                    ctaEl.setAttribute('href', ctaUrl);
-                    ctaEl.classList.remove('hidden');
-                } else {
-                    ctaEl.classList.add('hidden');
-                }
-            }
-        }
 
         new window.Swiper(heroSwiperEl, {
             modules: [window.SwiperAutoplay, window.SwiperPagination],
@@ -305,17 +267,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 clickable: true,
                 type: 'bullets',
             } : undefined,
-            on: {
-                init: function (swiper) {
-                    syncHeroCopy(swiper);
-                },
-                slideChange: function (swiper) {
-                    syncHeroCopy(swiper);
-                },
-                slideChangeTransitionEnd: function (swiper) {
-                    syncHeroCopy(swiper);
-                },
-            },
         });
     }
     if (window.Swiper) {
