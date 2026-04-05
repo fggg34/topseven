@@ -52,8 +52,6 @@
             break;
         }
     }
-    $departureDateMin = now()->format('Y-m-d');
-    $departureDateMax = now()->addMonths(18)->format('Y-m-d');
     $toursFilterSelectedDeparture = '';
     if (request()->filled('departure')) {
         try {
@@ -61,6 +59,10 @@
         } catch (\Throwable) {
             $toursFilterSelectedDeparture = '';
         }
+    }
+    $toursFilterAllowedDepartures = collect($departureOptions ?? [])->pluck('value')->all();
+    if ($toursFilterSelectedDeparture !== '' && ! in_array($toursFilterSelectedDeparture, $toursFilterAllowedDepartures, true)) {
+        $toursFilterSelectedDeparture = '';
     }
     $toursFilterLabels = [
         'destination' => __('Destination'),
@@ -98,7 +100,7 @@
         </div>
     </header>
 
-    <div class="pb-10 pt-2" x-data="tourFilters(@js($toursFilterLabels))" x-init="init()">
+    <div class="pb-10 pt-2" x-data="tourFilters(@js($toursFilterLabels))">
 
     <div class="tours-filter-bar flex flex-wrap items-center gap-3 pb-7 border-b border-[#e6e1d8]">
 
@@ -167,15 +169,20 @@
                     :class="!selectedDeparture ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
                     x-text="labels.anyDeparture"></button>
                 <div class="px-5 pt-3 border-t border-[#f0ebe3] mt-2">
-                    <label class="block text-[11px] font-semibold uppercase tracking-wide text-[#6a6a6a] mb-2" for="tours-filter-departure-date">{{ __('Departure date') }}</label>
-                    <div class="flatpickr-wrapper">
-                        <input id="tours-filter-departure-date" type="text"
-                            x-ref="departureDateInput"
-                            readonly
-                            placeholder="{{ __('Choose departure date') }}"
-                            class="w-full cursor-pointer rounded-lg border border-[#d1cdc4] bg-white px-3 py-2 text-sm text-[#111827] placeholder:text-[#9ca3af] focus:border-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827]"
-                            autocomplete="off">
-                    </div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wide text-[#6a6a6a] mb-2" for="tours-filter-departure-select">{{ __('Departure date') }}</label>
+                    @if(count($departureOptions ?? []) > 0)
+                        <select id="tours-filter-departure-select"
+                            x-model="selectedDeparture"
+                            @change="selectDeparture($event.target.value)"
+                            class="w-full rounded-lg border border-[#d1cdc4] bg-white px-3 py-2 text-sm text-[#111827] focus:border-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827]">
+                            <option value="">{{ __('Choose departure date') }}</option>
+                            @foreach($departureOptions as $depOpt)
+                                <option value="{{ $depOpt['value'] }}">{{ $depOpt['label'] }}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <p class="text-sm text-[#6a6a6a]">{{ __('No departure dates in the next period.') }}</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -270,8 +277,6 @@ function tourFilters(labels) {
             anyPrice: labels.anyPrice || 'Any price',
         },
         locale: @json(str_replace('_', '-', app()->getLocale())),
-        departureDateMin: @json($departureDateMin),
-        departureDateMax: @json($departureDateMax),
         selectedDeparture: @json($toursFilterSelectedDeparture),
         pricePresets: @json($toursPricePresets),
         selectedPricePreset: @json($toursFilterSelectedPricePreset),
@@ -290,52 +295,7 @@ function tourFilters(labels) {
             { value: 'price_low', label: 'Price: Low to High' },
             { value: 'price_high', label: 'Price: High to Low' },
         ],
-
-        departureFp: null,
-
-        init() {
-            this.$watch('openDeparture', (open) => {
-                if (open) {
-                    this.$nextTick(() => this.ensureDepartureFlatpickr());
-                }
-            });
-        },
-
-        destroyDepartureFlatpickr() {
-            if (this.departureFp) {
-                try {
-                    this.departureFp.destroy();
-                } catch (e) { /* noop */ }
-                this.departureFp = null;
-            }
-        },
-
-        ensureDepartureFlatpickr() {
-            if (!window.flatpickr || !this.$refs.departureDateInput) return;
-            if (this.departureFp) {
-                if (this.selectedDeparture) {
-                    this.departureFp.setDate(this.selectedDeparture, false);
-                } else {
-                    this.departureFp.clear();
-                }
-                return;
-            }
-            var self = this;
-            var useSq = this.locale && (this.locale === 'sq' || String(this.locale).indexOf('sq') === 0);
-            this.departureFp = window.flatpickr(this.$refs.departureDateInput, {
-                dateFormat: 'Y-m-d',
-                minDate: this.departureDateMin,
-                maxDate: this.departureDateMax,
-                allowInput: false,
-                disableMobile: true,
-                appendTo: document.body,
-                locale: useSq && window.flatpickrLocaleAlbanian ? window.flatpickrLocaleAlbanian : undefined,
-                defaultDate: this.selectedDeparture || undefined,
-                onChange: function (selectedDates, dateStr) {
-                    if (dateStr) self.selectDeparture(dateStr);
-                },
-            });
-        },
+        departureOptions: @json($departureOptions ?? []),
 
         monthButtonLabel() {
             if (!this.selectedMonth) return this.labels.month;
@@ -363,6 +323,8 @@ function tourFilters(labels) {
 
         departureButtonLabel() {
             if (!this.selectedDeparture) return this.labels.chooseDepartureDate;
+            const row = this.departureOptions.find((o) => o.value === this.selectedDeparture);
+            if (row) return row.label;
             try {
                 const d = new Date(this.selectedDeparture + 'T12:00:00');
                 if (Number.isNaN(d.getTime())) return this.labels.chooseDepartureDate;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Tour;
 use App\Models\TourCategory;
+use App\Models\TourDate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -55,6 +56,7 @@ class TourController extends Controller
                 $departureStr = $departureDay->toDateString();
                 $query->where(function ($q) use ($departureStr) {
                     $q->whereDate('homepage_card_date_from', $departureStr)
+                        ->orWhereDate('homepage_card_date_to', $departureStr)
                         ->orWhereHas('dates', function ($qDates) use ($departureStr) {
                             $qDates->where('is_active', true)
                                 ->whereDate('date', $departureStr);
@@ -123,7 +125,53 @@ class TourController extends Controller
             ['value' => 'all_season', 'label' => __('All Season')],
         ]);
 
-        return view('pages.tours.index', compact('tours', 'categories', 'countries', 'wishlistedIds', 'priceRange', 'seasonOptions'));
+        $departureWindowStart = Carbon::now()->startOfDay();
+        $departureWindowEnd = Carbon::now()->addMonths(18)->endOfDay();
+        $departureLocale = str_replace('_', '-', app()->getLocale());
+
+        $cardFromStrings = Tour::query()
+            ->where('is_active', true)
+            ->whereNotNull('homepage_card_date_from')
+            ->whereDate('homepage_card_date_from', '>=', $departureWindowStart)
+            ->whereDate('homepage_card_date_from', '<=', $departureWindowEnd)
+            ->distinct()
+            ->pluck('homepage_card_date_from');
+
+        $cardToStrings = Tour::query()
+            ->where('is_active', true)
+            ->whereNotNull('homepage_card_date_to')
+            ->whereDate('homepage_card_date_to', '>=', $departureWindowStart)
+            ->whereDate('homepage_card_date_to', '<=', $departureWindowEnd)
+            ->distinct()
+            ->pluck('homepage_card_date_to');
+
+        $scheduledDateStrings = TourDate::query()
+            ->where('is_active', true)
+            ->whereHas('tour', fn ($q) => $q->where('is_active', true))
+            ->whereDate('date', '>=', $departureWindowStart)
+            ->whereDate('date', '<=', $departureWindowEnd)
+            ->distinct()
+            ->pluck('date');
+
+        $departureOptionValues = collect()
+            ->merge($cardFromStrings)
+            ->merge($cardToStrings)
+            ->merge($scheduledDateStrings)
+            ->map(fn ($d) => Carbon::parse($d)->format('Y-m-d'))
+            ->unique()
+            ->sort()
+            ->values();
+
+        $departureOptions = $departureOptionValues->map(function (string $ymd) use ($departureLocale) {
+            $c = Carbon::parse($ymd)->locale($departureLocale);
+
+            return [
+                'value' => $ymd,
+                'label' => $c->translatedFormat('j F Y'),
+            ];
+        })->all();
+
+        return view('pages.tours.index', compact('tours', 'categories', 'countries', 'wishlistedIds', 'priceRange', 'seasonOptions', 'departureOptions'));
     }
 
     public function show(string $slug)
