@@ -197,22 +197,16 @@ section.home-flash-sale-section {
     overflow: hidden !important;
   }
 }
-/* Blog swiper - overflow visible on mobile for peek effect, hidden on desktop */
-.blog-swiper {
-  overflow: visible !important;
+/* Homepage blog stories (mobile swiper — matches flash-sale tour slider overflow) */
+.swiper.home-blog-stories-swiper {
+  overflow: unset !important;
+}
+section.home-blog-stories-section .home-blog-stories-mobile {
+  overflow: hidden;
+}
+.home-blog-stories-swiper {
   width: 100%;
   max-width: 100%;
-}
-
-@media (min-width: 640px) {
-  .blog-swiper {
-    display: none !important;
-  }
-}
-@media (min-width: 768px) {
-  .blog-swiper {
-    overflow: hidden !important;
-  }
 }
 
 /* City page swipers (highlights, tours, hotels) - overflow visible on mobile for peek effect */

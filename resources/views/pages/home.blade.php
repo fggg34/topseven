@@ -234,6 +234,11 @@
         opacity: 0.35;
         pointer-events: none;
     }
+    .home-blog-stories-prev.swiper-button-disabled,
+    .home-blog-stories-next.swiper-button-disabled {
+        opacity: 0.35;
+        pointer-events: none;
+    }
 </style>
 @endpush
 
@@ -265,6 +270,27 @@ document.addEventListener('DOMContentLoaded', function () {
             var section = el.closest('.home-flash-sale-section');
             var prev = section ? section.querySelector('.home-flash-sale-prev') : null;
             var next = section ? section.querySelector('.home-flash-sale-next') : null;
+            new window.Swiper(el, {
+                modules: [window.SwiperNavigation],
+                slidesPerView: 1.15,
+                spaceBetween: 16,
+                watchOverflow: true,
+                navigation: {
+                    prevEl: prev,
+                    nextEl: next,
+                },
+                breakpoints: {
+                    480: { slidesPerView: 1.35, spaceBetween: 16 },
+                    640: { slidesPerView: 2.15, spaceBetween: 16 },
+                    1024: { slidesPerView: 3.15, spaceBetween: 16 },
+                    1280: { slidesPerView: 4.15, spaceBetween: 16 },
+                },
+            });
+        });
+        document.querySelectorAll('.home-blog-stories-swiper').forEach(function (el) {
+            var section = el.closest('.home-blog-stories-section');
+            var prev = section ? section.querySelector('.home-blog-stories-prev') : null;
+            var next = section ? section.querySelector('.home-blog-stories-next') : null;
             new window.Swiper(el, {
                 modules: [window.SwiperNavigation],
                 slidesPerView: 1.15,
