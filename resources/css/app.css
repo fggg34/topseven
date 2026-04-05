@@ -139,16 +139,16 @@
   display: none;
 }
 
-/* Home page Swipers - ensure proper containment */
+/* Home page flash-sale: swiper can extend; section clips overflow */
+.swiper.home-flash-sale-swiper {
+  overflow: unset !important;
+}
+section.home-flash-sale-section {
+  overflow: hidden;
+}
 .home-flash-sale-swiper {
-  overflow: visible !important;
   width: 100%;
   max-width: 100%;
-}
-@media (min-width: 768px) {
-  .home-flash-sale-swiper {
-    overflow: hidden !important;
-  }
 }
 .featured-tours-swiper {
   overflow: visible !important;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Tour;
 use App\Models\TourCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TourController extends Controller
@@ -25,6 +26,29 @@ class TourController extends Controller
                 });
             }
         }
+        if ($request->filled('date')) {
+            try {
+                $monthStart = Carbon::parse($request->input('date'))->startOfMonth()->startOfDay();
+                $monthEnd = $monthStart->copy()->endOfMonth()->endOfDay();
+                $monthStartStr = $monthStart->toDateString();
+                $monthEndStr = $monthEnd->toDateString();
+
+                $query->where(function ($q) use ($monthStartStr, $monthEndStr, $monthStart, $monthEnd) {
+                    $q->where(function ($qCard) use ($monthStartStr, $monthEndStr) {
+                        $qCard->whereNotNull('homepage_card_date_from')
+                            ->where('homepage_card_date_from', '<=', $monthEndStr)
+                            ->whereRaw('COALESCE(homepage_card_date_to, homepage_card_date_from) >= ?', [$monthStartStr]);
+                    })->orWhereHas('dates', function ($qDates) use ($monthStart, $monthEnd) {
+                        $qDates->where('is_active', true)
+                            ->whereDate('date', '>=', $monthStart->toDateString())
+                            ->whereDate('date', '<=', $monthEnd->toDateString());
+                    });
+                });
+            } catch (\Throwable) {
+                /* invalid date param — ignore */
+            }
+        }
+
         if ($request->filled('category')) {
             $query->whereHas('category', fn ($q) => $q->where('slug', $request->category));
         }

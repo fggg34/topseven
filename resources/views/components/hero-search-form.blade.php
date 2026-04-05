@@ -24,7 +24,7 @@
     }
     $heroSearchUi = [
         'destination' => __('Destination'),
-        'when' => __('When'),
+        'when' => 'Zgjdhni muajin',
         'anyDestination' => __('Any destination'),
         'anyMonth' => __('Any month'),
         'locale' => str_replace('_', '-', $locale),

@@ -29,7 +29,7 @@
         </h2>
     </div>
 
-    <div class="swiper home-flash-sale-swiper overflow-visible">
+    <div class="swiper home-flash-sale-swiper">
         <div class="swiper-wrapper">
             @foreach($rows as $spotlight)
                 @php

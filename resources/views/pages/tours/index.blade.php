@@ -99,7 +99,7 @@
             </div>
         </div>
 
-        @if(request('country') || request()->has('duration'))
+        @if(request('country') || request()->has('duration') || request('date') || request('adults'))
             <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">{{ __('Clear') }}</a>
         @endif
     </div>
@@ -197,6 +197,10 @@ function tourFilters(labels) {
             if (this.currentSort && this.currentSort !== 'popular') params.set('sort', this.currentSort);
             const q = '{{ request('q', '') }}';
             if (q) params.set('q', q);
+            const monthDate = @json(request('date', ''));
+            if (monthDate) params.set('date', monthDate);
+            const adults = @json(request('adults', ''));
+            if (adults !== '' && adults !== null) params.set('adults', String(adults));
             window.location.href = '{{ route('tours.index') }}' + '?' + params.toString();
         }
     }
