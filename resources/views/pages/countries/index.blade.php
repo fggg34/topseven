@@ -4,7 +4,7 @@
 @section('description', 'Explore countries and find travel packages.')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="w-full px-4 sm:px-6 lg:px-[80px] py-8">
     {{-- Breadcrumb --}}
     <nav class="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center gap-1.5">
