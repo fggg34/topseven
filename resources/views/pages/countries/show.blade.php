@@ -15,16 +15,16 @@
 @section('content')
 <div class="w-full">
     <div class="px-4 sm:px-6 lg:px-[80px] pt-8 pb-14">
-        <div class="mx-auto">
+        <div class="max-w-[1400px] mx-auto">
 
     {{-- Breadcrumb --}}
-    <nav class="text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
-        <ol class="flex items-center gap-1.5">
-            <li><a href="{{ route('home') }}" class="text-lime-600 hover:text-lime-700 transition">Home</a></li>
-            <li>/</li>
-            <li><a href="{{ route('countries.index') }}" class="text-lime-600 hover:text-lime-700 transition">Countries</a></li>
-            <li>/</li>
-            <li class="text-gray-700">{{ $country->name }}</li>
+    <nav class="text-sm mb-8" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
+            <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">{{ __('Home') }}</a></li>
+            <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
+            <li><a href="{{ route('countries.index') }}" class="hover:text-[#111827] transition-colors">{{ __('Countries') }}</a></li>
+            <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
+            <li class="text-[#111827] font-medium">{{ $country->name }}</li>
         </ol>
     </nav>
 
@@ -41,12 +41,12 @@
         {{-- Left: Gallery (big image + thumbnails) --}}
         <div class="city-gallery">
             @if($allImages->isNotEmpty())
-                <div class="relative rounded-2xl overflow-hidden bg-gray-200" style="aspect-ratio: 16/10;">
+                <div class="relative rounded-2xl overflow-hidden bg-[#e8e4dc]" style="aspect-ratio: 16/10;">
                     <a href="{{ $allImages[0] }}" class="glightbox block w-full h-full" data-gallery="city-gallery">
                         <img src="{{ $allImages[0] }}" alt="{{ $country->name }}" class="w-full h-full object-cover">
                     </a>
                     @if($totalPhotos > 1)
-                        <div class="absolute bottom-4 right-4 flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-900/80 backdrop-blur-sm text-white text-sm font-medium pointer-events-none">
+                        <div class="absolute bottom-4 right-4 flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#111827]/85 backdrop-blur-sm text-white text-sm font-medium pointer-events-none">
                             <i class="fa-regular fa-images"></i>
                             {{ $totalPhotos }} photos
                         </div>
@@ -56,7 +56,7 @@
                 @if($thumbImages->isNotEmpty())
                     <div class="grid grid-cols-4 gap-2 mt-2">
                         @foreach($thumbImages->take(4) as $url)
-                            <a href="{{ $url }}" class="glightbox group block aspect-[4/3] rounded-xl overflow-hidden bg-gray-200" data-gallery="city-gallery">
+                            <a href="{{ $url }}" class="glightbox group block aspect-[4/3] rounded-xl overflow-hidden bg-[#e8e4dc] ring-1 ring-[#e6e1d8]" data-gallery="city-gallery">
                                 <img src="{{ $url }}" alt="{{ $country->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
                             </a>
                         @endforeach
@@ -68,8 +68,8 @@
                     <a href="{{ $url }}" class="glightbox hidden" data-gallery="city-gallery"></a>
                 @endforeach
             @else
-                <div class="rounded-2xl bg-gray-100 h-full flex items-center justify-center text-gray-400" style="min-height: 400px;">
-                    No images available
+                <div class="rounded-2xl bg-[#f8f6f2] h-full flex items-center justify-center text-[#6a6a6a] text-sm" style="min-height: 400px;">
+                    {{ __('No images available') }}
                 </div>
             @endif
         </div>
@@ -77,30 +77,30 @@
         {{-- Right: Title + Description --}}
         <div class="flex flex-col justify-center">
             @if($country->country)
-                <p class="text-xs font-medium uppercase tracking-wider text-lime-600 mb-2">{{ $country->country }}</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-2">{{ $country->country }}</p>
             @endif
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-5">{{ $country->name }}</h1>
+            <h1 class="text-3xl md:text-4xl lg:text-[2.5rem] font-serif font-semibold text-[#111827] tracking-tight leading-[1.1] mb-5">{{ $country->name }}</h1>
             @if($country->description)
-                <div class="prose prose-gray max-w-none text-gray-600">
+                <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#111827] prose-p:text-[#4a4a4a] prose-p:leading-[1.75] prose-a:text-[#111827] prose-a:underline prose-a:underline-offset-4">
                     {!! $country->description !!}
                 </div>
             @endif
-            <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-gray-100">
+            <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-[#e6e1d8]">
                 @if($country->tours->count())
                     <div class="flex items-center gap-2">
-                        <span class="w-9 h-9 rounded-lg bg-lime-50 flex items-center justify-center"><i class="fa-solid fa-route text-lime-600 text-sm"></i></span>
+                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-route text-[#111827] text-sm"></i></span>
                         <div>
-                            <span class="text-lg font-bold text-gray-900">{{ $country->tours->where('is_active', true)->count() }}</span>
-                            <span class="text-sm text-gray-500 ml-1">Travel packages</span>
+                            <span class="text-lg font-semibold text-[#111827]">{{ $country->tours->where('is_active', true)->count() }}</span>
+                            <span class="text-sm text-[#6a6a6a] ml-1">{{ __('Travel packages') }}</span>
                         </div>
                     </div>
                 @endif
                 @if($country->highlights->count())
                     <div class="flex items-center gap-2">
-                        <span class="w-9 h-9 rounded-lg bg-lime-50 flex items-center justify-center"><i class="fa-solid fa-camera text-lime-600 text-sm"></i></span>
+                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-camera text-[#111827] text-sm"></i></span>
                         <div>
-                            <span class="text-lg font-bold text-gray-900">{{ $country->highlights->count() }}</span>
-                            <span class="text-sm text-gray-500 ml-1">Attractions</span>
+                            <span class="text-lg font-semibold text-[#111827]">{{ $country->highlights->count() }}</span>
+                            <span class="text-sm text-[#6a6a6a] ml-1">{{ __('Attractions') }}</span>
                         </div>
                     </div>
                 @endif
@@ -116,16 +116,16 @@
     <div class="px-4 sm:px-6 lg:px-[80px] pb-14">
         <div class="max-w-[1400px] mx-auto">
             <section class="mb-0 overflow-hidden">
-        <div class="flex items-end justify-between mb-8">
+        <div class="flex items-end justify-between mb-8 gap-4">
             <div>
-                <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">Explore</p>
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Places to visit in {{ $country->name }}</h2>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-1">{{ __('Explore') }}</p>
+                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-[#111827] tracking-tight leading-tight">{{ __('Places to visit in :name', ['name' => $country->name]) }}</h2>
             </div>
-            <div class="flex items-center gap-2">
-                <button type="button" class="city-highlights-prev w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-lime-600 hover:border-lime-300 transition-colors">
+            <div class="flex items-center gap-2 shrink-0">
+                <button type="button" class="city-highlights-prev w-10 h-10 rounded-full border border-[#d1cdc4] bg-white flex items-center justify-center text-[#6a6a6a] hover:text-[#111827] hover:border-[#111827] transition-colors">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </button>
-                <button type="button" class="city-highlights-next w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-lime-600 hover:border-lime-300 transition-colors">
+                <button type="button" class="city-highlights-next w-10 h-10 rounded-full border border-[#d1cdc4] bg-white flex items-center justify-center text-[#6a6a6a] hover:text-[#111827] hover:border-[#111827] transition-colors">
                     <i class="fa-solid fa-arrow-right text-sm"></i>
                 </button>
             </div>
@@ -134,7 +134,7 @@
             <div class="swiper-wrapper">
                 @foreach($country->highlights as $highlight)
                 <div class="swiper-slide">
-                    <a href="{{ route('countries.highlights.show', [$country->slug, $highlight->slug]) }}" class="group block relative rounded-xl overflow-hidden bg-gray-200" style="aspect-ratio: 4/3;">
+                    <a href="{{ route('countries.highlights.show', [$country->slug, $highlight->slug]) }}" class="group block relative rounded-xl overflow-hidden bg-[#e8e4dc] ring-1 ring-[#e6e1d8]" style="aspect-ratio: 4/3;">
                         @if($highlight->image_url)
                             <img src="{{ $highlight->image_url }}" alt="{{ $highlight->title }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         @endif
@@ -158,34 +158,37 @@
         $countryTours = $country->tours->take(8);
     @endphp
     <section class="px-4 sm:px-6 lg:px-[80px] pb-16">
-        <div class="mb-6 md:mb-8">
-            <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">Curated experiences</p>
-            <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-semibold text-gray-700 tracking-tight leading-tight">
-                Travel packages in {{ $country->name }}
-            </h2>
-        </div>
-
-        <div class="swiper country-packages-swiper overflow-visible">
-            <div class="swiper-wrapper">
-                @foreach($countryTours as $tour)
-                <div class="swiper-slide !h-auto">
-                    <x-tour-card variant="flash" :tour="$tour" :queryParams="['country' => $country->slug]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
-                </div>
-                @endforeach
+        <div class="max-w-[1400px] mx-auto">
+            <div class="mb-6 md:mb-8">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-1">{{ __('Curated experiences') }}</p>
+                <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-serif font-semibold text-[#111827] tracking-tight leading-tight">
+                    {{ __('Travel packages in :name', ['name' => $country->name]) }}
+                </h2>
+                <div class="mt-5 h-1 w-14 rounded-full bg-lime-600" aria-hidden="true"></div>
             </div>
-        </div>
 
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mt-8">
-            <a href="{{ route('tours.index', ['country' => $country->slug]) }}" class="inline-flex items-center justify-center rounded-full bg-black text-white text-sm font-semibold px-6 py-2.5 hover:bg-gray-900 transition-colors">
-                View all travel packages
-            </a>
-            <div class="flex items-center justify-end gap-2">
-                <button type="button" class="country-packages-prev w-11 h-11 rounded-full border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center transition-colors hover:bg-gray-200 disabled:opacity-40 disabled:pointer-events-none" aria-label="Previous">
-                    <i class="fa-solid fa-arrow-left text-sm"></i>
-                </button>
-                <button type="button" class="country-packages-next w-11 h-11 rounded-full bg-black text-white flex items-center justify-center transition-colors hover:bg-gray-900 disabled:opacity-40 disabled:pointer-events-none" aria-label="Next">
-                    <i class="fa-solid fa-arrow-right text-sm"></i>
-                </button>
+            <div class="swiper country-packages-swiper overflow-visible">
+                <div class="swiper-wrapper">
+                    @foreach($countryTours as $tour)
+                    <div class="swiper-slide !h-auto">
+                        <x-tour-card variant="flash" :tour="$tour" :queryParams="['country' => $country->slug]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" />
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mt-8">
+                <a href="{{ route('tours.index', ['country' => $country->slug]) }}" class="inline-flex items-center justify-center rounded-full bg-[#111827] text-white text-sm font-semibold px-6 py-2.5 hover:bg-[#1f2937] transition-colors">
+                    {{ __('View all travel packages') }}
+                </a>
+                <div class="flex items-center justify-end gap-2">
+                    <button type="button" class="country-packages-prev w-11 h-11 rounded-full border border-[#d1cdc4] bg-white text-[#6a6a6a] flex items-center justify-center transition-colors hover:border-[#111827] hover:text-[#111827] disabled:opacity-40 disabled:pointer-events-none" aria-label="{{ __('Previous') }}">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </button>
+                    <button type="button" class="country-packages-next w-11 h-11 rounded-full bg-[#111827] text-white flex items-center justify-center transition-colors hover:bg-[#1f2937] disabled:opacity-40 disabled:pointer-events-none" aria-label="{{ __('Next') }}">
+                        <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>

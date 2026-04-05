@@ -226,5 +226,16 @@
     "Tell us more about your inquiry...": "Na tregoni më shumë për kërkesën tuaj...",
     "Set by your travel advisor for this package": "Vendosur nga këshilltari juaj për këtë paketë",
     "min": "min",
-    "h": "orë"
+    "h": "orë",
+    "Countries": "Shtetet",
+    "Explore": "Eksploro",
+    "Places to visit in :name": "Vende për të vizituar në :name",
+    "Curated experiences": "Përvoja të zgjedhura",
+    "Travel packages in :name": "Paketa udhëtimi në :name",
+    "View all travel packages": "Shiko të gjitha paketat",
+    "Travel packages": "Paketa udhëtimi",
+    "Attractions": "Atraksione",
+    "No images available": "Nuk ka imazhe të disponueshme",
+    "Previous": "Para",
+    "Next": "Pas"
 }
