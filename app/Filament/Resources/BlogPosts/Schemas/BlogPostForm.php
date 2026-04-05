@@ -39,9 +39,15 @@ class BlogPostForm
                     ->required(),
                 RichEditor::make('excerpt')
                     ->label('Excerpt')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('blog-posts/content')
+                    ->fileAttachmentsVisibility('public')
                     ->columnSpanFull(),
                 RichEditor::make('content')
                     ->label('Content')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('blog-posts/content')
+                    ->fileAttachmentsVisibility('public')
                     ->columnSpanFull(),
                 FileUpload::make('featured_image')
                     ->label('Featured image')

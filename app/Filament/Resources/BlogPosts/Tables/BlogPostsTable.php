@@ -25,7 +25,8 @@ class BlogPostsTable
                     ->searchable(),
                 TextColumn::make('slug')
                     ->searchable(),
-                ImageColumn::make('featured_image'),
+                ImageColumn::make('featured_image')
+                    ->disk('public'),
                 TextColumn::make('meta_title')
                     ->searchable(),
                 TextColumn::make('meta_description')

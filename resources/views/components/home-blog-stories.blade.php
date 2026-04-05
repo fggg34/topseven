@@ -14,11 +14,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         @foreach($posts as $post)
             @php
-                $imageUrl = $post->featured_image
-                    ? \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image)
-                    : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80';
+                $imageUrl = $post->featured_image_url
+                    ?? 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80';
                 $categoryLabel = trim((string) ($post->category?->name ?? 'Travel'));
-                $excerpt = trim(strip_tags($post->excerpt ?: $post->content ?: ''));
+                $excerpt = $post->excerpt_plain !== '' ? $post->excerpt_plain : strip_tags($post->content_html);
+                $excerpt = trim($excerpt);
             @endphp
             <article class="group">
                 <a href="{{ route('blog.show', $post->slug) }}" class="block">

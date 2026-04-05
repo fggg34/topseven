@@ -1,12 +1,12 @@
 @extends('layouts.site')
 
 @section('title', $post->meta_title ?: $post->title . ' - ' . config('app.name'))
-@section('description', $post->meta_description ?: Str::limit(strip_tags($post->excerpt ?? ''), 160))
+@section('description', $post->meta_description ?: Str::limit($post->excerpt_plain !== '' ? $post->excerpt_plain : strip_tags($post->content_html), 160))
 
 @section('content')
 <div class="relative w-full overflow-hidden bg-[#111827]" style="height: 340px;">
-    @if($post->featured_image)
-        <div class="absolute inset-0 bg-cover bg-center opacity-35" style="background-image: url('{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image) }}');"></div>
+    @if($post->featured_image_url)
+        <div class="absolute inset-0 bg-cover bg-center opacity-35" style="background-image: url({{ json_encode($post->featured_image_url) }});"></div>
     @endif
     <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
     <div class="absolute inset-0 flex items-end">
@@ -33,11 +33,11 @@
 </div>
 
 <article class="max-w-[900px] mx-auto px-4 sm:px-6 lg:px-8 py-14">
-    @if($post->featured_image)
-        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image) }}" alt="{{ $post->title }}" class="w-full mb-10" style="aspect-ratio: 16/9; object-fit: cover;">
+    @if($post->featured_image_url)
+        <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}" class="w-full mb-10" style="aspect-ratio: 16/9; object-fit: cover;">
     @endif
     <div class="blog-content prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#111827] prose-p:text-[#4a4a4a] prose-p:leading-[1.8] prose-a:text-[#111827] prose-a:underline prose-a:underline-offset-4">
-        {!! $post->content !!}
+        {!! $post->content_html !!}
     </div>
 
     @if($post->category || $post->tags->isNotEmpty())
@@ -71,9 +71,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @foreach($related as $p)
                 @php
-                    $relImageUrl = $p->featured_image
-                        ? \Illuminate\Support\Facades\Storage::disk('public')->url($p->featured_image)
-                        : 'https://placehold.co/600x400/e5e7eb/6b7280?text=Blog';
+                    $relImageUrl = $p->featured_image_url
+                        ?? 'https://placehold.co/600x400/e5e7eb/6b7280?text=Blog';
                 @endphp
                 <article class="group">
                     <a href="{{ route('blog.show', $p->slug) }}" class="block">

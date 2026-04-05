@@ -41,9 +41,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($posts as $post)
             @php
-                $imageUrl = $post->featured_image
-                    ? \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image)
-                    : 'https://placehold.co/600x400/e5e7eb/6b7280?text=Blog';
+                $imageUrl = $post->featured_image_url
+                    ?? 'https://placehold.co/600x400/e5e7eb/6b7280?text=Blog';
             @endphp
             <article class="group">
                 <a href="{{ route('blog.show', $post->slug) }}" class="block">
@@ -59,7 +58,7 @@
                             <span>{{ ($post->published_at ?? $post->created_at)?->format('M d, Y') }}</span>
                         </div>
                         <h3 class="text-xl font-serif text-[#111827] line-clamp-2 leading-snug group-hover:underline decoration-1 underline-offset-4">{{ $post->title }}</h3>
-                        <p class="mt-3 text-[15px] text-[#6a6a6a] line-clamp-3 leading-relaxed">{{ Str::limit(strip_tags($post->excerpt ?? $post->content ?? ''), 150) }}</p>
+                        <p class="mt-3 text-[15px] text-[#6a6a6a] line-clamp-3 leading-relaxed">{{ Str::limit($post->excerpt_plain !== '' ? $post->excerpt_plain : strip_tags($post->content_html), 150) }}</p>
                         <span class="inline-block mt-4 text-[13px] font-semibold uppercase tracking-wider text-[#111827] border-b border-[#111827]">Read article</span>
                     </div>
                 </a>

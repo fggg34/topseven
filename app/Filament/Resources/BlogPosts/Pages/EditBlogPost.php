@@ -22,6 +22,7 @@ class EditBlogPost extends EditRecord
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $data['tags'] = $this->record->tags->pluck('id')->toArray();
+
         return $data;
     }
 
@@ -29,6 +30,11 @@ class EditBlogPost extends EditRecord
     {
         $this->tagsToSync = $data['tags'] ?? [];
         unset($data['tags']);
+
+        if (isset($data['featured_image']) && is_array($data['featured_image'])) {
+            $data['featured_image'] = $data['featured_image'][array_key_first($data['featured_image'])] ?? ($data['featured_image'][0] ?? null);
+        }
+
         return $data;
     }
 
