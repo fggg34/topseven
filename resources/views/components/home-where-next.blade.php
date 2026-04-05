@@ -15,42 +15,34 @@
             {{ $heading }}
         </h2>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-4">
-            @foreach($countries as $country)
-                @php
-                    $img = $country->city_image_url;
-                    $galleryUrls = $country->gallery_urls;
-                    if (! $img && is_array($galleryUrls) && ! empty($galleryUrls[0])) {
-                        $img = $galleryUrls[0];
-                    }
-                    if (! $img) {
-                        $img = 'https://placehold.co/600x600/e5e7eb/6b7280?text=' . urlencode($country->name);
-                    }
-                    $trips = (int) ($country->tours_count ?? 0);
-                @endphp
-                <a
-                    href="{{ route('countries.show', $country->slug) }}"
-                    class="group relative aspect-square w-full overflow-hidden rounded-2xl md:rounded-3xl bg-gray-200 ring-1 ring-black/5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
-                >
-                    <img
-                        src="{{ $img }}"
-                        alt="{{ $country->name }}"
-                        class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                        loading="lazy"
-                    >
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/20 pointer-events-none"></div>
+        {{-- Mobile: Swiper — 2×2 grid per slide (same nav buttons as homepage flash-sale slider) --}}
+        <div class="home-where-next-mobile md:hidden overflow-hidden">
+            <div class="swiper home-where-next-swiper">
+                <div class="swiper-wrapper">
+                    @foreach($countries->chunk(4) as $chunk)
+                        <div class="swiper-slide !h-auto">
+                            <div class="grid grid-cols-2 gap-3">
+                                @foreach($chunk as $country)
+                                    <x-home-where-next-card :country="$country" />
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="flex items-center justify-end mt-8 gap-2">
+                <button type="button" class="home-where-next-prev w-11 h-11 rounded-full border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center transition-colors hover:bg-gray-200 disabled:opacity-40 disabled:pointer-events-none" aria-label="{{ __('Previous') }}">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </button>
+                <button type="button" class="home-where-next-next w-11 h-11 rounded-full bg-black text-white flex items-center justify-center transition-colors hover:bg-gray-900 disabled:opacity-40 disabled:pointer-events-none" aria-label="{{ __('Next') }}">
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+            </div>
+        </div>
 
-                    <div class="absolute inset-0 z-10 flex flex-col items-center justify-center px-3 text-center">
-                        <span class="text-base sm:text-lg font-medium text-white drop-shadow-md tracking-tight">
-                            {{ $country->name }}
-                        </span>
-                        @if($trips > 0)
-                            <span class="mt-2.5 inline-flex items-center rounded-full bg-white px-3 py-1 text-xs sm:text-sm font-semibold text-gray-900 tabular-nums shadow-sm">
-                                {{ $trips }} {{ $trips === 1 ? 'travel package' : 'travel packages' }}
-                            </span>
-                        @endif
-                    </div>
-                </a>
+        <div class="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-4">
+            @foreach($countries as $country)
+                <x-home-where-next-card :country="$country" />
             @endforeach
         </div>
     </div>

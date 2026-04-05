@@ -239,6 +239,11 @@
         opacity: 0.35;
         pointer-events: none;
     }
+    .home-where-next-prev.swiper-button-disabled,
+    .home-where-next-next.swiper-button-disabled {
+        opacity: 0.35;
+        pointer-events: none;
+    }
 </style>
 @endpush
 
@@ -305,6 +310,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     640: { slidesPerView: 2.15, spaceBetween: 16 },
                     1024: { slidesPerView: 3.15, spaceBetween: 16 },
                     1280: { slidesPerView: 4.15, spaceBetween: 16 },
+                },
+            });
+        });
+        document.querySelectorAll('.home-where-next-swiper').forEach(function (el) {
+            var section = el.closest('.home-where-next');
+            var prev = section ? section.querySelector('.home-where-next-prev') : null;
+            var next = section ? section.querySelector('.home-where-next-next') : null;
+            new window.Swiper(el, {
+                modules: [window.SwiperNavigation],
+                slidesPerView: 1,
+                spaceBetween: 16,
+                watchOverflow: true,
+                navigation: {
+                    prevEl: prev,
+                    nextEl: next,
                 },
             });
         });

@@ -212,6 +212,18 @@ section.home-blog-stories-section {
   max-width: 100%;
 }
 
+/* Homepage where-next — mobile swiper (2×2 grid per slide) */
+.swiper.home-where-next-swiper {
+  overflow: unset !important;
+}
+section.home-where-next .home-where-next-mobile {
+  overflow: hidden;
+}
+.home-where-next-swiper {
+  width: 100%;
+  max-width: 100%;
+}
+
 /* City page swipers (highlights, tours, hotels) - overflow visible on mobile for peek effect */
 .city-highlights-swiper,
 .city-tours-swiper,
