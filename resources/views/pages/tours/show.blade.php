@@ -242,19 +242,6 @@
                 </div>
                 @endif
 
-                {{-- Important notes --}}
-                @if($tour->important_notes)
-                <div class="rounded-2xl border border-amber-200 bg-amber-50/60 p-6">
-                    <h2 class="text-lg font-bold text-amber-800 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        {{ __('Important notes') }}
-                    </h2>
-                    <div class="prose prose-sm max-w-none text-amber-900">
-                        {!! $tour->important_notes !!}
-                    </div>
-                </div>
-                @endif
-
                 {{-- Itinerary --}}
                 @if($tour->itineraries->isNotEmpty())
                     @php $firstId = $tour->itineraries->first()->id; @endphp
