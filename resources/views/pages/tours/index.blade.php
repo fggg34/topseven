@@ -31,10 +31,41 @@
             'label' => $d->translatedFormat('F Y'),
         ];
     }
+    $toursPricePresets = [
+        ['id' => '', 'min' => null, 'max' => null, 'label' => __('Any price')],
+        ['id' => 'lte_500', 'min' => null, 'max' => 500.0, 'label' => __('Price: up to €500')],
+        ['id' => '500_1000', 'min' => 500.0, 'max' => 1000.0, 'label' => __('Price: €500–€1,000')],
+        ['id' => '1000_2000', 'min' => 1000.0, 'max' => 2000.0, 'label' => __('Price: €1,000–€2,000')],
+        ['id' => 'gte_2000', 'min' => 2000.0, 'max' => null, 'label' => __('Price: over €2,000')],
+    ];
+    $toursFilterSelectedPricePreset = '';
+    $fvMin = request()->filled('min_price') ? (float) request('min_price') : null;
+    $fvMax = request()->filled('max_price') ? (float) request('max_price') : null;
+    foreach ($toursPricePresets as $preset) {
+        if ($preset['id'] === '') {
+            continue;
+        }
+        $pm = $preset['min'];
+        $px = $preset['max'];
+        $ok = false;
+        if ($pm === null && $px !== null) {
+            $ok = ($fvMin === null || $fvMin <= 0) && $fvMax !== null && abs($fvMax - $px) < 0.01;
+        } elseif ($pm !== null && $px === null) {
+            $ok = $fvMin !== null && abs($fvMin - $pm) < 0.01 && $fvMax === null;
+        } elseif ($pm !== null && $px !== null) {
+            $ok = $fvMin !== null && abs($fvMin - $pm) < 0.01 && $fvMax !== null && abs($fvMax - $px) < 0.01;
+        }
+        if ($ok) {
+            $toursFilterSelectedPricePreset = $preset['id'];
+            break;
+        }
+    }
     $toursFilterLabels = [
         'destination' => __('Destination'),
         'month' => __('Choose month'),
         'anyMonth' => __('Any month'),
+        'choosePrice' => __('Choose price'),
+        'anyPrice' => __('Any price'),
         'sortOptions' => [
             ['value' => 'popular', 'label' => __('Most Popular')],
             ['value' => 'newest', 'label' => __('Newest')],
@@ -117,7 +148,26 @@
             </div>
         </div>
 
-        @if(request('country') || request('date') || request('adults'))
+        <div class="relative">
+            <button @click="openPrice = !openPrice" type="button"
+                class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
+                :class="selectedPricePreset ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                <i class="fa-solid fa-tag text-xs"></i>
+                <span x-text="priceButtonLabel()"></span>
+                <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
+            </button>
+            <div x-show="openPrice" @click.outside="openPrice = false" x-transition
+                class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[240px] max-h-72 overflow-y-auto">
+                <template x-for="p in pricePresets" :key="p.id || 'any'">
+                    <button type="button" @click="selectPricePreset(p.id)"
+                        class="w-full text-left px-5 py-2.5 text-sm transition-colors"
+                        :class="(selectedPricePreset || '') === (p.id || '') ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                        x-text="p.label"></button>
+                </template>
+            </div>
+        </div>
+
+        @if(request('country') || request('date') || request('adults') || request()->filled('min_price') || request()->filled('max_price'))
             <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">{{ __('Clear') }}</a>
         @endif
     </div>
@@ -151,7 +201,9 @@
             'date' => request('date'),
             'adults' => request('adults'),
             'category' => request('category'),
-        ]);
+            'min_price' => request('min_price'),
+            'max_price' => request('max_price'),
+        ], fn ($v) => $v !== null && $v !== '');
     @endphp
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @forelse($tours as $tour)
@@ -179,10 +231,15 @@ function tourFilters(labels) {
             destination: labels.destination || 'Destination',
             month: labels.month || 'Choose month',
             anyMonth: labels.anyMonth || 'Any month',
+            choosePrice: labels.choosePrice || 'Choose price',
+            anyPrice: labels.anyPrice || 'Any price',
         },
+        pricePresets: @json($toursPricePresets),
+        selectedPricePreset: @json($toursFilterSelectedPricePreset),
         selectedCountry: '{{ request('country', '') ?: request('city', '') }}',
         openDestination: false,
         openMonth: false,
+        openPrice: false,
         selectedMonth: @json($toursFilterSelectedMonth),
         monthOptions: @json($toursFilterMonthOptions),
         destinations: @json($countries->map(fn($c) => ['slug' => $c->slug, 'name' => $c->name])->values()),
@@ -200,6 +257,18 @@ function tourFilters(labels) {
             if (!this.selectedMonth) return this.labels.month;
             const row = this.monthOptions.find((m) => m.value === this.selectedMonth);
             return row ? row.label : this.labels.month;
+        },
+
+        priceButtonLabel() {
+            if (!this.selectedPricePreset) return this.labels.choosePrice;
+            const row = this.pricePresets.find((p) => p.id === this.selectedPricePreset);
+            return row ? row.label : this.labels.choosePrice;
+        },
+
+        selectPricePreset(id) {
+            this.selectedPricePreset = id || '';
+            this.openPrice = false;
+            this.applyFilters();
         },
 
         selectMonth(value) {
@@ -222,6 +291,9 @@ function tourFilters(labels) {
             if (q) params.set('q', q);
             const adults = @json(request('adults', ''));
             if (adults !== '' && adults !== null) params.set('adults', String(adults));
+            const preset = this.pricePresets.find((p) => p.id === this.selectedPricePreset);
+            if (preset && preset.min != null) params.set('min_price', String(preset.min));
+            if (preset && preset.max != null) params.set('max_price', String(preset.max));
             window.location.href = '{{ route('tours.index') }}' + '?' + params.toString();
         }
     }
