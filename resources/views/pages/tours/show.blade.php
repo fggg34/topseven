@@ -359,35 +359,31 @@
                 {{-- Included / Not included --}}
                 @if($tour->included || $tour->not_included)
                 <div class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 md:divide-x divide-gray-100">
+                    <div class="@if($tour->included && $tour->not_included) grid grid-cols-1 md:grid-cols-2 md:divide-x divide-gray-100 @endif">
                         @if($tour->included)
-                        <div class="p-6 md:p-8">
-                            <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-5">{{ __('Included') }}</h2>
-                            <ul class="space-y-0 divide-y divide-gray-100">
+                        <div class="p-6 md:p-8 w-full">
+                            <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-4">{{ __('Included') }}</h2>
+                            <div class="flex flex-wrap gap-2">
                                 @foreach((array) $tour->included as $item)
-                                <li class="flex items-start gap-3 py-3 first:pt-0 text-[15px] text-gray-800 leading-snug">
-                                    <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100">
-                                        <i class="fa-solid fa-check text-[10px]" aria-hidden="true"></i>
-                                    </span>
-                                    <span>{{ $item }}</span>
-                                </li>
+                                <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm text-gray-800 ring-1 ring-emerald-100">
+                                    <i class="fa-solid fa-check text-emerald-600 text-[10px]" aria-hidden="true"></i>
+                                    {{ $item }}
+                                </span>
                                 @endforeach
-                            </ul>
+                            </div>
                         </div>
                         @endif
                         @if($tour->not_included)
-                        <div class="p-6 md:p-8 {{ $tour->included ? '' : 'md:col-span-2' }}">
-                            <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-5">{{ __('Not included') }}</h2>
-                            <ul class="space-y-0 divide-y divide-gray-100">
+                        <div class="p-6 md:p-8 w-full @if($tour->included) border-t border-gray-100 md:border-t-0 @endif">
+                            <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-4">{{ __('Not included') }}</h2>
+                            <div class="flex flex-wrap gap-2">
                                 @foreach((array) $tour->not_included as $item)
-                                <li class="flex items-start gap-3 py-3 first:pt-0 text-[15px] text-gray-600 leading-snug">
-                                    <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-50 text-gray-400 ring-1 ring-gray-100">
-                                        <i class="fa-solid fa-minus text-[10px]" aria-hidden="true"></i>
-                                    </span>
-                                    <span>{{ $item }}</span>
-                                </li>
+                                <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700 ring-1 ring-gray-200/80">
+                                    <i class="fa-solid fa-minus text-gray-400 text-[10px]" aria-hidden="true"></i>
+                                    {{ $item }}
+                                </span>
                                 @endforeach
-                            </ul>
+                            </div>
                         </div>
                         @endif
                     </div>
