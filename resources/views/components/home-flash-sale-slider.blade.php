@@ -47,8 +47,8 @@
                     $decimals = ($sale != floor($sale)) ? 2 : 0;
                     $baseDecimals = ($base != floor($base)) ? 2 : 0;
                 @endphp
-                <div class="swiper-slide !h-auto">
-                    <a href="{{ $tourUrl }}" class="home-flash-sale-card group relative block aspect-[3/4] min-h-[420px] sm:min-h-[480px] max-h-[560px] rounded-[28px] overflow-hidden shadow-md ring-1 ring-black/10">
+                <div class="swiper-slide !h-auto min-w-0 max-w-full box-border">
+                    <a href="{{ $tourUrl }}" class="home-flash-sale-card group relative block w-full max-w-full min-w-0 box-border aspect-[3/4] min-h-[420px] sm:min-h-[480px] max-h-[560px] rounded-[28px] overflow-hidden shadow-md ring-1 ring-black/10">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-[1.04]" style="background-image: url('{{ e($imageUrl) }}');"></div>
                         {{-- Readability gradient: strong at bottom, fades by ~mid card --}}
                         <div class="absolute inset-0 bg-gradient-to-t from-black/[0.88] via-black/35 to-transparent pointer-events-none"></div>
@@ -75,7 +75,7 @@
     </div>
 
     <div class="flex items-center justify-between mt-8 gap-4">
-        <a href="{{ $ctaUrl }}" class="inline-flex items-center rounded-full bg-black text-white text-sm font-semibold px-6 py-2.5 hover:bg-gray-900 transition-colors">
+        <a href="{{ $ctaUrl }}" class="inline-flex items-center justify-center max-w-full min-w-0 rounded-full bg-black text-white text-sm font-semibold px-6 py-2.5 hover:bg-gray-900 transition-colors">
             {{ $ctaLabel }}
         </a>
         <div class="flex items-center gap-2">

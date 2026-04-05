@@ -150,6 +150,13 @@ section.home-flash-sale-section {
   width: 100%;
   max-width: 100%;
 }
+.home-flash-sale-swiper .swiper-slide {
+  box-sizing: border-box;
+  min-width: 0;
+}
+.home-flash-sale-swiper .swiper-slide .home-flash-sale-card {
+  max-width: 100%;
+}
 
 .home-flash-sale-prev.swiper-button-disabled,
 .home-flash-sale-next.swiper-button-disabled {
