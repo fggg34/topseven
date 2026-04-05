@@ -41,7 +41,7 @@
     @scroll.window="checkScroll()"
     :class="overlay && scrolled ? 'bg-[#000] shadow-md shadow-black/30' : (!overlay ? 'bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm' : '')"
 >
-    <nav class="w-full px-4 sm:px-6 lg:px-[80px] pt-5 pb-4">
+    <nav class="w-full px-4 sm:px-6 lg:px-[80px] pt-3 pb-2.5 md:pt-5 md:pb-4">
         <div class="relative flex items-center justify-between min-h-[44px]">
             {{-- Left: mobile menu + desktop nav --}}
             <div class="flex items-center z-10 min-w-0">
