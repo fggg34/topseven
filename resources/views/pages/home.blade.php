@@ -21,10 +21,13 @@
         ]);
     $resolveUrl = fn ($u) => (str_starts_with($u ?? '', 'http') ? $u : url($u ?? '#'));
 @endphp
-<section class="home-hero-section relative isolate h-[650px] bg-black text-white overflow-hidden">
-    {{-- Background slides (Swiper only wraps media; copy + form stay in sibling overlay) --}}
+<section class="home-hero-section relative isolate h-[min(85vh,650px)] min-h-[520px] md:h-[650px] bg-black text-white overflow-hidden">
+    {{-- Media layer: same box as UI layer below (both absolute inset-0) --}}
     @php $heroSlideCount = $heroSlides->count(); @endphp
-    <div class="{{ $heroSlideCount > 1 ? 'swiper home-hero-swiper' : '' }} absolute inset-0 z-0">
+    <div @class([
+        'swiper home-hero-swiper' => $heroSlideCount > 1,
+        'absolute inset-0 z-0 h-full min-h-0',
+    ])>
         <div class="{{ $heroSlideCount > 1 ? 'swiper-wrapper' : '' }}" style="height:100%">
             @foreach($heroSlides as $slide)
                 @php
@@ -61,8 +64,9 @@
         </div>
     </div>
 
-    {{-- Overlay UI: must stack above Swiper (.swiper often gets z-index from library CSS + touch layer) --}}
-    <div class="home-hero-ui relative z-30 flex flex-col h-full w-full min-h-0 px-4 sm:px-6 lg:px-[80px] pt-20 md:pt-24 pointer-events-auto">
+    {{-- UI layer: pinned to the same rectangle as the slides (not document flow below the media) --}}
+    <div class="home-hero-ui absolute inset-0 z-30 flex min-h-0 flex-col px-4 sm:px-6 lg:px-[80px] pt-20 md:pt-24 pointer-events-auto">
+        <div class="mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col">
 
         {{-- Search bar (full width within padded area) --}}
         <div class="flex-shrink-0 w-full mt-2">
@@ -91,6 +95,7 @@
                     @endif
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </section>
@@ -176,10 +181,6 @@
     .home-hero-swiper .swiper-slide,
     .home-hero-swiper .swiper-slide * {
         pointer-events: none !important;
-    }
-    .home-hero-ui {
-        z-index: 30;
-        isolation: isolate;
     }
     .home-hero-swiper,
     .home-hero-swiper .swiper-wrapper,
