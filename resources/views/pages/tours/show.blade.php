@@ -163,26 +163,32 @@
     </div>
 </section>
 
-{{-- Quick facts --}}
+{{-- Quick facts: package dates + price (from tour admin / homepage card dates) --}}
 @php
-    $durationLabel = $tour->duration_days
-        ? $tour->duration_days . ' ' . ($tour->duration_days === 1 ? __('day') : __('days'))
-        : ($tour->duration_hours ? $tour->duration_hours . ' ' . __('hours') : null);
+    $factsLocale = str_replace('_', '-', app()->getLocale());
     $facts = collect();
-    if ($tour->start_location) $facts->push(['icon' => 'fa-flag', 'label' => __('Starts'), 'value' => $tour->start_location]);
-    if ($durationLabel) $facts->push(['icon' => 'fa-sun', 'label' => __('Duration'), 'value' => $durationLabel]);
-    if ($tour->end_location ?? $tour->start_location) $facts->push(['icon' => 'fa-suitcase', 'label' => __('Ends'), 'value' => $tour->end_location ?? $tour->start_location]);
-    if ($tour->category) $facts->push(['icon' => 'fa-route', 'label' => __('Type'), 'value' => $tour->category->name]);
-    if ($tour->difficulty) {
-        $dl = ['easy' => __('Easy'), 'moderate' => __('Moderate'), 'challenging' => __('Challenging'), 'strenuous' => __('Strenuous')];
-        $facts->push(['icon' => 'fa-mountain', 'label' => __('Difficulty'), 'value' => $dl[$tour->difficulty] ?? $tour->difficulty]);
+    if ($tour->homepage_card_date_from) {
+        $facts->push([
+            'icon' => 'fa-calendar-day',
+            'label' => __('Departure date'),
+            'value' => $tour->homepage_card_date_from->copy()->locale($factsLocale)->translatedFormat('j M Y'),
+        ]);
     }
-    if ($tour->season) {
-        $sl = ['summer' => __('Summer'), 'winter' => __('Winter'), 'all_season' => __('All Season')];
-        $facts->push(['icon' => 'fa-calendar-check', 'label' => __('Season'), 'value' => $sl[$tour->season] ?? $tour->season]);
+    $returnCarbon = $tour->homepage_card_date_to ?? $tour->homepage_card_date_from;
+    if ($returnCarbon) {
+        $facts->push([
+            'icon' => 'fa-calendar-check',
+            'label' => __('Return date'),
+            'value' => $returnCarbon->copy()->locale($factsLocale)->translatedFormat('j M Y'),
+        ]);
     }
-    if ($tour->max_group_size) $facts->push(['icon' => 'fa-user-group', 'label' => __('Max people'), 'value' => $tour->max_group_size]);
-    if ($tour->languages && count($tour->languages) > 0) $facts->push(['icon' => 'fa-language', 'label' => __('Language'), 'value' => implode(', ', (array) $tour->languages)]);
+    $factsPrice = (float) ($tour->price ?? 0);
+    $factsCurrency = ($tour->currency === 'EUR' || ! $tour->currency) ? '€' : ($tour->currency === 'USD' ? '$' : $tour->currency.' ');
+    $facts->push([
+        'icon' => 'fa-tag',
+        'label' => __('Price per person'),
+        'value' => $factsCurrency.number_format($factsPrice, 0).' / '.__('person'),
+    ]);
 @endphp
 @if($facts->isNotEmpty())
 <section class="px-4 sm:px-6 md:px-[80px] mt-6 md:mt-8 relative z-10">
