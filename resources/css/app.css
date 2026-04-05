@@ -201,7 +201,10 @@ section.home-flash-sale-section {
 .swiper.home-blog-stories-swiper {
   overflow: unset !important;
 }
-section.home-blog-stories-section .home-blog-stories-mobile {
+.home-blog-stories-mobile {
+  overflow: unset !important;
+}
+section.home-blog-stories-section {
   overflow: hidden;
 }
 .home-blog-stories-swiper {
