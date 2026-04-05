@@ -78,9 +78,9 @@
                 <li class="text-[#111827] font-medium truncate max-w-[min(100%,280px)]">{{ $tour->title }}</li>
             </ol>
         </nav>
-        @if($tour->category)
+        <!-- @if($tour->category)
             <span class="inline-flex rounded-full bg-gray-100 px-3.5 py-1 text-[12px] font-semibold text-[#111827] mb-3">{{ $tour->category->name }}</span>
-        @endif
+        @endif -->
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#111827] tracking-tight leading-[1.1] max-w-4xl">{{ $tour->title }}</h1>
         @if($tour->approvedReviews->count() > 0)
             <div class="mt-3 flex items-center gap-2 text-[#111827]">
