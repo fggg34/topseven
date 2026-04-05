@@ -59,6 +59,11 @@
   width: 100%;
 }
 
+/* Above fixed header / filter dropdowns (nav z-50, mobile drawer z-[9999]) */
+.flatpickr-calendar {
+  z-index: 10050 !important;
+}
+
 /* Prose paragraph spacing (backend rich text editor content) */
 .prose p,
 .prose-sm p,

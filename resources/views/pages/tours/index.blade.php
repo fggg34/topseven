@@ -168,12 +168,14 @@
                     x-text="labels.anyDeparture"></button>
                 <div class="px-5 pt-3 border-t border-[#f0ebe3] mt-2">
                     <label class="block text-[11px] font-semibold uppercase tracking-wide text-[#6a6a6a] mb-2" for="tours-filter-departure-date">{{ __('Departure date') }}</label>
-                    <input id="tours-filter-departure-date" type="date"
-                        class="w-full rounded-lg border border-[#d1cdc4] px-3 py-2 text-sm text-[#111827] focus:border-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827]"
-                        :min="departureDateMin"
-                        :max="departureDateMax"
-                        :value="selectedDeparture"
-                        @change="if ($event.target.value) { selectDeparture($event.target.value); }">
+                    <div class="flatpickr-wrapper">
+                        <input id="tours-filter-departure-date" type="text"
+                            x-ref="departureDateInput"
+                            readonly
+                            placeholder="{{ __('Choose departure date') }}"
+                            class="w-full cursor-pointer rounded-lg border border-[#d1cdc4] bg-white px-3 py-2 text-sm text-[#111827] placeholder:text-[#9ca3af] focus:border-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827]"
+                            autocomplete="off">
+                    </div>
                 </div>
             </div>
         </div>
@@ -289,7 +291,51 @@ function tourFilters(labels) {
             { value: 'price_high', label: 'Price: High to Low' },
         ],
 
-        init() {},
+        departureFp: null,
+
+        init() {
+            this.$watch('openDeparture', (open) => {
+                if (open) {
+                    this.$nextTick(() => this.ensureDepartureFlatpickr());
+                }
+            });
+        },
+
+        destroyDepartureFlatpickr() {
+            if (this.departureFp) {
+                try {
+                    this.departureFp.destroy();
+                } catch (e) { /* noop */ }
+                this.departureFp = null;
+            }
+        },
+
+        ensureDepartureFlatpickr() {
+            if (!window.flatpickr || !this.$refs.departureDateInput) return;
+            if (this.departureFp) {
+                if (this.selectedDeparture) {
+                    this.departureFp.setDate(this.selectedDeparture, false);
+                } else {
+                    this.departureFp.clear();
+                }
+                return;
+            }
+            var self = this;
+            var useSq = this.locale && (this.locale === 'sq' || String(this.locale).indexOf('sq') === 0);
+            this.departureFp = window.flatpickr(this.$refs.departureDateInput, {
+                dateFormat: 'Y-m-d',
+                minDate: this.departureDateMin,
+                maxDate: this.departureDateMax,
+                allowInput: false,
+                disableMobile: true,
+                appendTo: document.body,
+                locale: useSq && window.flatpickrLocaleAlbanian ? window.flatpickrLocaleAlbanian : undefined,
+                defaultDate: this.selectedDeparture || undefined,
+                onChange: function (selectedDates, dateStr) {
+                    if (dateStr) self.selectDeparture(dateStr);
+                },
+            });
+        },
 
         monthButtonLabel() {
             if (!this.selectedMonth) return this.labels.month;
