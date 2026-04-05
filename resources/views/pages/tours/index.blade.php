@@ -33,7 +33,7 @@
     }
     $toursFilterLabels = [
         'destination' => __('Destination'),
-        'month' => __('Month'),
+        'month' => __('Choose month'),
         'anyMonth' => __('Any month'),
         'sortOptions' => [
             ['value' => 'popular', 'label' => __('Most Popular')],
@@ -177,7 +177,7 @@ function tourFilters(labels) {
     return {
         labels: {
             destination: labels.destination || 'Destination',
-            month: labels.month || 'Month',
+            month: labels.month || 'Choose month',
             anyMonth: labels.anyMonth || 'Any month',
         },
         selectedCountry: '{{ request('country', '') ?: request('city', '') }}',
