@@ -150,6 +150,11 @@ section.home-flash-sale-section {
   width: 100%;
   max-width: 100%;
 }
+
+.home-flash-sale-prev.swiper-button-disabled,
+.home-flash-sale-next.swiper-button-disabled {
+  opacity: 1 !important;
+}
 .featured-tours-swiper {
   overflow: visible !important;
   width: 100%;

@@ -218,15 +218,6 @@
             justify-content: flex-end !important;
         }
     }
-    .home-flash-sale-prev.swiper-button-disabled,
-    .home-flash-sale-next.swiper-button-disabled {
-        opacity: 0.35 !important;
-        cursor: not-allowed;
-    }
-    .home-flash-sale-next.swiper-button-disabled {
-        background-color: #e5e7eb !important;
-        color: #9ca3af !important;
-    }
     .home-testimonials-prev.swiper-button-disabled,
     .home-testimonials-next.swiper-button-disabled {
         opacity: 0.35;
