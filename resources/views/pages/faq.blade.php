@@ -76,7 +76,7 @@
                         </button>
                         <div x-show="open === 's{{ $sIdx }}_{{ $i }}'" x-collapse x-cloak>
                             <div class="px-5 sm:px-6 pb-5 pt-0 text-[15px] text-[#4a4a4a] leading-[1.75] border-t border-[#f0ebe3]">
-                                <div class="pt-4">{{ $faq['a'] ?? '' }}</div>
+                                <div class="pt-4 whitespace-pre-line">{{ $faq['a'] ?? '' }}</div>
                             </div>
                         </div>
                     </div>
