@@ -31,64 +31,72 @@
 @if(\App\Models\Setting::get('page_faq_seo_og_image'))@section('og_image', \App\Models\Setting::get('page_faq_seo_og_image'))@endif
 
 @section('content')
-{{-- Hero --}}
-<div class="relative w-full overflow-hidden bg-brand-footer" style="height: 320px;">
-    <div class="absolute inset-0 bg-cover bg-center opacity-50" style="background-image: url('{{ $heroBg }}');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+{{-- Hero (aligned with blog / legal-style interior pages) --}}
+<div class="relative w-full overflow-hidden bg-[#111827]" style="height: 340px;">
+    <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url({{ json_encode($heroBg) }});"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
     <div class="absolute inset-0 flex items-end">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-10">
-            <nav class="text-sm mb-4" aria-label="Breadcrumb">
-                <ol class="flex items-center gap-1.5">
-                    <li><a href="{{ route('home') }}" class="text-white/70 hover:text-white transition">Home</a></li>
-                    <li class="text-white/50">/</li>
-                    <li class="text-white">FAQ</li>
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[80px] w-full pb-12">
+            <nav class="text-sm mb-4" aria-label="{{ __('Breadcrumb') }}">
+                <ol class="flex flex-wrap items-center gap-1.5">
+                    <li><a href="{{ route('home') }}" class="text-white/60 hover:text-white transition-colors">{{ __('Home') }}</a></li>
+                    <li class="text-white/40" aria-hidden="true">/</li>
+                    <li class="text-white font-medium">{{ __('FAQ') }}</li>
                 </ol>
             </nav>
-            <h1 class="text-4xl md:text-5xl font-bold text-white" style="color: #fff !important;">{{ $heroTitle }}</h1>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-white tracking-tight leading-[1.1]">{{ $heroTitle }}</h1>
             @if($heroSubtitle)
-                <p class="mt-2 text-lg text-white/80">{{ $heroSubtitle }}</p>
+                <p class="mt-3 text-lg text-white/70 max-w-xl leading-relaxed">{{ $heroSubtitle }}</p>
             @endif
         </div>
     </div>
 </div>
 
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-
-    @foreach($sections as $sIdx => $section)
-    <section class="mb-12">
-        @if(!empty($section['category_label']))
-            <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-2">{{ $section['category_label'] }}</p>
-        @endif
-        @if(!empty($section['category_title']))
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ $section['category_title'] }}</h2>
-        @endif
-        @if(!empty($section['items']))
-        <div class="space-y-3" x-data="{ open: null }">
-            @foreach($section['items'] as $i => $faq)
-                <div class="rounded-xl border border-gray-100 bg-white overflow-hidden">
-                    <button @click="open === 's{{ $sIdx }}_{{ $i }}' ? open = null : open = 's{{ $sIdx }}_{{ $i }}'"
-                        class="w-full flex items-center justify-between gap-4 px-6 py-4 text-left">
-                        <span class="font-medium text-gray-900">{{ $faq['q'] ?? '' }}</span>
-                        <i class="fa-solid fa-chevron-down text-xs text-gray-400 transition-transform duration-200" :class="open === 's{{ $sIdx }}_{{ $i }}' && 'rotate-180'"></i>
-                    </button>
-                    <div x-show="open === 's{{ $sIdx }}_{{ $i }}'" x-collapse>
-                        <div class="px-6 pb-4 text-sm text-gray-600 leading-relaxed">{{ $faq['a'] ?? '' }}</div>
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[80px] py-16 md:py-20">
+    <div class="max-w-3xl mx-auto">
+        @foreach($sections as $sIdx => $section)
+        <section class="mb-14 last:mb-0">
+            @if(! empty($section['category_label']))
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-2">{{ $section['category_label'] }}</p>
+            @endif
+            @if(! empty($section['category_title']))
+                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-[#111827] tracking-tight leading-tight mb-6">{{ $section['category_title'] }}</h2>
+            @endif
+            @if(! empty($section['items']))
+            <div class="space-y-3" x-data="{ open: null }">
+                @foreach($section['items'] as $i => $faq)
+                    <div class="rounded-xl border border-[#e6e1d8] bg-white overflow-hidden shadow-sm ring-1 ring-black/[0.03]">
+                        <button type="button"
+                            @click="open === 's{{ $sIdx }}_{{ $i }}' ? open = null : open = 's{{ $sIdx }}_{{ $i }}'"
+                            class="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 text-left transition-colors hover:bg-[#f8f6f2]/80">
+                            <span class="font-semibold text-[#111827] text-[15px] sm:text-base pr-2">{{ $faq['q'] ?? '' }}</span>
+                            <span class="shrink-0 w-8 h-8 rounded-full border border-[#d1cdc4] bg-[#f8f6f2] flex items-center justify-center">
+                                <i class="fa-solid fa-chevron-down text-[10px] text-[#111827]/60 transition-transform duration-200" :class="open === 's{{ $sIdx }}_{{ $i }}' && 'rotate-180'"></i>
+                            </span>
+                        </button>
+                        <div x-show="open === 's{{ $sIdx }}_{{ $i }}'" x-collapse x-cloak>
+                            <div class="px-5 sm:px-6 pb-5 pt-0 text-[15px] text-[#4a4a4a] leading-[1.75] border-t border-[#f0ebe3]">
+                                <div class="pt-4">{{ $faq['a'] ?? '' }}</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
-        @endif
-    </section>
-    @endforeach
+                @endforeach
+            </div>
+            @endif
+        </section>
+        @endforeach
 
-    {{-- CTA --}}
-    <section class="mt-16 rounded-2xl bg-white border border-gray-100 p-8 md:p-12 text-center">
-        <i class="fa-solid fa-comment-dots text-3xl text-brand-btn mb-4"></i>
-        <h2 class="text-xl font-bold text-gray-900 mb-2">{{ $ctaTitle }}</h2>
-        <p class="text-gray-500 mb-6 max-w-md mx-auto">{{ $ctaDescription }}</p>
-        <a href="{{ $ctaButtonUrl }}" class="inline-flex px-8 py-3.5 bg-brand-btn hover:bg-brand-btn-hover text-white font-medium rounded-xl transition-colors">
-            {{ $ctaButtonText }}
-        </a>
-    </section>
+        {{-- CTA --}}
+        <section class="mt-16 rounded-2xl bg-[#f8f6f2] border border-[#e6e1d8] p-8 md:p-12 text-center">
+            <div class="inline-flex w-12 h-12 rounded-full bg-white border border-[#e6e1d8] items-center justify-center mb-5">
+                <i class="fa-solid fa-comment-dots text-lg text-[#111827]"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#111827] mb-3">{{ $ctaTitle }}</h2>
+            <p class="text-[#6a6a6a] mb-8 max-w-md mx-auto leading-relaxed">{{ $ctaDescription }}</p>
+            <a href="{{ $ctaButtonUrl }}" class="inline-flex items-center justify-center rounded-full bg-[#111827] hover:bg-[#1f2937] text-white text-sm font-semibold px-8 py-3.5 transition-colors">
+                {{ $ctaButtonText }}
+            </a>
+        </section>
+    </div>
 </div>
 @endsection
