@@ -15,7 +15,7 @@
 @section('content')
 <div class="w-full">
     <div class="px-4 sm:px-6 lg:px-[80px] pt-8 pb-14">
-        <div class="max-w-[1400px] mx-auto">
+        <div class="mx-auto">
 
     {{-- Breadcrumb --}}
     <nav class="text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
