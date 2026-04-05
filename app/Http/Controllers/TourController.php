@@ -49,6 +49,22 @@ class TourController extends Controller
             }
         }
 
+        if ($request->filled('departure')) {
+            try {
+                $departureDay = Carbon::parse($request->departure)->startOfDay();
+                $departureStr = $departureDay->toDateString();
+                $query->where(function ($q) use ($departureStr) {
+                    $q->whereDate('homepage_card_date_from', $departureStr)
+                        ->orWhereHas('dates', function ($qDates) use ($departureStr) {
+                            $qDates->where('is_active', true)
+                                ->whereDate('date', $departureStr);
+                        });
+                });
+            } catch (\Throwable) {
+                /* invalid departure param — ignore */
+            }
+        }
+
         if ($request->filled('category')) {
             $query->whereHas('category', fn ($q) => $q->where('slug', $request->category));
         }

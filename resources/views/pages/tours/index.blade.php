@@ -60,10 +60,22 @@
             break;
         }
     }
+    $departureDateMin = now()->format('Y-m-d');
+    $departureDateMax = now()->addMonths(18)->format('Y-m-d');
+    $toursFilterSelectedDeparture = '';
+    if (request()->filled('departure')) {
+        try {
+            $toursFilterSelectedDeparture = \Carbon\Carbon::parse(request('departure'))->format('Y-m-d');
+        } catch (\Throwable) {
+            $toursFilterSelectedDeparture = '';
+        }
+    }
     $toursFilterLabels = [
         'destination' => __('Destination'),
         'month' => __('Choose month'),
         'anyMonth' => __('Any month'),
+        'chooseDepartureDate' => __('Choose departure date'),
+        'anyDeparture' => __('Any departure'),
         'choosePrice' => __('Choose price'),
         'anyPrice' => __('Any price'),
         'sortOptions' => [
@@ -167,7 +179,7 @@
             </div>
         </div>
 
-        @if(request('country') || request('date') || request('adults') || request()->filled('min_price') || request()->filled('max_price'))
+        @if(request('country') || request('date') || request('departure') || request('adults') || request()->filled('min_price') || request()->filled('max_price'))
             <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">{{ __('Clear') }}</a>
         @endif
     </div>
@@ -199,6 +211,7 @@
         $searchParams = array_filter([
             'country' => request('country') ?: request('city'),
             'date' => request('date'),
+            'departure' => request('departure'),
             'adults' => request('adults'),
             'category' => request('category'),
             'min_price' => request('min_price'),
@@ -231,14 +244,21 @@ function tourFilters(labels) {
             destination: labels.destination || 'Destination',
             month: labels.month || 'Choose month',
             anyMonth: labels.anyMonth || 'Any month',
+            chooseDepartureDate: labels.chooseDepartureDate || 'Choose departure date',
+            anyDeparture: labels.anyDeparture || 'Any departure',
             choosePrice: labels.choosePrice || 'Choose price',
             anyPrice: labels.anyPrice || 'Any price',
         },
+        locale: @json(str_replace('_', '-', app()->getLocale())),
+        departureDateMin: @json($departureDateMin),
+        departureDateMax: @json($departureDateMax),
+        selectedDeparture: @json($toursFilterSelectedDeparture),
         pricePresets: @json($toursPricePresets),
         selectedPricePreset: @json($toursFilterSelectedPricePreset),
         selectedCountry: '{{ request('country', '') ?: request('city', '') }}',
         openDestination: false,
         openMonth: false,
+        openDeparture: false,
         openPrice: false,
         selectedMonth: @json($toursFilterSelectedMonth),
         monthOptions: @json($toursFilterMonthOptions),
@@ -277,6 +297,23 @@ function tourFilters(labels) {
             this.applyFilters();
         },
 
+        departureButtonLabel() {
+            if (!this.selectedDeparture) return this.labels.chooseDepartureDate;
+            try {
+                const d = new Date(this.selectedDeparture + 'T12:00:00');
+                if (Number.isNaN(d.getTime())) return this.labels.chooseDepartureDate;
+                return d.toLocaleDateString(this.locale, { day: 'numeric', month: 'long', year: 'numeric' });
+            } catch (e) {
+                return this.selectedDeparture;
+            }
+        },
+
+        selectDeparture(value) {
+            this.selectedDeparture = value || '';
+            this.openDeparture = false;
+            this.applyFilters();
+        },
+
         sortLabel() {
             const found = this.sortOptions.find(o => o.value === this.currentSort);
             return found ? found.label : (this.sortOptions[0]?.label || '');
@@ -286,6 +323,7 @@ function tourFilters(labels) {
             const params = new URLSearchParams();
             if (this.selectedCountry) params.set('country', this.selectedCountry);
             if (this.selectedMonth) params.set('date', this.selectedMonth);
+            if (this.selectedDeparture) params.set('departure', this.selectedDeparture);
             if (this.currentSort && this.currentSort !== 'popular') params.set('sort', this.currentSort);
             const q = '{{ request('q', '') }}';
             if (q) params.set('q', q);
