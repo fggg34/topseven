@@ -117,8 +117,6 @@
             </p>
             <div class="flex flex-wrap items-center gap-5 text-[#111827]">
                 <a href="{{ route('contact') }}" class="hover:text-[#1f2937] hover:underline">{{ __('Privacy Policy') }}</a>
-                <a href="{{ route('contact') }}" class="hover:text-[#1f2937] hover:underline">{{ __('Terms of Use') }}</a>
-                <a href="{{ route('contact') }}" class="hover:text-[#1f2937] hover:underline">{{ __('Contact Support') }}</a>
             </div>
         </div>
     </div>
