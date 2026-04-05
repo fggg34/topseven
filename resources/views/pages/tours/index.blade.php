@@ -1,13 +1,5 @@
 @extends('layouts.site')
 
-@push('styles')
-<style>
-.tours-filter-bar > .relative {
-    max-height: 42px;
-}
-</style>
-@endpush
-
 @section('title', __('Travel Packages') . ' - ' . config('app.name'))
 @section('description', __('Browse our selection of travel packages and book your next adventure.'))
 
@@ -157,6 +149,32 @@
                         :class="selectedMonth === m.value ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
                         x-text="m.label"></button>
                 </template>
+            </div>
+        </div>
+
+        <div class="relative">
+            <button @click="openDeparture = !openDeparture" type="button"
+                class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
+                :class="selectedDeparture ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                <i class="fa-solid fa-plane-departure text-xs" aria-hidden="true"></i>
+                <span x-text="departureButtonLabel()"></span>
+                <i class="fa-solid fa-chevron-down text-[9px] ml-1" aria-hidden="true"></i>
+            </button>
+            <div x-show="openDeparture" x-cloak @click.outside="openDeparture = false" x-transition
+                class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-3 min-w-[260px]">
+                <button type="button" @click="selectDeparture('')"
+                    class="w-full text-left px-5 py-2.5 text-sm transition-colors"
+                    :class="!selectedDeparture ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                    x-text="labels.anyDeparture"></button>
+                <div class="px-5 pt-3 border-t border-[#f0ebe3] mt-2">
+                    <label class="block text-[11px] font-semibold uppercase tracking-wide text-[#6a6a6a] mb-2" for="tours-filter-departure-date">{{ __('Departure date') }}</label>
+                    <input id="tours-filter-departure-date" type="date"
+                        class="w-full rounded-lg border border-[#d1cdc4] px-3 py-2 text-sm text-[#111827] focus:border-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827]"
+                        :min="departureDateMin"
+                        :max="departureDateMax"
+                        :value="selectedDeparture"
+                        @change="if ($event.target.value) { selectDeparture($event.target.value); }">
+                </div>
             </div>
         </div>
 
