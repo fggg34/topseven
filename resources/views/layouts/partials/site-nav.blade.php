@@ -206,23 +206,33 @@
             </div>
         @endif
 
-        <div class="flex-1 overflow-y-auto overscroll-contain px-3 pb-4 pt-2">
-            <p class="px-2 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-wider text-[#111827]/45">{{ __('Browse') }}</p>
+        <nav class="flex-1 overflow-y-auto overscroll-contain py-4 text-sm font-medium tracking-wide" aria-label="{{ __('Menu') }}">
             @foreach($navItems as $item)
                 @if(($item['type'] ?? 'link') === 'dropdown' && !empty($item['children'] ?? []))
-                    <div class="mb-3">
-                        <p class="px-2 py-1.5 text-xs font-semibold text-[#111827]">{{ $item['label'] ?? '' }}</p>
-                        <div class="rounded-xl border border-[#e6e1d8] bg-white overflow-hidden divide-y divide-[#f0ebe3]">
-                            @foreach($item['children'] as $child)
-                                <a href="{{ $resolveUrl($child['url'] ?? '') }}" @click="mobileOpen = false" class="block px-3 py-3 text-sm text-[#111827] hover:bg-[#f8f6f2] active:bg-[#f0ebe3] transition-colors">{{ $child['label'] ?? '' }}</a>
-                            @endforeach
-                        </div>
+                    <div class="mb-1">
+                        <p class="px-5 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">{{ $item['label'] ?? '' }}</p>
+                        @foreach($item['children'] as $child)
+                            @php
+                                $childHref = $resolveUrl($child['url'] ?? '');
+                                $childPath = parse_url($childHref, PHP_URL_PATH);
+                                $childPathNorm = $childPath === null || $childPath === '' ? '/' : '/'.ltrim($childPath, '/');
+                                $reqPath = '/'.ltrim(request()->path(), '/');
+                                $navChildActive = rtrim($childPathNorm, '/') === rtrim($reqPath, '/') || ($childPathNorm !== '/' && request()->is(trim($childPathNorm, '/')));
+                            @endphp
+                            <a href="{{ $childHref }}" @click="mobileOpen = false"
+                               class="flex items-center px-5 py-2.5 transition-colors {{ $navChildActive ? 'bg-lime-50 text-lime-700 font-medium' : 'text-gray-700 hover:bg-gray-50' }}">
+                                {{ $child['label'] ?? '' }}
+                            </a>
+                        @endforeach
                     </div>
                 @else
-                    <a href="{{ $resolveUrl($item['url'] ?? '') }}" @click="mobileOpen = false" class="block mb-2 rounded-xl border border-[#e6e1d8] bg-white px-3 py-3 text-sm font-medium text-[#111827] hover:bg-[#f8f6f2] transition-colors">{{ $item['label'] ?? '' }}</a>
+                    <a href="{{ $resolveUrl($item['url'] ?? '#') }}" @click="mobileOpen = false"
+                       class="block px-5 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors">
+                        {{ $item['label'] ?? '' }}
+                    </a>
                 @endif
             @endforeach
-        </div>
+        </nav>
 
         <div class="flex-shrink-0 border-t border-[#e6e1d8] bg-white px-4 py-4 space-y-4">
             @if($facebookUrl || $instagramUrl)
