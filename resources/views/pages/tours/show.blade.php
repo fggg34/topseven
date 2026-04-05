@@ -190,31 +190,28 @@
         'value' => $factsCurrency.number_format($factsPrice, 0).' / '.__('person'),
     ]);
 @endphp
-@if($facts->isNotEmpty())
-<section class="px-4 sm:px-6 md:px-[80px] mt-6 md:mt-8 relative z-10">
-    <div class="max-w-[1400px] mx-auto">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 flex flex-wrap gap-x-8 gap-y-4">
-            @foreach($facts as $fact)
-            <div class="flex items-center gap-3 min-w-[140px]">
-                <div class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid {{ $fact['icon'] }} text-gray-600 text-sm"></i>
-                </div>
-                <div class="min-w-0">
-                    <p class="text-[11px] text-gray-400 leading-none">{{ $fact['label'] }}</p>
-                    <p class="text-sm font-medium text-gray-900 truncate">{{ $fact['value'] }}</p>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
 
 {{-- Main content + sidebar --}}
 <div class="px-4 sm:px-6 md:px-[80px] py-10 md:py-14">
     <div class="max-w-[1400px] mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div class="lg:col-span-2 space-y-10">
+
+                @if($facts->isNotEmpty())
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 flex flex-wrap gap-x-8 gap-y-4">
+                    @foreach($facts as $fact)
+                    <div class="flex items-center gap-3 min-w-[140px]">
+                        <div class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid {{ $fact['icon'] }} text-gray-600 text-sm"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-[11px] text-gray-400 leading-none">{{ $fact['label'] }}</p>
+                            <p class="text-sm font-medium text-gray-900 truncate">{{ $fact['value'] }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @endif
 
                 {{-- Summary --}}
                 <div class="prose max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-p:leading-[1.8]">
