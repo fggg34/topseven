@@ -96,24 +96,6 @@ class TourController extends Controller
         $countries = Country::active()->withActiveTours()->orderBy('name')->get();
         $wishlistedIds = auth()->user()?->wishlistTours()->pluck('tours.id')->toArray() ?? [];
 
-        $durationOptions = Tour::where('is_active', true)
-            ->select('duration_hours', 'duration_days')
-            ->get()
-            ->map(function ($t) {
-                if ($t->duration_days) {
-                    return ['value' => $t->duration_days, 'label' => $t->duration_days.' '.($t->duration_days === 1 ? __('day') : __('days')), 'sort' => $t->duration_days * 24];
-                }
-                if ($t->duration_hours) {
-                    return ['value' => $t->duration_hours, 'label' => $t->duration_hours.' '.($t->duration_hours === 1 ? __('hour') : __('hours')), 'sort' => $t->duration_hours];
-                }
-
-                return null;
-            })
-            ->filter()
-            ->unique('label')
-            ->sortBy('sort')
-            ->values();
-
         $priceRange = [
             'min' => (int) Tour::where('is_active', true)->min('price'),
             'max' => (int) Tour::where('is_active', true)->max('price'),
@@ -125,7 +107,7 @@ class TourController extends Controller
             ['value' => 'all_season', 'label' => __('All Season')],
         ]);
 
-        return view('pages.tours.index', compact('tours', 'categories', 'countries', 'wishlistedIds', 'durationOptions', 'priceRange', 'seasonOptions'));
+        return view('pages.tours.index', compact('tours', 'categories', 'countries', 'wishlistedIds', 'priceRange', 'seasonOptions'));
     }
 
     public function show(string $slug)

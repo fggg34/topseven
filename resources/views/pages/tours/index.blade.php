@@ -13,9 +13,28 @@
 
 @section('content')
 @php
+    $toursFilterSelectedMonth = '';
+    if (request()->filled('date')) {
+        try {
+            $toursFilterSelectedMonth = \Carbon\Carbon::parse(request('date'))->startOfMonth()->format('Y-m-d');
+        } catch (\Throwable) {
+            $toursFilterSelectedMonth = '';
+        }
+    }
+    $toursFilterMonthOptions = [];
+    $monthCursor = now()->startOfMonth();
+    $toursFilterLocale = app()->getLocale();
+    for ($i = 0; $i < 18; $i++) {
+        $d = $monthCursor->copy()->addMonths($i)->locale($toursFilterLocale);
+        $toursFilterMonthOptions[] = [
+            'value' => $d->format('Y-m-01'),
+            'label' => $d->translatedFormat('F Y'),
+        ];
+    }
     $toursFilterLabels = [
         'destination' => __('Destination'),
-        'duration' => __('Duration'),
+        'month' => __('Month'),
+        'anyMonth' => __('Any month'),
         'sortOptions' => [
             ['value' => 'popular', 'label' => __('Most Popular')],
             ['value' => 'newest', 'label' => __('Newest')],
@@ -75,31 +94,30 @@
         </div>
         @endif
 
-        <div class="relative" x-data="{ open: false }">
-            <button @click="open = !open" type="button"
+        <div class="relative">
+            <button @click="openMonth = !openMonth" type="button"
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
-                :class="selectedDurations.length > 0 ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
-                <span x-text="selectedDurations.length > 0 ? (labels.duration + ' (' + selectedDurations.length + ')') : labels.duration"></span>
+                :class="selectedMonth ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                <i class="fa-regular fa-calendar text-xs"></i>
+                <span x-text="monthButtonLabel()"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
             </button>
-            <div x-show="open" @click.outside="open = false" x-transition
-                class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[200px]">
-                @foreach($durationOptions as $opt)
-                    <label class="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f6f2] cursor-pointer transition-colors">
-                        <input type="checkbox" value="{{ $opt['value'] }}"
-                            class="h-4 w-4 border-gray-300 text-[#111827] focus:ring-[#111827]"
-                            :checked="selectedDurations.includes('{{ $opt['value'] }}')"
-                            @change="toggleDuration('{{ $opt['value'] }}')">
-                        <span class="text-sm text-[#4a4a4a]">{{ $opt['label'] }}</span>
-                    </label>
-                @endforeach
-                @if($durationOptions->isEmpty())
-                    <p class="px-4 py-2.5 text-sm text-[#aaa]">{{ __('No options available') }}</p>
-                @endif
+            <div x-show="openMonth" @click.outside="openMonth = false" x-transition
+                class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[240px] max-h-72 overflow-y-auto">
+                <button type="button" @click="selectMonth('')"
+                    class="w-full text-left px-5 py-2.5 text-sm transition-colors"
+                    :class="!selectedMonth ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                    x-text="labels.anyMonth"></button>
+                <template x-for="m in monthOptions" :key="m.value">
+                    <button type="button" @click="selectMonth(m.value)"
+                        class="w-full text-left px-5 py-2.5 text-sm transition-colors"
+                        :class="selectedMonth === m.value ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                        x-text="m.label"></button>
+                </template>
             </div>
         </div>
 
-        @if(request('country') || request()->has('duration') || request('date') || request('adults'))
+        @if(request('country') || request('date') || request('adults'))
             <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">{{ __('Clear') }}</a>
         @endif
     </div>
@@ -159,12 +177,15 @@ function tourFilters(labels) {
     return {
         labels: {
             destination: labels.destination || 'Destination',
-            duration: labels.duration || 'Duration',
+            month: labels.month || 'Month',
+            anyMonth: labels.anyMonth || 'Any month',
         },
         selectedCountry: '{{ request('country', '') ?: request('city', '') }}',
         openDestination: false,
+        openMonth: false,
+        selectedMonth: @json($toursFilterSelectedMonth),
+        monthOptions: @json($toursFilterMonthOptions),
         destinations: @json($countries->map(fn($c) => ['slug' => $c->slug, 'name' => $c->name])->values()),
-        selectedDurations: @json(array_map('strval', (array) request('duration', []))),
         currentSort: '{{ request('sort', 'popular') }}',
         sortOptions: labels.sortOptions || [
             { value: 'popular', label: 'Most Popular' },
@@ -175,13 +196,15 @@ function tourFilters(labels) {
 
         init() {},
 
-        toggleDuration(val) {
-            const idx = this.selectedDurations.indexOf(val);
-            if (idx > -1) {
-                this.selectedDurations.splice(idx, 1);
-            } else {
-                this.selectedDurations.push(val);
-            }
+        monthButtonLabel() {
+            if (!this.selectedMonth) return this.labels.month;
+            const row = this.monthOptions.find((m) => m.value === this.selectedMonth);
+            return row ? row.label : this.labels.month;
+        },
+
+        selectMonth(value) {
+            this.selectedMonth = value || '';
+            this.openMonth = false;
             this.applyFilters();
         },
 
@@ -193,12 +216,10 @@ function tourFilters(labels) {
         applyFilters() {
             const params = new URLSearchParams();
             if (this.selectedCountry) params.set('country', this.selectedCountry);
-            this.selectedDurations.forEach(d => params.append('duration[]', d));
+            if (this.selectedMonth) params.set('date', this.selectedMonth);
             if (this.currentSort && this.currentSort !== 'popular') params.set('sort', this.currentSort);
             const q = '{{ request('q', '') }}';
             if (q) params.set('q', q);
-            const monthDate = @json(request('date', ''));
-            if (monthDate) params.set('date', monthDate);
             const adults = @json(request('adults', ''));
             if (adults !== '' && adults !== null) params.set('adults', String(adults));
             window.location.href = '{{ route('tours.index') }}' + '?' + params.toString();
