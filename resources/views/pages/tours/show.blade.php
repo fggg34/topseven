@@ -104,10 +104,10 @@
                          fetchpriority="high">
                 </a>
                 {{-- Right: two stacked images + pill CTA --}}
-                <div class="flex flex-col gap-4 min-h-0 h-full lg:min-h-0">
+                <div class="flex flex-row gap-4 min-h-[160px] h-full lg:flex-col lg:gap-4 lg:h-full lg:min-h-0">
                     @if($galleryLightboxLinks)
                         <a href="{{ $img2->url ?? $mainImageUrl }}"
-                           class="glightbox group relative block flex-1 min-h-[160px] lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100"
+                           class="glightbox group relative block w-1/2 min-w-0 min-h-[160px] h-full lg:h-auto lg:w-full lg:flex-1 lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100"
                            data-gallery="tour-gallery-{{ $tour->id }}"
                            role="listitem">
                             <img src="{{ $img2->url ?? $mainImageUrl }}"
@@ -116,14 +116,14 @@
                                  loading="lazy">
                         </a>
                     @else
-                        <div class="relative flex-1 min-h-[160px] lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100">
+                        <div class="relative w-1/2 min-w-0 min-h-[160px] h-full lg:h-auto lg:w-full lg:flex-1 lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100">
                             <img src="{{ $img2->url ?? $mainImageUrl }}"
                                  alt=""
                                  class="absolute inset-0 h-full w-full object-cover"
                                  loading="lazy">
                         </div>
                     @endif
-                    <div class="relative flex-1 min-h-[160px] lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100">
+                    <div class="relative w-1/2 min-w-0 min-h-[160px] h-full lg:h-auto lg:w-full lg:flex-1 lg:min-h-0 overflow-hidden rounded-2xl bg-gray-100">
                         @if($galleryLightboxLinks)
                             <a href="{{ $img3->url ?? $mainImageUrl }}"
                                class="glightbox group absolute inset-0 block"
