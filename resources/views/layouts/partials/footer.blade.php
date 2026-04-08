@@ -28,7 +28,6 @@
                 <div class="lg:col-span-4 flex items-center px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
                     <div>
                         <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]">{{ __('The latest ideas in luxury travel') }}</h3>
-                        <p class="mt-2 text-sm text-[#555]">{{ __('Join our weekly travel newsletter') }}</p>
                     </div>
                 </div>
                 <div class="lg:col-span-4 px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
