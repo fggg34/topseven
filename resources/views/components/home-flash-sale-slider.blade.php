@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <div class="flex items-center justify-between mt-8 gap-4">
+    <div class="flex items-center justify-end mt-8 gap-4">
         <div class="flex items-center gap-2">
             <button type="button" class="home-flash-sale-prev w-11 h-11 rounded-full border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center transition-colors hover:bg-gray-200 disabled:opacity-40 disabled:pointer-events-none" aria-label="Previous">
                 <i class="fa-solid fa-arrow-left text-sm"></i>
