@@ -1,15 +1,23 @@
-@props(['rows'])
+@props(['rows', 'variant' => 'primary'])
 
 @php
     $rows = $rows ?? collect();
+    $isSecondary = ($variant ?? 'primary') === 'secondary';
 @endphp
 
 @if($rows->isNotEmpty())
 @php
-    $headline = \App\Models\Setting::get('homepage_flash_sale_headline', 'Hand-picked travel packages for your next trip.');
-    $highlight = \App\Models\Setting::get('homepage_flash_sale_highlight', '');
-    $ctaLabel = \App\Models\Setting::get('homepage_flash_sale_cta_label', 'View All');
-    $ctaUrlRaw = \App\Models\Setting::get('homepage_flash_sale_cta_url', '/tours');
+    if ($isSecondary) {
+        $headline = \App\Models\Setting::get('homepage_flash_sale_2_headline', 'More hand-picked packages for your next trip.');
+        $highlight = \App\Models\Setting::get('homepage_flash_sale_2_highlight', '');
+        $ctaLabel = \App\Models\Setting::get('homepage_flash_sale_2_cta_label', 'View All');
+        $ctaUrlRaw = \App\Models\Setting::get('homepage_flash_sale_2_cta_url', '/tours');
+    } else {
+        $headline = \App\Models\Setting::get('homepage_flash_sale_headline', 'Hand-picked travel packages for your next trip.');
+        $highlight = \App\Models\Setting::get('homepage_flash_sale_highlight', '');
+        $ctaLabel = \App\Models\Setting::get('homepage_flash_sale_cta_label', 'View All');
+        $ctaUrlRaw = \App\Models\Setting::get('homepage_flash_sale_cta_url', '/tours');
+    }
     $ctaUrl = str_starts_with($ctaUrlRaw ?? '', 'http') ? $ctaUrlRaw : url($ctaUrlRaw ?: '/tours');
 @endphp
 

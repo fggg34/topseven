@@ -163,7 +163,7 @@
 </section>
 @endif
 
-<x-home-flash-sale-slider :rows="$homepageFlashSaleToursSecondary ?? collect()" />
+<x-home-flash-sale-slider :rows="$homepageFlashSaleToursSecondary ?? collect()" variant="secondary" />
 <x-home-seasonal-banners-slider :banners="$homepageSeasonalBanners ?? collect()" />
 <x-home-blog-stories :posts="$homepageBlogPosts ?? collect()" />
 
