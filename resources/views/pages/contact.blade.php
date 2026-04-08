@@ -243,7 +243,7 @@
                     </div>
 
                     {{-- Response time --}}
-                    <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5">
+                    <!-- <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5">
                         <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-clock text-emerald-600 text-sm"></i>
                         </div>
@@ -251,7 +251,7 @@
                             <p class="text-sm font-semibold text-gray-900">{{ __('Average response time') }}</p>
                             <p class="text-[13px] text-gray-500">{{ __('We typically reply within 2-4 hours.') }}</p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
