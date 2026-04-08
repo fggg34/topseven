@@ -98,10 +98,13 @@
                             <a href="tel:{{ $contactPhone }}" class="text-[#111827] hover:text-[#1f2937] hover:underline">{{ $contactPhone }}</a>
                         </p>
                     @endif
+                    @if($contactAddress)
+                        <p class="flex items-start gap-1.5">
+                            <i class="fa-solid fa-location-dot text-xs mt-0.5 text-[#7a746b] flex-shrink-0"></i>
+                            <span class="text-[#6a6a6a]">{{ $contactAddress }}</span>
+                        </p>
+                    @endif
                 </div>
-                @if($contactAddress)
-                    <p class="mt-2 text-sm text-[#6a6a6a]">{{ $contactAddress }}</p>
-                @endif
             </div>
         </div>
 
