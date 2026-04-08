@@ -27,7 +27,7 @@
                 <div class="hidden lg:block lg:col-span-4 h-full bg-cover bg-center footer-newsletter-image-clip" style="background-image:url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80')"></div>
                 <div class="lg:col-span-4 flex items-center px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
                     <div>
-                        <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]">{{ __('The latest ideas in luxury travel') }}</h3>
+                        <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]">Regjistrohu për të marr ofertat tona!</h3>
                     </div>
                 </div>
                 <div class="lg:col-span-4 px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
@@ -78,7 +78,7 @@
             </div>
 
             <div>
-                <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3">{{ __('Connect With Us') }}</h4>
+                <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3">Na kontaktoni</h4>
                 <div class="flex items-center gap-2">
                     @if($facebookUrl)<a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-facebook-f text-sm"></i></a>@endif
                     @if($instagramUrl)<a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full border border-[#b8b2a7] text-[#6c6c6c] flex items-center justify-center hover:text-[#1f1f1f]"><i class="fa-brands fa-instagram text-sm"></i></a>@endif

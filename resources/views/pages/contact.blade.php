@@ -131,7 +131,6 @@
 
             {{-- Form --}}
             <div class="lg:col-span-3">
-                <p class="text-[15px] text-gray-500 mb-2">{{ __('Send a message') }}</p>
                 <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-gray-900 leading-[1.08] mb-3">{{ $formTitle }}</h2>
                 <p class="text-[17px] text-gray-500 mb-10 max-w-lg leading-relaxed">{{ $formDescription }}</p>
 
