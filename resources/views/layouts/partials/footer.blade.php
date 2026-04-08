@@ -101,7 +101,7 @@
                     @if($contactAddress)
                         <p class="flex items-start gap-1.5">
                             <i class="fa-solid fa-location-dot text-xs mt-0.5 text-[#7a746b] flex-shrink-0"></i>
-                            <span class="text-[#6a6a6a]">{{ $contactAddress }}</span>
+                            <span class="text-[#111827]">{{ $contactAddress }}</span>
                         </p>
                     @endif
                 </div>
