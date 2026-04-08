@@ -55,11 +55,6 @@
             </div>
         </div>
 
-        <div class="mt-5 text-sm text-[#4a4a4a]">
-            {{ __('Are you a top travel specialist?') }}
-            <a href="{{ route('contact') }}" class="text-[#111827] font-semibold hover:text-[#1f2937] hover:underline">{{ __('Click here to contact us.') }}</a>
-        </div>
-
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <h4 class="text-[20px] font-serif text-[#1f1f1f] mb-3">{{ $footerMenu1['title'] }}</h4>
