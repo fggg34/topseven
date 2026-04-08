@@ -132,8 +132,6 @@
             {{-- Form --}}
             <div class="lg:col-span-3">
                 <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-gray-900 leading-[1.08] mb-3">{{ $formTitle }}</h2>
-                <p class="text-[17px] text-gray-500 mb-10 max-w-lg leading-relaxed">{{ $formDescription }}</p>
-
                 @if(session('success'))
                     <div class="mb-8 p-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-start gap-3">
                         <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>

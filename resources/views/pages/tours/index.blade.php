@@ -93,9 +93,6 @@
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#111827] tracking-tight leading-[1.1]">
                 {{ __('Explore our travel packages') }}
             </h1>
-            <p class="mt-4 text-base md:text-lg text-[#6a6a6a] leading-relaxed">
-                {{ __('Handpicked experiences designed to immerse you in culture, nature, and unforgettable moments.') }}
-            </p>
             <div class="mt-6 h-1 w-14 rounded-full bg-lime-600" aria-hidden="true"></div>
         </div>
     </header>
