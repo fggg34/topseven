@@ -60,7 +60,7 @@ class HomeController extends Controller
             })
             ->with('category')
             ->orderByRaw('COALESCE(published_at, created_at) DESC')
-            ->limit(3)
+            ->limit(4)
             ->get();
 
         $featuredTours = Tour::where('is_active', true)->where('is_featured', true)
