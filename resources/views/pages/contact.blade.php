@@ -3,6 +3,8 @@
     $heroSubtitle = \App\Models\Setting::get('page_contact_hero_subtitle', __("We'd love to hear from you"));
     $heroImage = \App\Models\Setting::get('page_contact_hero_image', '');
     $heroBg = $heroImage ? \Illuminate\Support\Facades\Storage::disk('public')->url($heroImage) : 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&h=600&fit=crop';
+    $heroHeight = max(200, min(900, (int) (\App\Models\Setting::get('page_contact_hero_height', 440) ?: 440)));
+    $breadcrumbCurrent = trim((string) \App\Models\Setting::get('page_contact_breadcrumb_label', ''));
     $formTitle = \App\Models\Setting::get('page_contact_form_title', __('Send us a message'));
     $formDescription = \App\Models\Setting::get('page_contact_form_description', __("Fill out the form below and we'll get back to you as soon as possible."));
     $sidebarTitle = \App\Models\Setting::get('page_contact_sidebar_title', __('Need quick help?'));
@@ -61,8 +63,8 @@
 
 @section('content')
 
-{{-- Hero --}}
-<section class="relative w-full overflow-hidden rounded-b-[40px]" style="height: 440px;">
+{{-- Hero (content managed in Filament: /_panel/contact-page) --}}
+<section class="relative w-full overflow-hidden rounded-b-[40px]" style="height: {{ $heroHeight }}px;">
     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $heroBg }}');"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
     <div class="absolute inset-0 flex flex-col justify-end">
@@ -71,13 +73,10 @@
                 <ol class="flex items-center gap-1.5 text-white/80">
                     <li><a href="{{ route('home') }}" class="hover:text-white transition">{{ __('Home') }}</a></li>
                     <li>/</li>
-                    <li>{{ __('Contact') }}</li>
+                    <li>{{ $breadcrumbCurrent !== '' ? $breadcrumbCurrent : __('Contact') }}</li>
                 </ol>
             </nav>
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.08]">{{ $heroTitle }}</h1>
-            @if($heroSubtitle)
-                <p class="mt-4 text-lg text-white/70 max-w-lg leading-relaxed">{{ $heroSubtitle }}</p>
-            @endif
         </div>
     </div>
 </section>
