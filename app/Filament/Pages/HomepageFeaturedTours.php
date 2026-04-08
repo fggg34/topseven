@@ -3,10 +3,12 @@
 namespace App\Filament\Pages;
 
 use App\Models\HomepageSpotlightTour;
+use App\Models\Setting;
 use App\Models\Tour;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Actions;
@@ -50,6 +52,10 @@ class HomepageFeaturedTours extends Page
             ->all();
 
         $this->getSchema('form')->fill([
+            'homepage_flash_sale_headline' => Setting::get('homepage_flash_sale_headline', 'Hand-picked tours for your next trip.'),
+            'homepage_flash_sale_highlight' => Setting::get('homepage_flash_sale_highlight', ''),
+            'homepage_flash_sale_cta_label' => Setting::get('homepage_flash_sale_cta_label', 'See offers'),
+            'homepage_flash_sale_cta_url' => Setting::get('homepage_flash_sale_cta_url', '/tours'),
             'tours' => $rows,
         ]);
     }
@@ -59,6 +65,29 @@ class HomepageFeaturedTours extends Page
         return $schema
             ->statePath('form')
             ->components([
+                Section::make('Title & button')
+                    ->description('Headline and bottom button for the first homepage tour slider (below the hero).')
+                    ->schema([
+                        TextInput::make('homepage_flash_sale_headline')
+                            ->label('Headline')
+                            ->maxLength(500)
+                            ->columnSpanFull(),
+                        TextInput::make('homepage_flash_sale_highlight')
+                            ->label('Highlight phrase')
+                            ->maxLength(120)
+                            ->helperText('Optional. If it appears inside the headline, that phrase is shown in a highlighted pill.')
+                            ->columnSpanFull(),
+                        TextInput::make('homepage_flash_sale_cta_label')
+                            ->label('Button label')
+                            ->maxLength(120),
+                        TextInput::make('homepage_flash_sale_cta_url')
+                            ->label('Button URL')
+                            ->placeholder('/tours')
+                            ->maxLength(2048),
+                    ])
+                    ->columns(2)
+                    ->collapsible(),
+
                 Section::make('Tours on the homepage')
                     ->description('Add a row for each tour and drag to set the slider order. Trip dates for the card are set on each tour (Overview tab → Homepage featured tours slider).')
                     ->schema([
@@ -107,6 +136,15 @@ class HomepageFeaturedTours extends Page
     {
         $data = $this->getSchema('form')->getState();
         $rows = $data['tours'] ?? [];
+
+        foreach ([
+            'homepage_flash_sale_headline',
+            'homepage_flash_sale_highlight',
+            'homepage_flash_sale_cta_label',
+            'homepage_flash_sale_cta_url',
+        ] as $key) {
+            Setting::set($key, (string) ($data[$key] ?? ''));
+        }
 
         DB::transaction(function () use ($rows): void {
             HomepageSpotlightTour::query()->delete();

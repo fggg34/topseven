@@ -98,7 +98,7 @@
 @endsection
 
 @section('content')
-<x-home-flash-sale-slider :rows="$homepageFlashSaleTours ?? collect()" />
+<x-home-flash-sale-slider :rows="$homepageFlashSaleTours ?? collect()" variant="primary" />
 
 <x-home-why-book :heading="$whyBookHeading" :cards="$whyBookCards" />
 
