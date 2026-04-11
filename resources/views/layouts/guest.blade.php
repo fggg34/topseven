@@ -34,7 +34,7 @@
                 </div>
 
                 <p class="text-center mt-8 text-sm text-gray-500">
-                    <a href="{{ route('home') }}" class="text-[#111827] font-medium hover:text-lime-700 transition-colors">← Back to home</a>
+                    <a href="{{ route('home') }}" class="text-[#111827] font-medium hover:text-lime-700 transition-colors">Kthehu në faqen kryesore</a>
                 </p>
             </div>
         </main>

@@ -39,7 +39,7 @@
                 @endif
                 @if (Route::has('register'))
                     <a class="text-lime-700 hover:text-lime-800 font-semibold transition-colors" href="{{ route('register') }}">
-                        {{ __('Create an account') }}
+                        Regjistrohu
                     </a>
                 @endif
             </div>

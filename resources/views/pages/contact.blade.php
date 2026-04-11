@@ -170,7 +170,7 @@
                             <label for="subject" class="block text-sm font-medium text-gray-700 mb-1.5">Arsyeja e kontaktit <span class="text-red-400">*</span></label>
                             <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
                                 class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
-                                placeholder="How can we help?">
+                                placeholder="Si mund t'ju ndihmojmë">
                             @error('subject')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                     </div>

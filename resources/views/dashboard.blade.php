@@ -13,12 +13,11 @@
         <div class="absolute inset-0 bg-cover bg-center opacity-35" style="background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&h=500&fit=crop');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/70 to-[#111827]/50"></div>
         <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[80px] py-10 md:py-12 min-h-[220px]">
-            <p class="text-xs font-medium uppercase tracking-wider text-white/50 mb-2">{{ __('My account') }}</p>
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-white tracking-tight leading-tight">{{ __('Hello, :name', ['name' => auth()->user()->name]) }}</h1>
-            <p class="mt-2 text-base text-white/65 max-w-xl">{{ __('Package enquiries and saved trips in one place.') }}</p>
+            <p class="mt-2 text-base text-white/65 max-w-xl">Rezervimet dhe udhëtimet e preferuara të ruajtura në një vend.</p>
             <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-white/90 hover:text-white transition-colors">
                 <i class="fa-solid fa-gear text-sm"></i>
-                {{ __('Account settings') }}
+                Profili
             </a>
         </div>
     </div>
@@ -40,7 +39,7 @@
                 </div>
                 <div>
                     <p class="text-2xl font-bold text-[#111827] tabular-nums">{{ $enquiriesCount ?? 0 }}</p>
-                    <p class="text-sm text-gray-500">{{ __('Package enquiries') }}</p>
+                    <p class="text-sm text-gray-500">Rezervimet</p>
                 </div>
             </div>
             <div class="bg-white rounded-2xl border border-[#e6e1d8] shadow-sm p-6 flex items-center gap-4">
@@ -49,7 +48,7 @@
                 </div>
                 <div>
                     <p class="text-2xl font-bold text-[#111827] tabular-nums">{{ $wishlistTours->count() }}</p>
-                    <p class="text-sm text-gray-500">{{ __('Saved packages') }}</p>
+                    <p class="text-sm text-gray-500">Paketat e preferuara</p>
                 </div>
             </div>
         </div>
@@ -61,7 +60,6 @@
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
                     <div>
                         <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#111827]">{{ __('Your enquiries') }}</h2>
-                        <p class="text-sm text-gray-500 mt-1">{{ __('Requests you sent from travel package pages. Estimated total uses the listed “from” price × guests.') }}</p>
                     </div>
                     <a href="{{ route('tours.index') }}" class="text-sm font-semibold text-lime-700 hover:text-lime-800 inline-flex items-center gap-1.5">
                         {{ __('Browse travel packages') }}
@@ -157,7 +155,7 @@
             <section>
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#111827]">{{ __('Saved travel packages') }}</h2>
+                        <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#111827]">Paketat e preferuara</h2>
                         <p class="text-sm text-gray-500 mt-1">{{ __('From your wishlist') }}</p>
                     </div>
                     <a href="{{ route('tours.index') }}" class="text-sm font-semibold text-lime-700 hover:text-lime-800 hidden sm:inline-flex items-center gap-1.5">
@@ -173,7 +171,6 @@
                                 <i class="fa-regular fa-heart text-amber-500 text-2xl"></i>
                             </div>
                             <p class="text-[#111827] font-semibold text-lg">{{ __('Nothing saved yet') }}</p>
-                            <p class="text-sm text-gray-500 mt-2 mb-8">{{ __('Heart a package to save it here.') }}</p>
                             <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-2 rounded-full bg-[#111827] text-white text-sm font-semibold px-7 py-3 hover:bg-gray-900 transition-colors">
                                 {{ __('Browse packages') }}
                             </a>
