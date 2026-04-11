@@ -14,11 +14,11 @@
             <li class="flex items-center gap-1.5" aria-hidden="true">
                 <span>&gt;</span>
             </li>
-            <li class="text-gray-700" aria-current="page">All Countries</li>
+            <li class="text-gray-700" aria-current="page">Të gjitha destinacionet</li>
         </ol>
     </nav>
 
-    <h1 class="text-2xl font-bold text-gray-900 mb-6">All Countries</h1>
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">Të gjitha destinacionet</h1>
 
     <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         @foreach($countries as $country)
@@ -36,7 +36,7 @@
                         <h2 class="text-xl font-bold" style="color: #fff !important;">{{ $country->name }}</h2>
                         <p class="text-sm text-white/90 mt-1">
                             @if($country->tours_count > 0)
-                                {{ $country->tours_count }} {{ $country->tours_count === 1 ? 'travel package' : 'travel packages' }}
+                                {{ $country->tours_count }} {{ $country->tours_count === 1 ? 'paketë turistike' : 'paketa turistike' }}
                             @else
                                 Travel packages coming soon
                             @endif
