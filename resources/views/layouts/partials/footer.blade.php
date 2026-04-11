@@ -27,7 +27,7 @@
                 <div class="hidden lg:block lg:col-span-4 h-full bg-cover bg-center footer-newsletter-image-clip" style="background-image:url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80')"></div>
                 <div class="lg:col-span-4 flex items-center px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
                     <div>
-                        <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]">Regjistrohu për të marr ofertat tona!</h3>
+                        <h3 class="text-[36px] leading-[1.02] font-serif text-[#1f1f1f]">Ofertat tona, direkt tek ju.</h3>
                     </div>
                 </div>
                 <div class="lg:col-span-4 px-6 py-7 border-t lg:border-t-0 lg:border-l lg:border-[#e6e1d8]">
@@ -36,18 +36,18 @@
                     @endif
                     <form method="POST" action="{{ route('newsletter.subscribe') }}" class="space-y-2">
                         @csrf
-                        <input type="text" name="full_name" value="{{ old('full_name') }}" placeholder="{{ __('Full name') }}" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('Email address') }}" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
+                        <input type="text" name="full_name" value="{{ old('full_name') }}" placeholder="Emri" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="E-mail" class="w-full h-10 border border-[#e1ddd4] px-3 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#9d8f7b]">
                         @error('email')
                             <p class="text-xs text-red-600">{{ $message }}</p>
                         @enderror
                         <label class="flex items-start gap-2 text-[11px] text-[#666] leading-snug">
                             <input type="checkbox" name="opt_in" value="1" checked class="mt-0.5 border-[#cbc4b8]">
-                            <span>{{ __('I would like to receive weekly travel inspiration and ideas from the newsletter of :site', ['site' => $siteName]) }}</span>
+                            <span>Regjistrohu dhe bëhu i pari që mëson për paketat e reja.</span>
                         </label>
                         <button type="submit" class="w-full h-10 bg-[#d9c9a8] hover:bg-[#cfbe9a] transition-colors text-[#1f1f1f] text-sm font-semibold inline-flex items-center justify-center gap-2">
                             <i class="fa-solid fa-envelope text-xs"></i>
-                            {{ __('Subscribe') }}
+                            Regjistrohu
                         </button>
                     </form>
                 </div>

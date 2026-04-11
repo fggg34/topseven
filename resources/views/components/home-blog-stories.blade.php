@@ -6,9 +6,9 @@
 
 @if($posts->isNotEmpty())
 <section class="home-blog-stories-section w-full px-4 sm:px-6 lg:px-[80px] py-14">
-    <p class="text-[15px] text-gray-700 mb-2">Get Inspired</p>
+    <p class="text-[15px] text-gray-700 mb-2">Inspirohu</p>
     <h2 class="text-[36px] md:text-[48px] font-serif font-semibold text-[#1f1f1f] leading-[1.05] mb-7">
-        Travel stories to inspire you.
+        Gjithçka për Udhëtimin Tuaj
     </h2>
 
     {{-- Mobile: same Swiper behaviour + arrows as homepage flash-sale tour slider --}}

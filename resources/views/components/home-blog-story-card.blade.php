@@ -31,7 +31,7 @@
             {{ \Illuminate\Support\Str::limit($excerpt, 145) }}
         </p>
         <span class="mt-5 inline-flex text-[15px] font-medium text-[#1f1f1f] group-hover:underline">
-            Read more
+            Lexoni
         </span>
     </a>
 </article>
