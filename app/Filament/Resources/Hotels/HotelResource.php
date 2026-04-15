@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Hotels;
 
 use App\Filament\Resources\Hotels\Pages\ManageHotels;
+use App\Filament\RestrictedPanelUser;
 use App\Models\Hotel;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
@@ -33,6 +34,15 @@ class HotelResource extends Resource
     protected static string|\UnitEnum|null $navigationGroup = 'Destinations';
 
     protected static ?int $navigationSort = 2;
+
+    public static function canViewAny(): bool
+    {
+        if (RestrictedPanelUser::isCurrentUser()) {
+            return false;
+        }
+
+        return parent::canViewAny();
+    }
 
     public static function form(Schema $schema): Schema
     {

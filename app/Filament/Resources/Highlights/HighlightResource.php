@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Highlights;
 use App\Filament\Resources\Highlights\Pages\CreateHighlight;
 use App\Filament\Resources\Highlights\Pages\EditHighlight;
 use App\Filament\Resources\Highlights\Pages\ListHighlights;
+use App\Filament\RestrictedPanelUser;
 use App\Models\Highlight;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
@@ -31,6 +32,15 @@ class HighlightResource extends Resource
     protected static string|\UnitEnum|null $navigationGroup = 'Destinations';
 
     protected static ?int $navigationSort = 2;
+
+    public static function canViewAny(): bool
+    {
+        if (RestrictedPanelUser::isCurrentUser()) {
+            return false;
+        }
+
+        return parent::canViewAny();
+    }
 
     public static function form(Schema $schema): Schema
     {

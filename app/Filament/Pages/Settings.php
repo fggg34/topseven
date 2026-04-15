@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\RestrictedPanelUser;
 use App\Models\Setting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
@@ -11,7 +12,6 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Form;
-use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
@@ -33,8 +33,19 @@ class Settings extends Page
 
     protected string $view = 'filament.pages.settings';
 
+    public static function canAccess(): bool
+    {
+        if (RestrictedPanelUser::isCurrentUser()) {
+            return false;
+        }
+
+        return parent::canAccess();
+    }
+
     public function mount(): void
     {
+        abort_unless(static::canAccess(), 403);
+
         $this->getSchema('form')->fill([
             'site_name' => Setting::get('site_name', ''),
             'site_tagline' => Setting::get('site_tagline', ''),
@@ -301,10 +312,12 @@ class Settings extends Page
         foreach ($data as $key => $value) {
             if ($key === 'nav_menu_items') {
                 Setting::set($key, json_encode($value ?? []));
+
                 continue;
             }
             if ($key === 'footer_menu_1' || $key === 'footer_menu_2') {
                 Setting::set($key, json_encode($value ?? ['title' => '', 'items' => []]));
+
                 continue;
             }
             // FileUpload may return array (single path) - normalize to string
@@ -333,6 +346,7 @@ class Settings extends Page
                     ],
                 ];
             }
+
             return [
                 'title' => 'Company',
                 'items' => [
@@ -342,6 +356,7 @@ class Settings extends Page
                 ],
             ];
         }
+
         return array_merge(['title' => '', 'items' => []], $menu);
     }
 
@@ -383,6 +398,7 @@ class Settings extends Page
                 ['type' => 'link', 'label' => 'My Trips', 'url' => '/dashboard', 'children' => []],
             ];
         }
+
         return $items;
     }
 }
