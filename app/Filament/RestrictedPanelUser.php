@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 final class RestrictedPanelUser
 {
     /**
-     * Admin users matched here get a reduced panel (no Site Settings, Highlights, or Hotels).
+     * Admin users matched here get a reduced panel (no Site Settings, Highlights, Hotels, FAQ/About/Contact CMS).
      *
      * @var list<string>
      */

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\RestrictedPanelUser;
 use App\Models\Setting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
@@ -40,8 +41,19 @@ class AboutPage extends Page
 
     protected string $view = 'filament.pages.settings';
 
+    public static function canAccess(): bool
+    {
+        if (RestrictedPanelUser::isCurrentUser()) {
+            return false;
+        }
+
+        return parent::canAccess();
+    }
+
     public function mount(): void
     {
+        abort_unless(static::canAccess(), 403);
+
         $values = $this->decodeJsonSetting('page_about_values', []);
         if ($values === []) {
             $values = [
