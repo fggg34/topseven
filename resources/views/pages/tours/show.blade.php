@@ -503,13 +503,13 @@
                                     </div>
                                     <div>
                                         <label for="review_title" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Title') }} <span class="text-red-500">*</span></label>
-                                        <input type="text" name="title" id="review_title" value="{{ old('title') }}" required placeholder="{{ __('Summarize your experience') }}"
+                                        <input type="text" name="title" id="review_title" value="{{ old('title') }}" required
                                             class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
                                         @error('title')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="review_comment" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Your review') }} <span class="text-red-500">*</span></label>
-                                        <textarea name="comment" id="review_comment" rows="5" required placeholder="{{ __('Share your experience...') }}"
+                                        <textarea name="comment" id="review_comment" rows="5" required placeholder="Nga pamjet mbresëlënëse te detajet e vogla – çfarë ju pëlqeu më shumë?"
                                             class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition resize-y">{{ old('comment') }}</textarea>
                                         @error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                                     </div>
