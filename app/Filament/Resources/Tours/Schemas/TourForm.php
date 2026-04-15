@@ -41,12 +41,6 @@ class TourForm
                                             ->searchable()
                                             ->preload()
                                             ->label('Countries'),
-                                        Select::make('hotels')
-                                            ->relationship('hotels', 'name')
-                                            ->multiple()
-                                            ->searchable()
-                                            ->preload()
-                                            ->label('Hotels & resorts'),
                                         TextInput::make('title')
                                             ->required()
                                             ->live(onBlur: true)
