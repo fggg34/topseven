@@ -116,7 +116,7 @@ class TourForm
                                         TextInput::make('sort_order')->numeric()->default(0),
                                     ])
                                     ->columns(3),
-                                Section::make('Homepage featured tours slider')
+                                Section::make()
                                     ->description('Data e paketes turistike')
                                     ->schema([
                                         DatePicker::make('homepage_card_date_from')
