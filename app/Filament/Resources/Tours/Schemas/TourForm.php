@@ -117,7 +117,7 @@ class TourForm
                                     ])
                                     ->columns(3),
                                 Section::make('Homepage featured tours slider')
-                                    ->description('When this tour is added under Pages → Homepage → Featured tours, these dates appear on the white badge on the homepage card. Leave empty to hide the badge.')
+                                    ->description('Data e paketes turistike')
                                     ->schema([
                                         DatePicker::make('homepage_card_date_from')
                                             ->label('Date from')
