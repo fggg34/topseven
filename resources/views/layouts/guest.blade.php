@@ -15,7 +15,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-[#f5f3ef] text-gray-900">
+    <body class="font-sans antialiased bg-[#f5f3ef] text-brand-ink">
         @include('layouts.partials.site-nav')
 
         <main class="pt-28 pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-8rem)]">
@@ -23,7 +23,7 @@
                 @unless(request()->routeIs('login', 'register', 'password.request'))
                     @php $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
                     <a href="{{ route('home') }}" class="block text-center mb-8 group">
-                        <span class="text-2xl sm:text-3xl font-serif font-semibold text-[#111827] tracking-tight group-hover:text-lime-800 transition-colors">{{ $siteName }}</span>
+                        <span class="text-2xl sm:text-3xl font-serif font-semibold text-[#3f4b9a] tracking-tight group-hover:text-lime-800 transition-colors">{{ $siteName }}</span>
                     </a>
                 @endunless
 
@@ -34,7 +34,7 @@
                 </div>
 
                 <p class="text-center mt-8 text-sm text-gray-500">
-                    <a href="{{ route('home') }}" class="text-[#111827] font-medium hover:text-lime-700 transition-colors">Kthehu në faqen kryesore</a>
+                    <a href="{{ route('home') }}" class="text-[#3f4b9a] font-medium hover:text-lime-700 transition-colors">Kthehu në faqen kryesore</a>
                 </p>
             </div>
         </main>

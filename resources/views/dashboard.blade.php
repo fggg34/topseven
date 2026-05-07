@@ -11,7 +11,7 @@
     {{-- Hero --}}
     <div class="relative w-full overflow-hidden bg-[#111827]">
         <div class="absolute inset-0 bg-cover bg-center opacity-35" style="background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&h=500&fit=crop');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/70 to-[#111827]/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#3f4b9a]/95 via-[#3f4b9a]/70 to-[#3f4b9a]/50"></div>
         <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[80px] py-10 md:py-12 min-h-[220px]">
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-white tracking-tight leading-tight">{{ __('Hello, :name', ['name' => auth()->user()->name]) }}</h1>
             <p class="mt-2 text-base text-white/65 max-w-xl">Rezervimet dhe udhëtimet e preferuara të ruajtura në një vend.</p>
@@ -38,7 +38,7 @@
                     <i class="fa-solid fa-paper-plane text-lime-800 text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-2xl font-bold text-[#111827] tabular-nums">{{ $enquiriesCount ?? 0 }}</p>
+                    <p class="text-2xl font-bold text-[#3f4b9a] tabular-nums">{{ $enquiriesCount ?? 0 }}</p>
                     <p class="text-sm text-gray-500">Rezervimet</p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     <i class="fa-solid fa-heart text-amber-600 text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-2xl font-bold text-[#111827] tabular-nums">{{ $wishlistTours->count() }}</p>
+                    <p class="text-2xl font-bold text-[#3f4b9a] tabular-nums">{{ $wishlistTours->count() }}</p>
                     <p class="text-sm text-gray-500">Paketat e preferuara</p>
                 </div>
             </div>
@@ -59,7 +59,7 @@
             <section>
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#111827]">{{ __('Your enquiries') }}</h2>
+                        <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#3f4b9a]">{{ __('Your enquiries') }}</h2>
                     </div>
                     <a href="{{ route('tours.index') }}" class="text-sm font-semibold text-lime-700 hover:text-lime-800 inline-flex items-center gap-1.5">
                         {{ __('Browse travel packages') }}
@@ -73,7 +73,7 @@
                             <div class="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-4">
                                 <i class="fa-regular fa-envelope text-gray-400 text-2xl"></i>
                             </div>
-                            <p class="text-[#111827] font-semibold text-lg">{{ __('No enquiries yet') }}</p>
+                            <p class="text-[#3f4b9a] font-semibold text-lg">{{ __('No enquiries yet') }}</p>
                             <p class="text-sm text-gray-500 mt-2 max-w-md mx-auto mb-8">{{ __('When you enquire about a package, it will appear here with guest count and an estimated total.') }}</p>
                             <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-2 rounded-full bg-[#111827] text-white text-sm font-semibold px-7 py-3 hover:bg-gray-900 transition-colors">
                                 <i class="fa-solid fa-compass text-xs"></i>
@@ -99,7 +99,7 @@
                                         <div class="flex-1 min-w-0">
                                             <div class="flex flex-wrap items-start justify-between gap-3">
                                                 <div>
-                                                    <a href="{{ $tour ? route('tours.show', $tour->slug) : '#' }}" class="text-lg md:text-xl font-semibold text-[#111827] hover:text-lime-800 transition-colors line-clamp-2">
+                                                    <a href="{{ $tour ? route('tours.show', $tour->slug) : '#' }}" class="text-lg md:text-xl font-semibold text-[#3f4b9a] hover:text-lime-800 transition-colors line-clamp-2">
                                                         {{ $tour?->title ?? __('Travel package') }}
                                                     </a>
                                                     <p class="text-sm text-gray-500 mt-1">{{ __('Submitted') }} {{ $enquiry->created_at->translatedFormat('j M Y, H:i') }}</p>
@@ -132,7 +132,7 @@
                                                 @endif
                                             </div>
                                             @if($est !== null)
-                                                <p class="mt-4 text-base md:text-lg font-bold text-[#111827]">
+                                                <p class="mt-4 text-base md:text-lg font-bold text-[#3f4b9a]">
                                                     Estimated total: <span class="tabular-nums">{{ $currency }}{{ number_format($est, $decimals) }}</span>
                                                     <span class="text-sm font-normal text-gray-500">(from price × {{ $enquiry->guests }} {{ Str::plural('guest', $enquiry->guests) }})</span>
                                                 </p>
@@ -155,7 +155,7 @@
             <section>
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#111827]">Paketat e preferuara</h2>
+                        <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#3f4b9a]">Paketat e preferuara</h2>
                         <p class="text-sm text-gray-500 mt-1">{{ __('From your wishlist') }}</p>
                     </div>
                     <a href="{{ route('tours.index') }}" class="text-sm font-semibold text-lime-700 hover:text-lime-800 hidden sm:inline-flex items-center gap-1.5">
@@ -170,7 +170,7 @@
                             <div class="w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-4">
                                 <i class="fa-regular fa-heart text-amber-500 text-2xl"></i>
                             </div>
-                            <p class="text-[#111827] font-semibold text-lg">{{ __('Nothing saved yet') }}</p>
+                            <p class="text-[#3f4b9a] font-semibold text-lg">{{ __('Nothing saved yet') }}</p>
                             <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-2 rounded-full bg-[#111827] text-white text-sm font-semibold px-7 py-3 hover:bg-gray-900 transition-colors">
                                 {{ __('Browse packages') }}
                             </a>
@@ -195,7 +195,7 @@
                                             <div class="aspect-[4/3] rounded-xl overflow-hidden bg-gray-200 mb-3">
                                                 <img src="{{ $imageUrl }}" alt="{{ $tour->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                                             </div>
-                                            <h3 class="font-semibold text-[#111827] group-hover:text-lime-800 transition line-clamp-2 pr-10">{{ $tour->title }}</h3>
+                                            <h3 class="font-semibold text-[#3f4b9a] group-hover:text-lime-800 transition line-clamp-2 pr-10">{{ $tour->title }}</h3>
                                             @if($tour->price)
                                                 <p class="mt-1 text-sm font-medium text-gray-600">{{ __('From') }} €{{ number_format($tour->price, $tour->price != floor($tour->price) ? 2 : 0) }}</p>
                                             @endif

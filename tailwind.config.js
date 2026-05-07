@@ -17,6 +17,8 @@ export default {
             },
             colors: {
                 brand: {
+                    /** Primary body / UI ink (replaces gray-900 / #111827 for text & icons) */
+                    ink: '#3f4b9a',
                     light: '#78a032',
                     DEFAULT: '#5a7825',
                     dark: '#3c5019',

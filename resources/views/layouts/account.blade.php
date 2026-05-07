@@ -16,14 +16,14 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('styles')
     </head>
-    <body class="font-sans antialiased bg-[#f5f3ef] text-gray-900">
+    <body class="font-sans antialiased bg-[#f5f3ef] text-brand-ink">
         @include('layouts.partials.site-nav')
 
         <main class="pt-28 pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-8rem)]">
             <div class="max-w-xl mx-auto">
                 @php $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
                 <a href="{{ route('home') }}" class="block text-center mb-8 group">
-                    <span class="text-2xl sm:text-3xl font-serif font-semibold text-[#111827] tracking-tight group-hover:text-lime-800 transition-colors">{{ $siteName }}</span>
+                    <span class="text-2xl sm:text-3xl font-serif font-semibold text-[#3f4b9a] tracking-tight group-hover:text-lime-800 transition-colors">{{ $siteName }}</span>
                 </a>
 
                 <div class="rounded-[28px] bg-white border border-[#e6e1d8] shadow-xl shadow-black/5 overflow-hidden">
@@ -33,9 +33,9 @@
                 </div>
 
                 <p class="text-center mt-8 text-sm text-gray-500 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-                    <a href="{{ route('dashboard') }}" class="text-[#111827] font-medium hover:text-lime-700 transition-colors">← {{ __('My account') }}</a>
+                    <a href="{{ route('dashboard') }}" class="text-[#3f4b9a] font-medium hover:text-lime-700 transition-colors">← {{ __('My account') }}</a>
                     <span class="text-gray-300" aria-hidden="true">·</span>
-                    <a href="{{ route('home') }}" class="text-gray-600 hover:text-[#111827] font-medium transition-colors">{{ __('Site home') }}</a>
+                    <a href="{{ route('home') }}" class="text-gray-600 hover:text-[#3f4b9a] font-medium transition-colors">{{ __('Site home') }}</a>
                 </p>
             </div>
         </main>

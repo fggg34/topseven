@@ -18,7 +18,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('styles')
     </head>
-    <body class="font-sans antialiased bg-gray-50 text-gray-900">
+    <body class="font-sans antialiased bg-gray-50 text-brand-ink">
         @include('layouts.partials.site-nav')
 
         <main class="mt-[77px]">

@@ -71,7 +71,7 @@
                                 @endif
                                 @if(filled($slide->cta_text ?? null))
                                     <a href="{{ $ctaUrl }}"
-                                       class="inline-flex items-center rounded-full border-2 border-white px-8 py-3.5 text-base font-semibold text-white transition-all duration-200 hover:bg-white hover:text-gray-900 lg:px-10 lg:py-4 lg:text-lg">{{ $slide->cta_text }}</a>
+                                       class="inline-flex items-center rounded-full border-2 border-white px-8 py-3.5 text-base font-semibold text-white transition-all duration-200 hover:bg-white hover:text-brand-ink lg:px-10 lg:py-4 lg:text-lg">{{ $slide->cta_text }}</a>
                                 @endif
                             </div>
                         </div>

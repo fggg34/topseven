@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <h1 class="text-2xl font-bold text-gray-900 mb-6">{{ __('Confirm Password') }}</h1>
+    <h1 class="text-2xl font-bold text-brand-ink mb-6">{{ __('Confirm Password') }}</h1>
 
     <div class="mb-4 text-sm text-gray-600">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}

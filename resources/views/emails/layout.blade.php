@@ -14,7 +14,7 @@
         .detail-row { border-bottom: 1px solid #e5e7eb; }
         .detail-row:last-child { border-bottom: none; }
         .detail-label { padding: 12px 16px; width: 140px; font-size: 13px; color: #6b7280; font-weight: 500; vertical-align: top; }
-        .detail-value { padding: 12px 16px; font-size: 14px; color: #111827; }
+        .detail-value { padding: 12px 16px; font-size: 14px; color: #3f4b9a; }
         .footer { padding: 20px 24px; background: #f9fafb; font-size: 12px; color: #6b7280; text-align: center; border-top: 1px solid #e5e7eb; }
         .btn { display: inline-block; padding: 12px 24px; background: #65a30d; color: #ffffff !important; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; margin-top: 8px; }
         .btn:hover { background: #4d7c0f; }

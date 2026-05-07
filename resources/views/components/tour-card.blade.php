@@ -144,7 +144,7 @@
             @endif
 
             {{-- Title --}}
-            <h3 class="text-[15px] font-semibold text-gray-900 leading-snug line-clamp-2 group-hover:text-gray-700 transition-colors min-h-[41px]">{{ $tour->title }}</h3>
+            <h3 class="text-[15px] font-semibold text-brand-ink leading-snug line-clamp-2 group-hover:text-gray-700 transition-colors min-h-[41px]">{{ $tour->title }}</h3>
 
             {{-- Duration --}}
             @if($durationLabel)
@@ -160,7 +160,7 @@
             <div class="mt-auto pt-2.5 flex items-center justify-between gap-2">
                 <div class="flex items-center gap-1.5">
                     @if($rating)
-                        <span class="inline-flex items-center gap-0.5 text-sm font-bold text-gray-900">
+                        <span class="inline-flex items-center gap-0.5 text-sm font-bold text-brand-ink">
                             <i class="fa-solid fa-star text-amber-400 text-xs"></i>
                             {{ number_format($rating, 1) }}
                         </span>
@@ -175,7 +175,7 @@
                     @if($hasDiscount)
                         <span class="text-xs text-gray-400 line-through">{{ $currency }}{{ number_format($tour->base_price, 0) }}</span>
                     @endif
-                    <span class="text-base font-bold text-gray-900">{{ $currency }}{{ number_format($tour->price ?? 0, 0) }}</span>
+                    <span class="text-base font-bold text-brand-ink">{{ $currency }}{{ number_format($tour->price ?? 0, 0) }}</span>
                 </div>
             </div>
         </div>

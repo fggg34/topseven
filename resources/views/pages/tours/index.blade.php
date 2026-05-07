@@ -84,13 +84,13 @@
     <header class="pt-10 pb-8 md:pt-12 md:pb-10">
         <nav class="text-sm" aria-label="{{ __('Breadcrumb') }}">
             <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
-                <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">{{ __('Home') }}</a></li>
+                <li><a href="{{ route('home') }}" class="hover:text-[#3f4b9a] transition-colors">{{ __('Home') }}</a></li>
                 <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
-                <li class="text-[#111827] font-medium">{{ __('Travel Packages') }}</li>
+                <li class="text-[#3f4b9a] font-medium">{{ __('Travel Packages') }}</li>
             </ol>
         </nav>
         <div class="mt-6 md:mt-8 max-w-3xl">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#111827] tracking-tight leading-[1.1]">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-[1.1]">
                 {{ __('Explore our travel packages') }}
             </h1>
             <div class="mt-6 h-1 w-14 rounded-full bg-lime-600" aria-hidden="true"></div>
@@ -105,7 +105,7 @@
         <div class="relative">
             <button @click="openDestination = !openDestination" type="button"
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
-                :class="selectedCountry ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                :class="selectedCountry ? 'bg-[#111827] border-[#3f4b9a] text-white' : 'bg-white border-[#d1cdc4] text-[#3f4b9a] hover:border-[#3f4b9a]'">
                 <i class="fa-solid fa-location-dot text-xs"></i>
                 <span x-text="selectedCountry ? (destinations.find(c => c.slug === selectedCountry)?.name || labels.destination) : labels.destination"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
@@ -114,13 +114,13 @@
                 class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[220px]">
                 <button @click="selectedCountry = ''; openDestination = false; applyFilters()"
                     class="w-full text-left px-5 py-2.5 text-sm transition-colors"
-                    :class="!selectedCountry ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'">
+                    :class="!selectedCountry ? 'bg-[#f8f6f2] text-[#3f4b9a] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'">
                     {{ __('All destinations') }}
                 </button>
                 @foreach($countries as $c)
                     <button @click="selectedCountry = '{{ $c->slug }}'; openDestination = false; applyFilters()"
                         class="w-full text-left px-5 py-2.5 text-sm transition-colors"
-                        :class="selectedCountry === '{{ $c->slug }}' ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'">
+                        :class="selectedCountry === '{{ $c->slug }}' ? 'bg-[#f8f6f2] text-[#3f4b9a] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'">
                         {{ $c->name }}
                     </button>
                 @endforeach
@@ -131,7 +131,7 @@
         <div class="relative">
             <button @click="openMonth = !openMonth" type="button"
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
-                :class="selectedMonth ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                :class="selectedMonth ? 'bg-[#111827] border-[#3f4b9a] text-white' : 'bg-white border-[#d1cdc4] text-[#3f4b9a] hover:border-[#3f4b9a]'">
                 <i class="fa-regular fa-calendar text-xs"></i>
                 <span x-text="monthButtonLabel()"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
@@ -140,12 +140,12 @@
                 class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-2 min-w-[240px] max-h-72 overflow-y-auto">
                 <button type="button" @click="selectMonth('')"
                     class="w-full text-left px-5 py-2.5 text-sm transition-colors"
-                    :class="!selectedMonth ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                    :class="!selectedMonth ? 'bg-[#f8f6f2] text-[#3f4b9a] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
                     x-text="labels.anyMonth"></button>
                 <template x-for="m in monthOptions" :key="m.value">
                     <button type="button" @click="selectMonth(m.value)"
                         class="w-full text-left px-5 py-2.5 text-sm transition-colors"
-                        :class="selectedMonth === m.value ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                        :class="selectedMonth === m.value ? 'bg-[#f8f6f2] text-[#3f4b9a] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
                         x-text="m.label"></button>
                 </template>
             </div>
@@ -154,7 +154,7 @@
         <div class="relative">
             <button @click="openDeparture = !openDeparture" type="button"
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
-                :class="selectedDeparture ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                :class="selectedDeparture ? 'bg-[#111827] border-[#3f4b9a] text-white' : 'bg-white border-[#d1cdc4] text-[#3f4b9a] hover:border-[#3f4b9a]'">
                 <i class="fa-solid fa-plane-departure text-xs" aria-hidden="true"></i>
                 <span x-text="departureButtonLabel()"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1" aria-hidden="true"></i>
@@ -163,7 +163,7 @@
                 class="absolute left-0 top-full mt-2 z-50 bg-white shadow-xl border border-[#e6e1d8] py-3 min-w-[260px]">
                 <button type="button" @click="selectDeparture('')"
                     class="w-full text-left px-5 py-2.5 text-sm transition-colors"
-                    :class="!selectedDeparture ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                    :class="!selectedDeparture ? 'bg-[#f8f6f2] text-[#3f4b9a] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
                     x-text="labels.anyDeparture"></button>
                 <div class="px-5 pt-3 border-t border-[#f0ebe3] mt-2">
                     <label class="block text-[11px] font-semibold uppercase tracking-wide text-[#6a6a6a] mb-2" for="tours-filter-departure-select">{{ __('Departure date') }}</label>
@@ -171,7 +171,7 @@
                         <select id="tours-filter-departure-select"
                             x-model="selectedDeparture"
                             @change="selectDeparture($event.target.value)"
-                            class="w-full rounded-lg border border-[#d1cdc4] bg-white px-3 py-2 text-sm text-[#111827] focus:border-[#111827] focus:outline-none focus:ring-1 focus:ring-[#111827]">
+                            class="w-full rounded-lg border border-[#d1cdc4] bg-white px-3 py-2 text-sm text-[#3f4b9a] focus:border-[#3f4b9a] focus:outline-none focus:ring-1 focus:ring-[#3f4b9a]">
                             <option value="">{{ __('Choose departure date') }}</option>
                             @foreach($departureOptions as $depOpt)
                                 <option value="{{ $depOpt['value'] }}">{{ $depOpt['label'] }}</option>
@@ -187,7 +187,7 @@
         <div class="relative">
             <button @click="openPrice = !openPrice" type="button"
                 class="inline-flex items-center gap-2 px-5 py-3 border text-sm font-semibold uppercase tracking-wider transition-all"
-                :class="selectedPricePreset ? 'bg-[#111827] border-[#111827] text-white' : 'bg-white border-[#d1cdc4] text-[#111827] hover:border-[#111827]'">
+                :class="selectedPricePreset ? 'bg-[#111827] border-[#3f4b9a] text-white' : 'bg-white border-[#d1cdc4] text-[#3f4b9a] hover:border-[#3f4b9a]'">
                 <i class="fa-solid fa-tag text-xs"></i>
                 <span x-text="priceButtonLabel()"></span>
                 <i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
@@ -197,34 +197,34 @@
                 <template x-for="p in pricePresets" :key="p.id || 'any'">
                     <button type="button" @click="selectPricePreset(p.id)"
                         class="w-full text-left px-5 py-2.5 text-sm transition-colors"
-                        :class="(selectedPricePreset || '') === (p.id || '') ? 'bg-[#f8f6f2] text-[#111827] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
+                        :class="(selectedPricePreset || '') === (p.id || '') ? 'bg-[#f8f6f2] text-[#3f4b9a] font-semibold' : 'hover:bg-[#f8f6f2] text-[#4a4a4a]'"
                         x-text="p.label"></button>
                 </template>
             </div>
         </div>
 
         @if(request('country') || request('date') || request('departure') || request('adults') || request()->filled('min_price') || request()->filled('max_price'))
-            <a href="{{ route('tours.index') }}" class="text-sm text-[#111827] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">{{ __('Clear') }}</a>
+            <a href="{{ route('tours.index') }}" class="text-sm text-[#3f4b9a] hover:underline underline-offset-2 ml-2 font-semibold uppercase tracking-wider">{{ __('Clear') }}</a>
         @endif
     </div>
 
     <div class="flex items-center justify-between mt-8 mb-8">
         <p class="text-sm text-[#6a6a6a]">
-            <span class="font-semibold text-[#111827]">{{ $tours->total() }}</span> {{ __('travel packages available') }}
+            <span class="font-semibold text-[#3f4b9a]">{{ $tours->total() }}</span> {{ __('travel packages available') }}
         </p>
 
         <div class="relative" x-data="{ open: false }">
             <button @click="open = !open" type="button"
-                class="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d1cdc4] bg-white text-sm text-[#111827] hover:border-[#111827] transition-colors">
+                class="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d1cdc4] bg-white text-sm text-[#3f4b9a] hover:border-[#3f4b9a] transition-colors">
                 <span>{{ __('Sort: ') }}<span class="font-semibold" x-text="sortLabel()">{{ __('Most Popular') }}</span></span>
-                <i class="fa-solid fa-chevron-down text-[9px] text-[#111827]/50"></i>
+                <i class="fa-solid fa-chevron-down text-[9px] text-[#3f4b9a]/50"></i>
             </button>
             <div x-show="open" @click.outside="open = false" x-transition
                 class="absolute right-0 top-full mt-1 z-50 bg-white shadow-xl border border-[#e6e1d8] py-1 min-w-[180px]">
                 <template x-for="opt in sortOptions" :key="opt.value">
                     <button @click="currentSort = opt.value; open = false; applyFilters()"
                         class="w-full text-left px-5 py-2.5 text-sm hover:bg-[#f8f6f2] transition-colors"
-                        :class="currentSort === opt.value ? 'text-[#111827] font-semibold' : 'text-[#4a4a4a]'"
+                        :class="currentSort === opt.value ? 'text-[#3f4b9a] font-semibold' : 'text-[#4a4a4a]'"
                         x-text="opt.label"></button>
                 </template>
             </div>

@@ -8,7 +8,7 @@
     @if($post->featured_image_url)
         <div class="absolute inset-0 bg-cover bg-center opacity-35" style="background-image: url({{ json_encode($post->featured_image_url) }});"></div>
     @endif
-    <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#3f4b9a]/80 via-transparent to-[#3f4b9a]/40"></div>
     <div class="absolute inset-0 flex items-end">
         <div class="max-w-[900px] mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
             <nav class="text-sm mb-4" aria-label="Breadcrumb">
@@ -36,7 +36,7 @@
     @if($post->featured_image_url)
         <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}" class="w-full mb-10" style="aspect-ratio: 16/9; object-fit: cover;">
     @endif
-    <div class="blog-content prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#111827] prose-p:text-[#4a4a4a] prose-p:leading-[1.8] prose-a:text-[#111827] prose-a:underline prose-a:underline-offset-4">
+    <div class="blog-content prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#3f4b9a] prose-p:text-[#4a4a4a] prose-p:leading-[1.8] prose-a:text-[#3f4b9a] prose-a:underline prose-a:underline-offset-4">
         {!! $post->content_html !!}
     </div>
 
@@ -45,16 +45,16 @@
         <div class="flex flex-wrap flex-col items-left gap-4 text-sm">
             @if($post->category)
                 <div class="flex items-center gap-3">
-                    <span class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Category</span>
-                    <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}" class="inline-flex items-center px-4 py-1.5 bg-[#f8f6f2] text-[#111827] text-sm font-semibold hover:bg-[#eee9df] transition-colors">{{ $post->category->name }}</a>
+                    <span class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50">Category</span>
+                    <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}" class="inline-flex items-center px-4 py-1.5 bg-[#f8f6f2] text-[#3f4b9a] text-sm font-semibold hover:bg-[#eee9df] transition-colors">{{ $post->category->name }}</a>
                 </div>
             @endif
             @if($post->tags->isNotEmpty())
                 <div class="flex items-center gap-3 flex-wrap">
-                    <span class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50">Tags</span>
+                    <span class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50">Tags</span>
                     <div class="flex flex-wrap gap-2">
                         @foreach($post->tags as $tag)
-                            <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}" class="inline-flex items-center px-4 py-1.5 bg-[#f8f6f2] text-[#111827] text-sm font-medium hover:bg-[#eee9df] transition-colors">{{ $tag->name }}</a>
+                            <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}" class="inline-flex items-center px-4 py-1.5 bg-[#f8f6f2] text-[#3f4b9a] text-sm font-medium hover:bg-[#eee9df] transition-colors">{{ $tag->name }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -67,7 +67,7 @@
 @if($related->isNotEmpty())
 <section class="border-t border-[#e6e1d8] bg-[#f8f6f2]">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 class="text-3xl font-serif text-[#111827] mb-8">Related articles</h2>
+        <h2 class="text-3xl font-serif text-[#3f4b9a] mb-8">Related articles</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @foreach($related as $p)
                 @php
@@ -80,8 +80,8 @@
                             <img src="{{ $relImageUrl }}" alt="{{ $p->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         </div>
                         <div class="pt-5">
-                            <p class="text-[12px] text-[#111827]/50 uppercase tracking-wider mb-2">{{ ($p->published_at ?? $p->created_at)?->format('M d, Y') }}</p>
-                            <h3 class="text-xl font-serif text-[#111827] line-clamp-2 leading-snug group-hover:underline decoration-1 underline-offset-4">{{ $p->title }}</h3>
+                            <p class="text-[12px] text-[#3f4b9a]/50 uppercase tracking-wider mb-2">{{ ($p->published_at ?? $p->created_at)?->format('M d, Y') }}</p>
+                            <h3 class="text-xl font-serif text-[#3f4b9a] line-clamp-2 leading-snug group-hover:underline decoration-1 underline-offset-4">{{ $p->title }}</h3>
                         </div>
                     </a>
                 </article>

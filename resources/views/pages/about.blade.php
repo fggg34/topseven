@@ -115,7 +115,7 @@
                 @if($introLabel)
                     <p class="text-[15px] text-gray-500 mb-3">{{ $introLabel }}</p>
                 @endif
-                <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-gray-900 leading-[1.08]">{{ $introTitle }}</h2>
+                <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-brand-ink leading-[1.08]">{{ $introTitle }}</h2>
                 @if($introBadgeTitle || $introBadgeSubtitle)
                 <div class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 mt-6 rounded-full bg-gray-100 px-4 py-2">
                     @if($introBadgeTitle)
@@ -187,7 +187,7 @@
             @if($valuesLabel)
                 <p class="text-[15px] text-gray-500 mb-2">{{ $valuesLabel }}</p>
             @endif
-            <h2 class="text-[34px] md:text-[48px] font-serif font-semibold text-gray-900 leading-[1.05] tracking-tight">{{ $valuesTitle }}</h2>
+            <h2 class="text-[34px] md:text-[48px] font-serif font-semibold text-brand-ink leading-[1.05] tracking-tight">{{ $valuesTitle }}</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             @foreach($values as $val)
@@ -198,7 +198,7 @@
                 </div>
                 @endif
                 @if(!empty($val['title']))
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $val['title'] }}</h3>
+                    <h3 class="text-xl font-bold text-brand-ink mb-2">{{ $val['title'] }}</h3>
                 @endif
                 @if(!empty($val['description']))
                     <p class="text-[15px] text-gray-600 leading-relaxed">{{ $val['description'] }}</p>
@@ -240,7 +240,7 @@
                 @if($expectLabel)
                     <p class="text-[15px] text-gray-500 mb-3">{{ $expectLabel }}</p>
                 @endif
-                <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-gray-900 leading-[1.08]">{{ $expectTitle }}</h2>
+                <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-brand-ink leading-[1.08]">{{ $expectTitle }}</h2>
             </div>
             <div class="lg:col-span-3">
                 @if($expectIntro)
@@ -255,7 +255,7 @@
                 <span class="w-10 h-10 rounded-full bg-gray-900 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">{{ $i + 1 }}</span>
                 <div class="min-w-0">
                     @if(!empty($item['title']))
-                        <h4 class="text-[17px] font-bold text-gray-900 mb-1">{{ $item['title'] }}</h4>
+                        <h4 class="text-[17px] font-bold text-brand-ink mb-1">{{ $item['title'] }}</h4>
                     @endif
                     @if(!empty($item['description']))
                         <p class="text-[15px] text-gray-500 leading-relaxed">{{ $item['description'] }}</p>
@@ -283,7 +283,7 @@
                     @endif
                 </div>
                 <div class="flex flex-wrap justify-center md:justify-end gap-3">
-                    <a href="{{ $ctaPrimaryUrl }}" class="inline-flex items-center rounded-full bg-white text-gray-900 text-sm font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors">
+                    <a href="{{ $ctaPrimaryUrl }}" class="inline-flex items-center rounded-full bg-white text-brand-ink text-sm font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors">
                         {{ $ctaPrimaryLabel }}
                     </a>
                     <a href="{{ $ctaSecondaryUrl }}" class="inline-flex items-center rounded-full border border-white/30 text-white text-sm font-semibold px-7 py-3.5 hover:bg-white/10 transition-colors">

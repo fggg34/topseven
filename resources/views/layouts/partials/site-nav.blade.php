@@ -50,7 +50,7 @@
             <div class="flex items-center z-10 min-w-0">
             {{-- Mobile: hamburger --}}
             <button @click="mobileOpen = !mobileOpen" type="button"
-                    class="md:hidden inline-flex items-center justify-center w-11 h-11 -ml-2 rounded-full {{ $headerOverlay ? 'text-white/90 hover:bg-white/10' : 'text-[#111827] hover:bg-gray-100' }} transition-colors"
+                    class="md:hidden inline-flex items-center justify-center w-11 h-11 -ml-2 rounded-full {{ $headerOverlay ? 'text-white/90 hover:bg-white/10' : 'text-[#3f4b9a] hover:bg-gray-100' }} transition-colors"
                     :aria-expanded="mobileOpen"
                     aria-controls="site-mobile-drawer"
                     aria-label="{{ __('Open menu') }}">
@@ -123,7 +123,7 @@
                     <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($headerLogoPath) }}" alt="{{ $siteName }}"
                          class="h-9 md:h-10 lg:h-[3.5rem] w-auto object-contain {{ $headerOverlay && $siteLogo !== '' ? 'brightness-0 invert' : '' }}" />
                 @else
-                    <span class="text-2xl md:text-3xl lg:text-4xl font-black tracking-wider uppercase {{ $headerOverlay ? 'text-white' : 'text-gray-900' }}">{{ $siteName }}</span>
+                    <span class="text-2xl md:text-3xl lg:text-4xl font-black tracking-wider uppercase {{ $headerOverlay ? 'text-white' : 'text-brand-ink' }}">{{ $siteName }}</span>
                 @endif
             </a>
 
@@ -131,7 +131,7 @@
             <div class="flex items-center justify-end gap-1 z-10 shrink-0">
                 @if($bookPhone)
                     <a href="tel:{{ $bookPhoneTel }}"
-                       class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-full {{ $headerOverlay ? 'text-white/90 hover:bg-white/10' : 'text-[#111827] hover:bg-gray-100' }} transition-colors"
+                       class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-full {{ $headerOverlay ? 'text-white/90 hover:bg-white/10' : 'text-[#3f4b9a] hover:bg-gray-100' }} transition-colors"
                        aria-label="{{ __('Call us') }}">
                         <i class="fa-solid fa-phone text-lg" aria-hidden="true"></i>
                     </a>
@@ -193,9 +193,9 @@
                 @if($mobileDrawerLogoPath)
                     <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($mobileDrawerLogoPath) }}" alt="" class="h-8 w-auto object-contain shrink-0" />
                 @endif
-                <span class="text-sm font-semibold text-[#111827] truncate">{{ $siteName }}</span>
+                <span class="text-sm font-semibold text-[#3f4b9a] truncate">{{ $siteName }}</span>
             </a>
-            <button @click="mobileOpen = false" type="button" class="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full text-[#6a6a6a] hover:bg-[#f8f6f2] hover:text-[#111827] transition-colors" aria-label="{{ __('Close menu') }}">
+            <button @click="mobileOpen = false" type="button" class="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full text-[#6a6a6a] hover:bg-[#f8f6f2] hover:text-[#3f4b9a] transition-colors" aria-label="{{ __('Close menu') }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
@@ -240,15 +240,15 @@
         <div class="flex-shrink-0 border-t border-[#e6e1d8] bg-white px-4 py-4 space-y-4">
             @if($facebookUrl || $instagramUrl)
                 <div>
-                    <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/45 mb-2">{{ __('Follow us') }}</p>
+                    <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/45 mb-2">{{ __('Follow us') }}</p>
                     <div class="flex items-center gap-4">
                         @if($facebookUrl)
-                            <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#e6e1d8] text-[#111827] hover:bg-[#f8f6f2] transition-colors" aria-label="{{ __('Facebook') }}">
+                            <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#e6e1d8] text-[#3f4b9a] hover:bg-[#f8f6f2] transition-colors" aria-label="{{ __('Facebook') }}">
                                 <i class="fa-brands fa-facebook-f text-lg"></i>
                             </a>
                         @endif
                         @if($instagramUrl)
-                            <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#e6e1d8] text-[#111827] hover:bg-[#f8f6f2] transition-colors" aria-label="{{ __('Instagram') }}">
+                            <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" @click="mobileOpen = false" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#e6e1d8] text-[#3f4b9a] hover:bg-[#f8f6f2] transition-colors" aria-label="{{ __('Instagram') }}">
                                 <i class="fa-brands fa-instagram text-xl"></i>
                             </a>
                         @endif
@@ -257,17 +257,17 @@
             @endif
 
             <div>
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/45 mb-2">{{ __('Account') }}</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/45 mb-2">{{ __('Account') }}</p>
                 <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
                     @auth
-                        <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-sm font-medium text-[#111827] hover:underline inline-flex items-center gap-2">
+                        <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-sm font-medium text-[#3f4b9a] hover:underline inline-flex items-center gap-2">
                             <x-icons.user-circled class="w-4 h-4 shrink-0 text-[#6a6a6a]" /> {{ __('My account') }}
                         </a>
                         <form method="POST" action="{{ route('logout') }}" class="inline">@csrf
                             <button type="submit" class="text-sm text-[#6a6a6a] hover:text-red-600 transition-colors">{{ __('Log out') }}</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-sm font-medium text-[#111827] hover:underline">{{ __('Log in') }}</a>
+                        <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-sm font-medium text-[#3f4b9a] hover:underline">{{ __('Log in') }}</a>
                         @if(Route::has('register'))
                             <a href="{{ route('register') }}" @click="mobileOpen = false" class="text-sm font-medium text-lime-700 hover:underline">{{ __('Register') }}</a>
                         @endif
@@ -276,20 +276,20 @@
             </div>
 
             <div>
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/45 mb-2">{{ __('Connect With Us') }}</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/45 mb-2">{{ __('Connect With Us') }}</p>
                 <div class="space-y-1">
-                    <a href="{{ route('contact') }}" @click="mobileOpen = false" class="flex items-center gap-3 py-2 text-sm text-[#111827] hover:text-[#1f2937]">
+                    <a href="{{ route('contact') }}" @click="mobileOpen = false" class="flex items-center gap-3 py-2 text-sm text-[#3f4b9a] hover:text-[#1f2937]">
                         <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#f8f6f2] text-[#6a6a6a]"><i class="fa-solid fa-paper-plane text-sm"></i></span>
                         {{ __('Contact') }}
                     </a>
                     @if($bookPhone)
-                        <a href="tel:{{ $bookPhoneTel }}" @click="mobileOpen = false" class="flex items-center gap-3 py-2 text-sm text-[#111827] hover:text-[#1f2937]">
+                        <a href="tel:{{ $bookPhoneTel }}" @click="mobileOpen = false" class="flex items-center gap-3 py-2 text-sm text-[#3f4b9a] hover:text-[#1f2937]">
                             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#f8f6f2] text-[#6a6a6a]"><i class="fa-solid fa-phone text-sm"></i></span>
                             <span class="break-all">{{ $bookPhone }}</span>
                         </a>
                     @endif
                     @if($contactEmail = \App\Models\Setting::get('contact_email'))
-                        <a href="mailto:{{ $contactEmail }}" @click="mobileOpen = false" class="flex items-center gap-3 py-2 text-sm text-[#111827] hover:text-[#1f2937]">
+                        <a href="mailto:{{ $contactEmail }}" @click="mobileOpen = false" class="flex items-center gap-3 py-2 text-sm text-[#3f4b9a] hover:text-[#1f2937]">
                             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#f8f6f2] text-[#6a6a6a]"><i class="fa-solid fa-envelope text-sm"></i></span>
                             <span class="break-all">{{ $contactEmail }}</span>
                         </a>

@@ -20,11 +20,11 @@
     {{-- Breadcrumb --}}
     <nav class="text-sm mb-8" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
-            <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">{{ __('Home') }}</a></li>
+            <li><a href="{{ route('home') }}" class="hover:text-[#3f4b9a] transition-colors">{{ __('Home') }}</a></li>
             <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
-            <li><a href="{{ route('countries.index') }}" class="hover:text-[#111827] transition-colors">{{ __('Countries') }}</a></li>
+            <li><a href="{{ route('countries.index') }}" class="hover:text-[#3f4b9a] transition-colors">{{ __('Countries') }}</a></li>
             <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
-            <li class="text-[#111827] font-medium">{{ $country->name }}</li>
+            <li class="text-[#3f4b9a] font-medium">{{ $country->name }}</li>
         </ol>
     </nav>
 
@@ -77,29 +77,29 @@
         {{-- Right: Title + Description --}}
         <div class="flex flex-col justify-center">
             @if($country->country)
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-2">{{ $country->country }}</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50 mb-2">{{ $country->country }}</p>
             @endif
-            <h1 class="text-3xl md:text-4xl lg:text-[2.5rem] font-serif font-semibold text-[#111827] tracking-tight leading-[1.1] mb-5">{{ $country->name }}</h1>
+            <h1 class="text-3xl md:text-4xl lg:text-[2.5rem] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-[1.1] mb-5">{{ $country->name }}</h1>
             @if($country->description)
-                <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#111827] prose-p:text-[#4a4a4a] prose-p:leading-[1.75] prose-a:text-[#111827] prose-a:underline prose-a:underline-offset-4">
+                <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#3f4b9a] prose-p:text-[#4a4a4a] prose-p:leading-[1.75] prose-a:text-[#3f4b9a] prose-a:underline prose-a:underline-offset-4">
                     {!! $country->description !!}
                 </div>
             @endif
             <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-[#e6e1d8]">
                 @if($country->tours->count())
                     <div class="flex items-center gap-2">
-                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-route text-[#111827] text-sm"></i></span>
+                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-route text-[#3f4b9a] text-sm"></i></span>
                         <div>
-                            <span class="text-lg font-semibold text-[#111827]">{{ $country->tours->where('is_active', true)->count() }}</span>
+                            <span class="text-lg font-semibold text-[#3f4b9a]">{{ $country->tours->where('is_active', true)->count() }}</span>
                             <span class="text-sm text-[#6a6a6a] ml-1">{{ __('Travel packages') }}</span>
                         </div>
                     </div>
                 @endif
                 @if($country->highlights->count())
                     <div class="flex items-center gap-2">
-                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-camera text-[#111827] text-sm"></i></span>
+                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-camera text-[#3f4b9a] text-sm"></i></span>
                         <div>
-                            <span class="text-lg font-semibold text-[#111827]">{{ $country->highlights->count() }}</span>
+                            <span class="text-lg font-semibold text-[#3f4b9a]">{{ $country->highlights->count() }}</span>
                             <span class="text-sm text-[#6a6a6a] ml-1">{{ __('Attractions') }}</span>
                         </div>
                     </div>
@@ -118,14 +118,14 @@
             <section class="mb-0 overflow-hidden">
         <div class="flex items-end justify-between mb-8 gap-4">
             <div>
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-1">{{ __('Explore') }}</p>
-                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-[#111827] tracking-tight leading-tight">{{ __('Places to visit in :name', ['name' => $country->name]) }}</h2>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50 mb-1">{{ __('Explore') }}</p>
+                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight">{{ __('Places to visit in :name', ['name' => $country->name]) }}</h2>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-                <button type="button" class="city-highlights-prev w-10 h-10 rounded-full border border-[#d1cdc4] bg-white flex items-center justify-center text-[#6a6a6a] hover:text-[#111827] hover:border-[#111827] transition-colors">
+                <button type="button" class="city-highlights-prev w-10 h-10 rounded-full border border-[#d1cdc4] bg-white flex items-center justify-center text-[#6a6a6a] hover:text-[#3f4b9a] hover:border-[#3f4b9a] transition-colors">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </button>
-                <button type="button" class="city-highlights-next w-10 h-10 rounded-full border border-[#d1cdc4] bg-white flex items-center justify-center text-[#6a6a6a] hover:text-[#111827] hover:border-[#111827] transition-colors">
+                <button type="button" class="city-highlights-next w-10 h-10 rounded-full border border-[#d1cdc4] bg-white flex items-center justify-center text-[#6a6a6a] hover:text-[#3f4b9a] hover:border-[#3f4b9a] transition-colors">
                     <i class="fa-solid fa-arrow-right text-sm"></i>
                 </button>
             </div>
@@ -160,8 +160,8 @@
     <section class="px-4 sm:px-6 lg:px-[80px] pb-16">
         <div class="max-w-[1400px] mx-auto">
             <div class="mb-6 md:mb-8">
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#111827]/50 mb-1">{{ __('Curated experiences') }}</p>
-                <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-serif font-semibold text-[#111827] tracking-tight leading-tight">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50 mb-1">{{ __('Curated experiences') }}</p>
+                <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight">
                     {{ __('Travel packages in :name', ['name' => $country->name]) }}
                 </h2>
                 <div class="mt-5 h-1 w-14 rounded-full bg-lime-600" aria-hidden="true"></div>
@@ -182,7 +182,7 @@
                     {{ __('View all travel packages') }}
                 </a>
                 <div class="flex items-center justify-end gap-2">
-                    <button type="button" class="country-packages-prev w-11 h-11 rounded-full border border-[#d1cdc4] bg-white text-[#6a6a6a] flex items-center justify-center transition-colors hover:border-[#111827] hover:text-[#111827] disabled:opacity-40 disabled:pointer-events-none" aria-label="{{ __('Previous') }}">
+                    <button type="button" class="country-packages-prev w-11 h-11 rounded-full border border-[#d1cdc4] bg-white text-[#6a6a6a] flex items-center justify-center transition-colors hover:border-[#3f4b9a] hover:text-[#3f4b9a] disabled:opacity-40 disabled:pointer-events-none" aria-label="{{ __('Previous') }}">
                         <i class="fa-solid fa-arrow-left text-sm"></i>
                     </button>
                     <button type="button" class="country-packages-next w-11 h-11 rounded-full bg-[#111827] text-white flex items-center justify-center transition-colors hover:bg-[#1f2937] disabled:opacity-40 disabled:pointer-events-none" aria-label="{{ __('Next') }}">

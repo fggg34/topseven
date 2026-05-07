@@ -28,11 +28,11 @@
     padding-bottom: 0.75rem !important;
     font-size: 0.875rem !important;
     line-height: 1.25rem !important;
-    color: #111827 !important;
+    color: #3f4b9a !important;
 }
 .enquiry-intl-wrap .iti__tel-input:focus {
     outline: none !important;
-    box-shadow: 0 0 0 2px #111827 !important;
+    box-shadow: 0 0 0 2px #3f4b9a !important;
     border-color: transparent !important;
 }
 .enquiry-intl-wrap .iti__selected-country {
@@ -71,19 +71,19 @@
     <div class="max-w-[1400px] mx-auto">
         <nav class="text-sm mb-4" aria-label="{{ __('Breadcrumb') }}">
             <ol class="flex flex-wrap items-center gap-1.5 text-[#6a6a6a]">
-                <li><a href="{{ route('home') }}" class="hover:text-[#111827] transition-colors">{{ __('Home') }}</a></li>
+                <li><a href="{{ route('home') }}" class="hover:text-[#3f4b9a] transition-colors">{{ __('Home') }}</a></li>
                 <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
-                <li><a href="{{ route('tours.index') }}" class="hover:text-[#111827] transition-colors">{{ __('Travel Packages') }}</a></li>
+                <li><a href="{{ route('tours.index') }}" class="hover:text-[#3f4b9a] transition-colors">{{ __('Travel Packages') }}</a></li>
                 <li class="text-[#d1cdc4]" aria-hidden="true">/</li>
-                <li class="text-[#111827] font-medium truncate max-w-[min(100%,280px)]">{{ $tour->title }}</li>
+                <li class="text-[#3f4b9a] font-medium truncate max-w-[min(100%,280px)]">{{ $tour->title }}</li>
             </ol>
         </nav>
         <!-- @if($tour->category)
-            <span class="inline-flex rounded-full bg-gray-100 px-3.5 py-1 text-[12px] font-semibold text-[#111827] mb-3">{{ $tour->category->name }}</span>
+            <span class="inline-flex rounded-full bg-gray-100 px-3.5 py-1 text-[12px] font-semibold text-[#3f4b9a] mb-3">{{ $tour->category->name }}</span>
         @endif -->
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#111827] tracking-tight leading-[1.1] max-w-4xl">{{ $tour->title }}</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-[1.1] max-w-4xl">{{ $tour->title }}</h1>
         @if($tour->approvedReviews->count() > 0)
-            <div class="mt-3 flex items-center gap-2 text-[#111827]">
+            <div class="mt-3 flex items-center gap-2 text-[#3f4b9a]">
                 <x-review-stars :rating="(float) $tour->average_rating" />
                 @php $rc = $tour->approvedReviews->count(); @endphp
                 <span class="text-sm text-[#6a6a6a]">({{ $rc }} {{ $rc === 1 ? __('review') : __('reviews') }})</span>
@@ -135,10 +135,10 @@
                                      loading="lazy">
                             </a>
                             <a href="{{ $img1->url ?? $mainImageUrl }}"
-                               class="glightbox absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#111827] shadow-md shadow-black/10 ring-1 ring-black/5 transition hover:bg-gray-50"
+                               class="glightbox absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#3f4b9a] shadow-md shadow-black/10 ring-1 ring-black/5 transition hover:bg-gray-50"
                                data-gallery="tour-gallery-{{ $tour->id }}"
                                aria-label="{{ __('View all :count photos', ['count' => $totalImages]) }}">
-                                <i class="fa-solid fa-camera text-[15px] text-[#111827]/80" aria-hidden="true"></i>
+                                <i class="fa-solid fa-camera text-[15px] text-[#3f4b9a]/80" aria-hidden="true"></i>
                                 <span>{{ __('View') }} {{ $totalImages }} {{ $totalImages === 1 ? __('photo') : __('photos') }}</span>
                             </a>
                         @else
@@ -206,7 +206,7 @@
                         </div>
                         <div class="min-w-0">
                             <p class="text-[11px] text-gray-400 leading-none">{{ $fact['label'] }}</p>
-                            <p class="text-sm font-medium text-gray-900 truncate">{{ $fact['value'] }}</p>
+                            <p class="text-sm font-medium text-brand-ink truncate">{{ $fact['value'] }}</p>
                         </div>
                     </div>
                     @endforeach
@@ -214,15 +214,15 @@
                 @endif
 
                 {{-- Summary --}}
-                <div class="prose max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-p:leading-[1.8]">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('Summary') }}</h2>
+                <div class="prose max-w-none prose-headings:font-bold prose-headings:text-brand-ink prose-p:text-gray-600 prose-p:leading-[1.8]">
+                    <h2 class="text-2xl font-bold text-brand-ink mb-4">{{ __('Summary') }}</h2>
                     {!! $tour->description !!}
                 </div>
 
                 {{-- Tour highlights --}}
                 @if($tour->tour_highlights && count($tour->tour_highlights) > 0)
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">{{ __('Travel package highlights') }}</h2>
+                    <h2 class="text-2xl font-bold text-brand-ink mb-5">{{ __('Travel package highlights') }}</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @foreach($tour->tour_highlights as $highlight)
                             @php $text = is_array($highlight) ? ($highlight['text'] ?? $highlight['value'] ?? '') : $highlight; @endphp
@@ -243,14 +243,14 @@
                 @if($tour->itineraries->isNotEmpty())
                     @php $firstId = $tour->itineraries->first()->id; @endphp
                     <div x-data="{ openDay: {{ $firstId }} }">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-5">{{ __('Itinerary & Details') }}</h2>
+                        <h2 class="text-2xl font-bold text-brand-ink mb-5">{{ __('Itinerary & Details') }}</h2>
                         <div class="space-y-3">
                             @foreach($tour->itineraries as $day)
                             <div class="rounded-2xl border border-gray-200 overflow-hidden bg-white">
                                 <button type="button"
                                     @click="openDay = openDay === {{ $day->id }} ? null : {{ $day->id }}"
                                     :class="openDay === {{ $day->id }} ? 'bg-gray-50' : 'hover:bg-gray-50'"
-                                    class="w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-gray-900 transition-colors">
+                                    class="w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-brand-ink transition-colors">
                                     <span class="flex items-center gap-3">
                                         @if($day->day)
                                         <span class="w-8 h-8 rounded-lg bg-gray-900 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">{{ $day->day }}</span>
@@ -278,7 +278,7 @@
                 {{-- Hotels & resorts --}}
                 @if($tour->hotels->isNotEmpty())
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">{{ __('Where you\'ll stay') }}</h2>
+                    <h2 class="text-2xl font-bold text-brand-ink mb-5">{{ __('Where you\'ll stay') }}</h2>
                     <div class="space-y-8">
                         @foreach($tour->hotels as $hotel)
                             @php
@@ -301,7 +301,7 @@
                                     </div>
                                     <div class="md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
                                         <div class="flex flex-wrap items-center gap-2 mb-3">
-                                            <h3 class="text-xl font-bold text-gray-900">{{ $hotel->name }}</h3>
+                                            <h3 class="text-xl font-bold text-brand-ink">{{ $hotel->name }}</h3>
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold {{ $isResort ? 'bg-sky-100 text-sky-800' : 'bg-gray-100 text-gray-700' }}">
                                                 {{ $isResort ? __('Resort') : __('Hotel') }}
                                             </span>
@@ -334,7 +334,7 @@
                 {{-- What to bring --}}
                 @if($tour->what_to_bring && count($tour->what_to_bring) > 0)
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('What to bring') }}</h2>
+                    <h2 class="text-2xl font-bold text-brand-ink mb-4">{{ __('What to bring') }}</h2>
                     <div class="flex flex-wrap gap-2">
                         @foreach((array) $tour->what_to_bring as $item)
                         <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
@@ -389,9 +389,9 @@
                 <div>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
                         <div>
-                            <h2 class="text-2xl font-bold text-gray-900">{{ __('Customer reviews') }}</h2>
+                            <h2 class="text-2xl font-bold text-brand-ink">{{ __('Customer reviews') }}</h2>
                             <p class="mt-1 text-[15px] text-gray-500">
-                                {{ __('What real customers say about') }} <strong class="font-semibold text-gray-900">{{ $tour->title }}</strong>.
+                                {{ __('What real customers say about') }} <strong class="font-semibold text-brand-ink">{{ $tour->title }}</strong>.
                             </p>
                         </div>
                         @if($reviewCount > 0)
@@ -441,7 +441,7 @@
                                         {{ $initials }}
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <p class="font-medium text-gray-900">
+                                        <p class="font-medium text-brand-ink">
                                             {{ $name }}
                                             <span class="text-gray-400 font-normal"> {{ $displayDate->format('d/m/Y') }}</span>
                                         </p>
@@ -454,12 +454,12 @@
                                             @endfor
                                         </div>
                                         @if($review->title)
-                                            <h3 class="font-bold text-lg text-gray-900 mt-3">{{ $review->title }}</h3>
+                                            <h3 class="font-bold text-lg text-brand-ink mt-3">{{ $review->title }}</h3>
                                         @endif
                                         <div class="mt-2 text-gray-600 text-[15px] leading-relaxed">
                                             <p :class="expanded ? '' : 'line-clamp-4'">{{ $review->comment }}</p>
                                             @if(strlen($review->comment) > 280)
-                                                <button type="button" @click="expanded = !expanded" class="text-gray-900 font-semibold hover:underline mt-1 text-sm" x-text="expanded ? @js(__('Show less')) : @js(__('Show more'))"></button>
+                                                <button type="button" @click="expanded = !expanded" class="text-brand-ink font-semibold hover:underline mt-1 text-sm" x-text="expanded ? @js(__('Show less')) : @js(__('Show more'))"></button>
                                             @endif
                                         </div>
                                     </div>
@@ -475,7 +475,7 @@
                             </div>
                         @else
                             <div class="rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
-                                <h3 class="text-xl font-bold text-gray-900 mb-6">{{ __('Leave a review') }}</h3>
+                                <h3 class="text-xl font-bold text-brand-ink mb-6">{{ __('Leave a review') }}</h3>
 
                                 @if(session('error'))
                                     <div class="mb-6 p-4 rounded-xl bg-red-50 text-red-700 text-sm">{{ session('error') }}</div>
@@ -504,13 +504,13 @@
                                     <div>
                                         <label for="review_title" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Title') }} <span class="text-red-500">*</span></label>
                                         <input type="text" name="title" id="review_title" value="{{ old('title') }}" required
-                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
+                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition">
                                         @error('title')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="review_comment" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Your review') }} <span class="text-red-500">*</span></label>
                                         <textarea name="comment" id="review_comment" rows="5" required placeholder="Nga pamjet mbresëlënëse te detajet e vogla – çfarë ju pëlqeu më shumë?"
-                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition resize-y">{{ old('comment') }}</textarea>
+                                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition resize-y">{{ old('comment') }}</textarea>
                                         @error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                                     </div>
                                     <button type="submit" class="inline-flex items-center rounded-full bg-gray-900 text-white text-sm font-semibold px-7 py-3 hover:bg-gray-800 transition-colors">
@@ -559,7 +559,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Full Name') }} <span class="text-red-500">*</span></label>
                                     <input type="text" name="full_name" value="{{ old('full_name') }}" required
-                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition"
                                         placeholder="{{ __('Your full name') }}">
                                     @error('full_name')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
@@ -567,7 +567,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Email') }} <span class="text-red-500">*</span></label>
                                     <input type="email" name="email" value="{{ old('email') }}" required
-                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition"
                                         placeholder="{{ __('your@email.com') }}">
                                     @error('email')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
@@ -577,7 +577,7 @@
                                     <input type="tel" name="phone" id="enquiry-phone-input" value="{{ old('phone') }}"
                                         data-initial-country="al"
                                         autocomplete="tel"
-                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition"
                                         placeholder="{{ __('Your phone number') }}">
                                     <p class="mt-1.5 text-xs text-gray-500">{{ __('Default +355 (Albania). You can change the flag for another country. We save your full international number.') }}</p>
                                     @error('phone')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
@@ -587,13 +587,13 @@
                                 <div class="grid grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Departure') }}</label>
-                                        <div class="w-full rounded-xl border border-gray-200 bg-gray-100 px-3 py-3 text-sm text-gray-900 tabular-nums select-none" title="{{ __('Set by your travel advisor for this package') }}">
+                                        <div class="w-full rounded-xl border border-gray-200 bg-gray-100 px-3 py-3 text-sm text-brand-ink tabular-nums select-none" title="{{ __('Set by your travel advisor for this package') }}">
                                             {{ $tour->homepage_card_date_from?->translatedFormat('j M Y') ?? '—' }}
                                         </div>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Return') }}</label>
-                                        <div class="w-full rounded-xl border border-gray-200 bg-gray-100 px-3 py-3 text-sm text-gray-900 tabular-nums select-none" title="{{ __('Set by your travel advisor for this package') }}">
+                                        <div class="w-full rounded-xl border border-gray-200 bg-gray-100 px-3 py-3 text-sm text-brand-ink tabular-nums select-none" title="{{ __('Set by your travel advisor for this package') }}">
                                             {{ $tour->homepage_card_date_to?->translatedFormat('j M Y') ?? '—' }}
                                         </div>
                                     </div>
@@ -603,14 +603,14 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Guests') }} <span class="text-red-500">*</span></label>
                                     <input type="number" name="guests" value="{{ old('guests', 2) }}" min="1" max="100" required
-                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
+                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition">
                                     @error('guests')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Message') }}</label>
                                     <textarea name="message" rows="3"
-                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition resize-y"
+                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition resize-y"
                                         placeholder="{{ __('Any special requests...') }}">{{ old('message') }}</textarea>
                                     @error('message')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
@@ -647,7 +647,7 @@
                     $mobilePrice = (float)($tour->base_price ?? $tour->price ?? 0);
                     $mobileCurrency = ($tour->currency === 'EUR' || !$tour->currency) ? '€' : $tour->currency;
                 @endphp
-                <span class="text-lg font-bold text-gray-900">{{ $mobileCurrency }} {{ number_format($mobilePrice, 0) }} <span class="text-xs font-normal text-gray-400">/ {{ __('person') }}</span></span>
+                <span class="text-lg font-bold text-brand-ink">{{ $mobileCurrency }} {{ number_format($mobilePrice, 0) }} <span class="text-xs font-normal text-gray-400">/ {{ __('person') }}</span></span>
             </div>
             <a href="#enquiry-form"
                 class="flex-shrink-0 rounded-full py-3 px-6 bg-gray-900 text-white font-semibold text-sm hover:bg-gray-800 transition-colors">

@@ -6,7 +6,7 @@
 @section('content')
 <div class="relative w-full overflow-hidden bg-[#111827]" style="height: 380px;">
     <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1920&h=600&fit=crop');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-[#111827]/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#3f4b9a]/80 via-transparent to-[#3f4b9a]/40"></div>
     <div class="absolute inset-0 flex items-end">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
             <nav class="text-sm mb-4" aria-label="Breadcrumb">
@@ -26,12 +26,12 @@
     @if($categories->isNotEmpty())
         <div class="flex flex-wrap items-center gap-3 mb-12">
             <a href="{{ route('blog.index') }}"
-               class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ !request('category') ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-[#111827] hover:bg-[#111827] hover:text-white hover:border-[#111827]' }}">
+               class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ !request('category') ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-[#3f4b9a] hover:bg-[#111827] hover:text-white hover:border-[#3f4b9a]' }}">
                 All
             </a>
             @foreach($categories as $c)
                 <a href="{{ route('blog.index', ['category' => $c->slug]) }}"
-                   class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ request('category') === $c->slug ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-[#111827] hover:bg-[#111827] hover:text-white hover:border-[#111827]' }}">
+                   class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ request('category') === $c->slug ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-[#3f4b9a] hover:bg-[#111827] hover:text-white hover:border-[#3f4b9a]' }}">
                     {{ $c->name }}
                 </a>
             @endforeach
@@ -50,16 +50,16 @@
                         <img src="{{ $imageUrl }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                     </div>
                     <div class="pt-5">
-                        <div class="flex items-center gap-3 text-[12px] text-[#111827]/50 uppercase tracking-wider mb-3">
+                        <div class="flex items-center gap-3 text-[12px] text-[#3f4b9a]/50 uppercase tracking-wider mb-3">
                             @if($post->category)
-                                <span class="font-semibold text-[#111827]">{{ $post->category->name }}</span>
+                                <span class="font-semibold text-[#3f4b9a]">{{ $post->category->name }}</span>
                                 <span>&bull;</span>
                             @endif
                             <span>{{ ($post->published_at ?? $post->created_at)?->format('M d, Y') }}</span>
                         </div>
-                        <h3 class="text-xl font-serif text-[#111827] line-clamp-2 leading-snug group-hover:underline decoration-1 underline-offset-4">{{ $post->title }}</h3>
+                        <h3 class="text-xl font-serif text-[#3f4b9a] line-clamp-2 leading-snug group-hover:underline decoration-1 underline-offset-4">{{ $post->title }}</h3>
                         <p class="mt-3 text-[15px] text-[#6a6a6a] line-clamp-3 leading-relaxed">{{ Str::limit($post->excerpt_plain !== '' ? $post->excerpt_plain : strip_tags($post->content_html), 150) }}</p>
-                        <span class="inline-block mt-4 text-[13px] font-semibold uppercase tracking-wider text-[#111827] border-b border-[#111827]">Read article</span>
+                        <span class="inline-block mt-4 text-[13px] font-semibold uppercase tracking-wider text-[#3f4b9a] border-b border-[#3f4b9a]">Read article</span>
                     </div>
                 </a>
             </article>
