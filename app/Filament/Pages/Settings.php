@@ -50,6 +50,7 @@ class Settings extends Page
             'site_name' => Setting::get('site_name', ''),
             'site_tagline' => Setting::get('site_tagline', ''),
             'site_logo' => Setting::get('site_logo', ''),
+            'site_logo_dark' => Setting::get('site_logo_dark', ''),
             'site_icon' => Setting::get('site_icon', ''),
             'footer_logo' => Setting::get('footer_logo', ''),
             'contact_email' => Setting::get('contact_email', ''),
@@ -92,14 +93,23 @@ class Settings extends Page
                 \Filament\Schemas\Components\Section::make('Branding')
                     ->schema([
                         FileUpload::make('site_logo')
-                            ->label('Site Logo (Header)')
+                            ->label('Site Logo (Homepage header)')
                             ->image()
                             ->disk('public')
                             ->directory('settings')
                             ->visibility('public')
                             ->imagePreviewHeight('80')
                             ->maxSize(2048)
-                            ->helperText('Logo displayed in the site header. Recommended: PNG or SVG, max 2MB.'),
+                            ->helperText('Shown on the homepage transparent header (over the hero). Recommended: PNG or SVG, max 2MB.'),
+                        FileUpload::make('site_logo_dark')
+                            ->label('Dark Logo (Other pages header)')
+                            ->image()
+                            ->disk('public')
+                            ->directory('settings')
+                            ->visibility('public')
+                            ->imagePreviewHeight('80')
+                            ->maxSize(2048)
+                            ->helperText('Shown on inner pages with the light header bar. Leave empty to reuse the homepage logo.'),
                         FileUpload::make('footer_logo')
                             ->label('Footer Logo')
                             ->image()

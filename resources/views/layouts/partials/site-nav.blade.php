@@ -1,7 +1,10 @@
 @php
     $headerOverlay = request()->routeIs('home');
     $siteName = \App\Models\Setting::get('site_name', config('app.name'));
-    $siteLogo = \App\Models\Setting::get('site_logo', '');
+    $siteLogo = trim((string) \App\Models\Setting::get('site_logo', ''));
+    $siteLogoDark = trim((string) \App\Models\Setting::get('site_logo_dark', ''));
+    $headerLogoPath = $headerOverlay ? $siteLogo : ($siteLogoDark !== '' ? $siteLogoDark : $siteLogo);
+    $mobileDrawerLogoPath = $siteLogoDark !== '' ? $siteLogoDark : $siteLogo;
     $bookPhone = \App\Models\Setting::get('contact_phone', '');
     $bookPhoneTel = preg_replace('/[^0-9+]/', '', $bookPhone) ?: '';
     $facebookUrl = trim((string) \App\Models\Setting::get('facebook_url', ''));
@@ -116,9 +119,9 @@
 
             {{-- Center: logo --}}
             <a href="{{ route('home') }}" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 flex items-center max-w-[min(52vw,200px)] md:max-w-none">
-                @if($siteLogo)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($siteLogo) }}" alt="{{ $siteName }}"
-                         class="h-9 md:h-10 lg:h-12 w-auto object-contain {{ $headerOverlay ? 'brightness-0 invert' : '' }}" />
+                @if($headerLogoPath)
+                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($headerLogoPath) }}" alt="{{ $siteName }}"
+                         class="h-9 md:h-10 lg:h-12 w-auto object-contain {{ $headerOverlay && $siteLogo !== '' ? 'brightness-0 invert' : '' }}" />
                 @else
                     <span class="text-2xl md:text-3xl lg:text-4xl font-black tracking-wider uppercase {{ $headerOverlay ? 'text-white' : 'text-gray-900' }}">{{ $siteName }}</span>
                 @endif
@@ -187,8 +190,8 @@
          class="md:hidden fixed top-0 right-0 bottom-0 z-[9999] w-[min(100vw-1rem,20rem)] max-w-[90vw] bg-[#faf9f7] shadow-2xl shadow-black/15 flex flex-col border-l border-[#e6e1d8]">
         <div class="flex items-center gap-3 px-4 py-4 border-b border-[#e6e1d8] bg-white">
             <a href="{{ route('home') }}" @click="mobileOpen = false" class="flex items-center gap-2 min-w-0 flex-1">
-                @if($siteLogo)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($siteLogo) }}" alt="" class="h-8 w-auto object-contain shrink-0" />
+                @if($mobileDrawerLogoPath)
+                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($mobileDrawerLogoPath) }}" alt="" class="h-8 w-auto object-contain shrink-0" />
                 @endif
                 <span class="text-sm font-semibold text-[#111827] truncate">{{ $siteName }}</span>
             </a>
