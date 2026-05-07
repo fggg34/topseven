@@ -93,7 +93,6 @@
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-[1.1]">
                 {{ __('Explore our travel packages') }}
             </h1>
-            <div class="mt-6 h-1 w-14 rounded-full bg-lime-600" aria-hidden="true"></div>
         </div>
     </header>
 
