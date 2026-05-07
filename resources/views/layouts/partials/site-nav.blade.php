@@ -121,7 +121,7 @@
             <a href="{{ route('home') }}" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 flex items-center max-w-[min(52vw,200px)] md:max-w-none">
                 @if($headerLogoPath)
                     <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($headerLogoPath) }}" alt="{{ $siteName }}"
-                         class="h-9 md:h-10 lg:h-12 w-auto object-contain {{ $headerOverlay && $siteLogo !== '' ? 'brightness-0 invert' : '' }}" />
+                         class="h-9 md:h-10 lg:h-16 w-auto object-contain {{ $headerOverlay && $siteLogo !== '' ? 'brightness-0 invert' : '' }}" />
                 @else
                     <span class="text-2xl md:text-3xl lg:text-4xl font-black tracking-wider uppercase {{ $headerOverlay ? 'text-white' : 'text-gray-900' }}">{{ $siteName }}</span>
                 @endif
