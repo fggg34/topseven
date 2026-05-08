@@ -6,7 +6,7 @@
 @section('content')
 <div class="relative w-full overflow-hidden bg-[#111827]" style="height: 380px;">
     <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1920&h=600&fit=crop');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#3f4b9a]/80 via-transparent to-[#3f4b9a]/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#071432]/85 via-[#3f4b9a]/15 to-[#3f4b9a]/40"></div>
     <div class="absolute inset-0 flex items-end">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
             <nav class="text-sm mb-4" aria-label="Breadcrumb">
