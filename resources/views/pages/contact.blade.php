@@ -88,8 +88,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @if($contactEmail)
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-envelope text-white text-sm"></i>
+                <div class="w-12 h-12 rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-envelope text-brand-ink text-sm"></i>
                 </div>
                 <div class="min-w-0">
                     <p class="text-[13px] text-gray-400 mb-0.5">{{ __('Email') }}</p>
@@ -99,8 +99,8 @@
             @endif
             @if($contactPhone)
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-phone text-white text-sm"></i>
+                <div class="w-12 h-12 rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-phone text-brand-ink text-sm"></i>
                 </div>
                 <div class="min-w-0">
                     <p class="text-[13px] text-gray-400 mb-0.5">{{ __('Phone') }}</p>
@@ -110,8 +110,8 @@
             @endif
             @if($contactAddress)
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-location-dot text-white text-sm"></i>
+                <div class="w-12 h-12 rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-location-dot text-brand-ink text-sm"></i>
                 </div>
                 <div class="min-w-0">
                     <p class="text-[13px] text-gray-400 mb-0.5">{{ __('Address') }}</p>
@@ -131,7 +131,7 @@
 
             {{-- Form --}}
             <div class="lg:col-span-3">
-                <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-brand-ink leading-[1.08] mb-3">{{ $formTitle }}</h2>
+                <h2 class="text-[34px] md:text-[44px] font-serif font-semibold text-brand-heading leading-[1.08] mb-3">{{ $formTitle }}</h2>
                 @if(session('success'))
                     <div class="mb-8 p-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-start gap-3">
                         <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
@@ -145,14 +145,14 @@
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Name') }} <span class="text-red-400">*</span></label>
                             <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition"
                                 placeholder="{{ __('Your name') }}">
                             @error('name')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Email') }} <span class="text-red-400">*</span></label>
                             <input type="email" name="email" id="email" value="{{ old('email') }}" required
-                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition"
                                 placeholder="{{ __('your@email.com') }}">
                             @error('email')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
@@ -162,14 +162,14 @@
                             <label for="contact-phone-input" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Phone') }} <span class="text-red-400">*</span></label>
                             <input type="tel" name="phone" id="contact-phone-input" value="{{ old('phone') }}" required autocomplete="tel"
                                 data-initial-country="al"
-                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition"
                                 placeholder="{{ __('Your phone number') }}">
                             @error('phone')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label for="subject" class="block text-sm font-medium text-gray-700 mb-1.5">Arsyeja e kontaktit <span class="text-red-400">*</span></label>
                             <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
-                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition"
                                 placeholder="Si mund t'ju ndihmojmë">
                             @error('subject')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
@@ -177,7 +177,7 @@
                     <div>
                         <label for="message" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Message') }} <span class="text-red-400">*</span></label>
                         <textarea name="message" id="message" rows="5" required
-                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition resize-y"
+                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition resize-y"
                             placeholder="{{ __('Tell us more about your inquiry...') }}">{{ old('message') }}</textarea>
                         @error('message')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                     </div>
@@ -193,32 +193,32 @@
                 <div class="sticky top-28 space-y-5">
                     {{-- How can we help --}}
                     <div class="bg-gray-100 rounded-2xl p-7">
-                        <h3 class="text-xl font-bold text-brand-ink mb-5">{{ __('How can we help?') }}</h3>
+                        <h3 class="text-xl font-bold text-brand-heading mb-5">{{ __('How can we help?') }}</h3>
                         <div class="space-y-4">
                             <div class="flex items-start gap-3.5">
-                                <div class="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0">
-                                    <i class="fa-solid fa-plane-departure text-white text-sm"></i>
+                                <div class="w-10 h-10 rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-plane-departure text-brand-ink text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-semibold text-brand-ink">{{ __('Custom travel package requests') }}</h4>
+                                    <h4 class="text-sm font-semibold text-brand-heading">{{ __('Custom travel package requests') }}</h4>
                                     <p class="text-[13px] text-gray-500 mt-0.5">{{ __("Tell us your dream itinerary and we'll make it happen.") }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3.5">
-                                <div class="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0">
-                                    <i class="fa-solid fa-users text-white text-sm"></i>
+                                <div class="w-10 h-10 rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-users text-brand-ink text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-semibold text-brand-ink">{{ __('Group travel') }}</h4>
+                                    <h4 class="text-sm font-semibold text-brand-heading">{{ __('Group travel') }}</h4>
                                     <p class="text-[13px] text-gray-500 mt-0.5">{{ __('Special rates and tailored experiences for groups.') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3.5">
-                                <div class="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0">
-                                    <i class="fa-solid fa-circle-question text-white text-sm"></i>
+                                <div class="w-10 h-10 rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-circle-question text-brand-ink text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-semibold text-brand-ink">{{ __('General Enquiries') }}</h4>
+                                    <h4 class="text-sm font-semibold text-brand-heading">{{ __('General Enquiries') }}</h4>
                                     <p class="text-[13px] text-gray-500 mt-0.5">{{ __('Questions about destinations, availability, or anything else.') }}</p>
                                 </div>
                             </div>
