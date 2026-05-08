@@ -100,7 +100,7 @@
             </div>
 
             {{-- Search button --}}
-            <button type="submit" class="flex-shrink-0 self-center w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition-colors" aria-label="{{ __('Search') }}">
+            <button type="submit" class="flex-shrink-0 self-center w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-brand-ink hover:bg-[#354287] text-white flex items-center justify-center transition-colors" aria-label="{{ __('Search') }}">
                 <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
 
