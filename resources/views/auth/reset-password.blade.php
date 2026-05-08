@@ -27,7 +27,7 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1.5" />
         </div>
 
-        <button type="submit" class="w-full inline-flex items-center justify-center rounded-full bg-[#111827] text-white text-sm font-semibold px-8 py-3.5 hover:bg-gray-900 transition-colors">
+        <button type="submit" class="w-full inline-flex items-center justify-center rounded-full bg-brand-ink text-white text-sm font-semibold px-8 py-3.5 hover:bg-[#354287] transition-colors">
             {{ __('Reset Password') }}
         </button>
     </form>

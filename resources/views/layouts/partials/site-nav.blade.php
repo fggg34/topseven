@@ -202,7 +202,7 @@
 
         @if($bookPhone)
             <div class="px-4 pt-4 pb-2">
-                <a href="tel:{{ $bookPhoneTel }}" @click="mobileOpen = false" class="flex items-center justify-center gap-2 w-full rounded-full bg-[#111827] text-white text-sm font-semibold py-3 px-4 hover:bg-[#1f2937] transition-colors">
+                <a href="tel:{{ $bookPhoneTel }}" @click="mobileOpen = false" class="flex items-center justify-center gap-2 w-full rounded-full bg-brand-ink text-white text-sm font-semibold py-3 px-4 hover:bg-[#354287] transition-colors">
                     <i class="fa-solid fa-phone" aria-hidden="true"></i>
                     {{ __('Call us') }}
                 </a>

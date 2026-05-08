@@ -37,7 +37,7 @@
             <a class="text-sm text-gray-600 hover:text-brand-ink font-medium transition-colors order-2 sm:order-1" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
-            <button type="submit" class="order-1 sm:order-2 inline-flex items-center justify-center rounded-full bg-[#111827] text-white text-sm font-semibold px-8 py-3.5 hover:bg-gray-900 transition-colors w-full sm:w-auto">
+            <button type="submit" class="order-1 sm:order-2 inline-flex items-center justify-center rounded-full bg-brand-ink text-white text-sm font-semibold px-8 py-3.5 hover:bg-[#354287] transition-colors w-full sm:w-auto">
                 {{ __('Register') }}
                 <i class="fa-solid fa-arrow-right text-xs ml-2"></i>
             </button>

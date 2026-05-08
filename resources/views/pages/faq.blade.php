@@ -93,7 +93,7 @@
             </div>
             <h2 class="text-xl md:text-2xl font-serif font-semibold text-brand-heading mb-3">{{ $ctaTitle }}</h2>
             <p class="text-[#6a6a6a] mb-8 max-w-md mx-auto leading-relaxed">{{ $ctaDescription }}</p>
-            <a href="{{ $ctaButtonUrl }}" class="inline-flex items-center justify-center rounded-full bg-[#111827] hover:bg-[#1f2937] text-white text-sm font-semibold px-8 py-3.5 transition-colors">
+            <a href="{{ $ctaButtonUrl }}" class="inline-flex items-center justify-center rounded-full bg-brand-ink hover:bg-[#354287] text-white text-sm font-semibold px-8 py-3.5 transition-colors">
                 {{ $ctaButtonText }}
             </a>
         </section>

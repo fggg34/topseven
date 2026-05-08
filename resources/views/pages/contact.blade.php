@@ -181,7 +181,7 @@
                             placeholder="{{ __('Tell us more about your inquiry...') }}">{{ old('message') }}</textarea>
                         @error('message')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                     </div>
-                    <button type="submit" class="inline-flex items-center rounded-full bg-gray-900 text-white text-sm font-semibold px-8 py-3.5 hover:bg-gray-800 transition-colors">
+                    <button type="submit" class="inline-flex items-center rounded-full bg-brand-ink text-white text-sm font-semibold px-8 py-3.5 hover:bg-[#354287] transition-colors">
                         {{ __('Send message') }}
                         <i class="fa-solid fa-arrow-right text-xs ml-2.5"></i>
                     </button>

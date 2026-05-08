@@ -27,7 +27,7 @@
         </div>
 
         <div class="flex flex-col gap-4 pt-2">
-            <button type="submit" class="inline-flex items-center justify-center w-full rounded-full bg-[#111827] text-white text-sm font-semibold px-8 py-3.5 hover:bg-gray-900 transition-colors">
+            <button type="submit" class="inline-flex items-center justify-center w-full rounded-full bg-brand-ink text-white text-sm font-semibold px-8 py-3.5 hover:bg-[#354287] transition-colors">
                 {{ __('Log in') }}
                 <i class="fa-solid fa-arrow-right text-xs ml-2"></i>
             </button>

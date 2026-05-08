@@ -513,7 +513,7 @@
                                             class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition resize-y">{{ old('comment') }}</textarea>
                                         @error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                                     </div>
-                                    <button type="submit" class="inline-flex items-center rounded-full bg-gray-900 text-white text-sm font-semibold px-7 py-3 hover:bg-gray-800 transition-colors">
+                                    <button type="submit" class="inline-flex items-center rounded-full bg-brand-ink text-white text-sm font-semibold px-7 py-3 hover:bg-[#354287] transition-colors">
                                         {{ __('Submit Review') }}
                                     </button>
                                 </form>
@@ -522,7 +522,7 @@
                     @else
                         <div class="rounded-2xl bg-gray-100 p-6 md:p-8 text-center">
                             <p class="text-gray-500 mb-5">{{ __('To leave a review you need to log in.') }}</p>
-                            <a href="{{ route('login') }}" class="inline-flex items-center rounded-full bg-gray-900 text-white text-sm font-semibold px-7 py-3 hover:bg-gray-800 transition-colors">
+                            <a href="{{ route('login') }}" class="inline-flex items-center rounded-full bg-brand-ink text-white text-sm font-semibold px-7 py-3 hover:bg-[#354287] transition-colors">
                                 {{ __('Log in to your account') }}
                             </a>
                         </div>
@@ -534,7 +534,7 @@
             <div class="lg:col-span-1">
                 <div id="enquiry-form" class="lg:sticky lg:top-24 lg:self-start scroll-mt-12">
                     <div class="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-                        <div class="bg-gray-900 rounded-t-2xl px-6 py-5">
+                        <div class="bg-brand-ink rounded-t-2xl px-6 py-5">
                             <h3 class="text-lg font-bold text-white">{{ __('Enquire About This Travel Package') }}</h3>
                             @php
                                 $basePrice = (float)($tour->base_price ?? $tour->price ?? 0);
@@ -615,7 +615,7 @@
                                     @error('message')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
 
-                                <button type="submit" class="w-full rounded-full py-3.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-semibold transition-colors">
+                                <button type="submit" class="w-full rounded-full py-3.5 bg-brand-ink hover:bg-[#354287] text-white text-sm font-semibold transition-colors">
                                     {{ __('Send Enquiry') }}
                                 </button>
                             </form>
@@ -650,7 +650,7 @@
                 <span class="text-lg font-bold text-brand-ink">{{ $mobileCurrency }} {{ number_format($mobilePrice, 0) }} <span class="text-xs font-normal text-gray-400">/ {{ __('person') }}</span></span>
             </div>
             <a href="#enquiry-form"
-                class="flex-shrink-0 rounded-full py-3 px-6 bg-gray-900 text-white font-semibold text-sm hover:bg-gray-800 transition-colors">
+                class="flex-shrink-0 rounded-full py-3 px-6 bg-brand-ink text-white font-semibold text-sm hover:bg-[#354287] transition-colors">
                 {{ __('Enquire Now') }}
             </a>
         </div>
