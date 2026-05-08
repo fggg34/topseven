@@ -92,8 +92,8 @@
                     <i class="fa-solid fa-envelope text-brand-ink text-sm"></i>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[13px] text-gray-400 mb-0.5">{{ __('Email') }}</p>
-                    <a href="mailto:{{ $contactEmail }}" class="text-[15px] font-medium text-brand-ink hover:underline break-all">{{ $contactEmail }}</a>
+                    <p class="text-[13px] font-medium text-brand-ink/55 mb-0.5">{{ __('Email') }}</p>
+                    <a href="mailto:{{ $contactEmail }}" class="text-[15px] font-medium text-brand-heading hover:text-brand-ink hover:underline break-all transition-colors">{{ $contactEmail }}</a>
                 </div>
             </div>
             @endif
@@ -103,8 +103,8 @@
                     <i class="fa-solid fa-phone text-brand-ink text-sm"></i>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[13px] text-gray-400 mb-0.5">{{ __('Phone') }}</p>
-                    <a href="tel:{{ $contactPhone }}" class="text-[15px] font-medium text-brand-ink hover:underline">{{ $contactPhone }}</a>
+                    <p class="text-[13px] font-medium text-brand-ink/55 mb-0.5">{{ __('Phone') }}</p>
+                    <a href="tel:{{ $contactPhone }}" class="text-[15px] font-medium text-brand-heading hover:text-brand-ink hover:underline transition-colors">{{ $contactPhone }}</a>
                 </div>
             </div>
             @endif
@@ -114,8 +114,8 @@
                     <i class="fa-solid fa-location-dot text-brand-ink text-sm"></i>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[13px] text-gray-400 mb-0.5">{{ __('Address') }}</p>
-                    <p class="text-[15px] font-medium text-brand-ink">{{ $contactAddress }}</p>
+                    <p class="text-[13px] font-medium text-brand-ink/55 mb-0.5">{{ __('Address') }}</p>
+                    <p class="text-[15px] font-medium text-brand-heading">{{ $contactAddress }}</p>
                 </div>
             </div>
             @endif
