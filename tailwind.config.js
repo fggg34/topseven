@@ -17,12 +17,14 @@ export default {
             },
             colors: {
                 brand: {
-                    /** Primary body / UI ink (replaces gray-900 / #111827 for text & icons) */
+                    /** Icons, links, and UI accent */
                     ink: '#3f4b9a',
+                    /** Page & section titles (h1–h6, large display headings) */
+                    heading: '#071432',
                     light: '#78a032',
                     DEFAULT: '#5a7825',
                     dark: '#3c5019',
-                    headline: '#0f1406',
+                    headline: '#071432',
                     btn: '#87b438',
                     'btn-hover': '#78a032',
                     footer: '#1A1A19',

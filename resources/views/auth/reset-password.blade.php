@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight mb-2">{{ __('Reset Password') }}</h1>
+    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-brand-heading tracking-tight leading-tight mb-2">{{ __('Reset Password') }}</h1>
     <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">Choose a new password for your account.</p>
 
     <form method="POST" action="{{ route('password.store') }}" class="space-y-5">

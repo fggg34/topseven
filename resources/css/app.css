@@ -13,8 +13,7 @@
   }
 }
 
-/* Brand color palette: #78a032, #5a7825, #3c5019, #0f1406 */
-/* Headlines use #0f1406 - override utility classes in main content */
+/* Brand: headings #071432 (brand-heading), icons/links accent #3f4b9a (brand-ink) */
 @media (max-width: 767px) {
   main {
     overflow-x: hidden;
@@ -99,6 +98,7 @@
 .blog-content h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
+  color: #071432;
 }
 .blog-content h1:first-child,
 .blog-content h2:first-child,

@@ -144,7 +144,7 @@
             @endif
 
             {{-- Title --}}
-            <h3 class="text-[15px] font-semibold text-brand-ink leading-snug line-clamp-2 group-hover:text-gray-700 transition-colors min-h-[41px]">{{ $tour->title }}</h3>
+            <h3 class="text-[15px] font-semibold text-brand-heading leading-snug line-clamp-2 group-hover:text-gray-700 transition-colors min-h-[41px]">{{ $tour->title }}</h3>
 
             {{-- Duration --}}
             @if($durationLabel)

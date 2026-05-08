@@ -79,27 +79,27 @@
             @if($country->country)
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50 mb-2">{{ $country->country }}</p>
             @endif
-            <h1 class="text-3xl md:text-4xl lg:text-[2.5rem] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-[1.1] mb-5">{{ $country->name }}</h1>
+            <h1 class="text-3xl md:text-4xl lg:text-[2.5rem] font-serif font-semibold text-brand-heading tracking-tight leading-[1.1] mb-5">{{ $country->name }}</h1>
             @if($country->description)
-                <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#3f4b9a] prose-p:text-[#4a4a4a] prose-p:leading-[1.75] prose-a:text-[#3f4b9a] prose-a:underline prose-a:underline-offset-4">
+                <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-heading prose-p:text-[#4a4a4a] prose-p:leading-[1.75] prose-a:text-brand-ink prose-a:underline prose-a:underline-offset-4">
                     {!! $country->description !!}
                 </div>
             @endif
             <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-[#e6e1d8]">
                 @if($country->tours->count())
                     <div class="flex items-center gap-2">
-                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-route text-[#3f4b9a] text-sm"></i></span>
+                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-route text-brand-ink text-sm"></i></span>
                         <div>
-                            <span class="text-lg font-semibold text-[#3f4b9a]">{{ $country->tours->where('is_active', true)->count() }}</span>
+                            <span class="text-lg font-semibold text-brand-ink">{{ $country->tours->where('is_active', true)->count() }}</span>
                             <span class="text-sm text-[#6a6a6a] ml-1">{{ __('Travel packages') }}</span>
                         </div>
                     </div>
                 @endif
                 @if($country->highlights->count())
                     <div class="flex items-center gap-2">
-                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-camera text-[#3f4b9a] text-sm"></i></span>
+                        <span class="w-9 h-9 rounded-lg bg-[#f8f6f2] flex items-center justify-center border border-[#e6e1d8]"><i class="fa-solid fa-camera text-brand-ink text-sm"></i></span>
                         <div>
-                            <span class="text-lg font-semibold text-[#3f4b9a]">{{ $country->highlights->count() }}</span>
+                            <span class="text-lg font-semibold text-brand-ink">{{ $country->highlights->count() }}</span>
                             <span class="text-sm text-[#6a6a6a] ml-1">{{ __('Attractions') }}</span>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
         <div class="flex items-end justify-between mb-8 gap-4">
             <div>
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50 mb-1">{{ __('Explore') }}</p>
-                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight">{{ __('Places to visit in :name', ['name' => $country->name]) }}</h2>
+                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-brand-heading tracking-tight leading-tight">{{ __('Places to visit in :name', ['name' => $country->name]) }}</h2>
             </div>
             <div class="flex items-center gap-2 shrink-0">
                 <button type="button" class="city-highlights-prev w-10 h-10 rounded-full border border-[#d1cdc4] bg-white flex items-center justify-center text-[#6a6a6a] hover:text-[#3f4b9a] hover:border-[#3f4b9a] transition-colors">
@@ -161,7 +161,7 @@
         <div class="max-w-[1400px] mx-auto">
             <div class="mb-6 md:mb-8">
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50 mb-1">{{ __('Curated experiences') }}</p>
-                <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight">
+                <h2 class="text-3xl sm:text-4xl md:text-[2.125rem] lg:text-[2.5rem] font-serif font-semibold text-brand-heading tracking-tight leading-tight">
                     {{ __('Travel packages in :name', ['name' => $country->name]) }}
                 </h2>
             </div>

@@ -81,9 +81,9 @@
         <!-- @if($tour->category)
             <span class="inline-flex rounded-full bg-gray-100 px-3.5 py-1 text-[12px] font-semibold text-[#3f4b9a] mb-3">{{ $tour->category->name }}</span>
         @endif -->
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-[1.1] max-w-4xl">{{ $tour->title }}</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-brand-heading tracking-tight leading-[1.1] max-w-4xl">{{ $tour->title }}</h1>
         @if($tour->approvedReviews->count() > 0)
-            <div class="mt-3 flex items-center gap-2 text-[#3f4b9a]">
+            <div class="mt-3 flex items-center gap-2 text-brand-ink">
                 <x-review-stars :rating="(float) $tour->average_rating" />
                 @php $rc = $tour->approvedReviews->count(); @endphp
                 <span class="text-sm text-[#6a6a6a]">({{ $rc }} {{ $rc === 1 ? __('review') : __('reviews') }})</span>
@@ -135,10 +135,10 @@
                                      loading="lazy">
                             </a>
                             <a href="{{ $img1->url ?? $mainImageUrl }}"
-                               class="glightbox absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#3f4b9a] shadow-md shadow-black/10 ring-1 ring-black/5 transition hover:bg-gray-50"
+                               class="glightbox absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-brand-ink shadow-md shadow-black/10 ring-1 ring-black/5 transition hover:bg-gray-50"
                                data-gallery="tour-gallery-{{ $tour->id }}"
                                aria-label="{{ __('View all :count photos', ['count' => $totalImages]) }}">
-                                <i class="fa-solid fa-camera text-[15px] text-[#3f4b9a]/80" aria-hidden="true"></i>
+                                <i class="fa-solid fa-camera text-[15px] text-brand-ink/80" aria-hidden="true"></i>
                                 <span>{{ __('View') }} {{ $totalImages }} {{ $totalImages === 1 ? __('photo') : __('photos') }}</span>
                             </a>
                         @else
@@ -202,7 +202,7 @@
                     @foreach($facts as $fact)
                     <div class="flex items-center gap-3 min-w-[140px]">
                         <div class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid {{ $fact['icon'] }} text-gray-600 text-sm"></i>
+                            <i class="fa-solid {{ $fact['icon'] }} text-brand-ink text-sm"></i>
                         </div>
                         <div class="min-w-0">
                             <p class="text-[11px] text-gray-400 leading-none">{{ $fact['label'] }}</p>
@@ -214,15 +214,15 @@
                 @endif
 
                 {{-- Summary --}}
-                <div class="prose max-w-none prose-headings:font-bold prose-headings:text-brand-ink prose-p:text-gray-600 prose-p:leading-[1.8]">
-                    <h2 class="text-2xl font-bold text-brand-ink mb-4">{{ __('Summary') }}</h2>
+                <div class="prose max-w-none prose-headings:font-bold prose-headings:text-brand-heading prose-p:text-gray-600 prose-p:leading-[1.8]">
+                    <h2 class="text-2xl font-bold text-brand-heading mb-4">{{ __('Summary') }}</h2>
                     {!! $tour->description !!}
                 </div>
 
                 {{-- Tour highlights --}}
                 @if($tour->tour_highlights && count($tour->tour_highlights) > 0)
                 <div>
-                    <h2 class="text-2xl font-bold text-brand-ink mb-5">{{ __('Travel package highlights') }}</h2>
+                    <h2 class="text-2xl font-bold text-brand-heading mb-5">{{ __('Travel package highlights') }}</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @foreach($tour->tour_highlights as $highlight)
                             @php $text = is_array($highlight) ? ($highlight['text'] ?? $highlight['value'] ?? '') : $highlight; @endphp
@@ -243,14 +243,14 @@
                 @if($tour->itineraries->isNotEmpty())
                     @php $firstId = $tour->itineraries->first()->id; @endphp
                     <div x-data="{ openDay: {{ $firstId }} }">
-                        <h2 class="text-2xl font-bold text-brand-ink mb-5">{{ __('Itinerary & Details') }}</h2>
+                        <h2 class="text-2xl font-bold text-brand-heading mb-5">{{ __('Itinerary & Details') }}</h2>
                         <div class="space-y-3">
                             @foreach($tour->itineraries as $day)
                             <div class="rounded-2xl border border-gray-200 overflow-hidden bg-white">
                                 <button type="button"
                                     @click="openDay = openDay === {{ $day->id }} ? null : {{ $day->id }}"
                                     :class="openDay === {{ $day->id }} ? 'bg-gray-50' : 'hover:bg-gray-50'"
-                                    class="w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-brand-ink transition-colors">
+                                    class="w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-brand-heading transition-colors">
                                     <span class="flex items-center gap-3">
                                         @if($day->day)
                                         <span class="w-8 h-8 rounded-lg bg-gray-900 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">{{ $day->day }}</span>
@@ -278,7 +278,7 @@
                 {{-- Hotels & resorts --}}
                 @if($tour->hotels->isNotEmpty())
                 <div>
-                    <h2 class="text-2xl font-bold text-brand-ink mb-5">{{ __('Where you\'ll stay') }}</h2>
+                    <h2 class="text-2xl font-bold text-brand-heading mb-5">{{ __('Where you\'ll stay') }}</h2>
                     <div class="space-y-8">
                         @foreach($tour->hotels as $hotel)
                             @php
@@ -301,7 +301,7 @@
                                     </div>
                                     <div class="md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
                                         <div class="flex flex-wrap items-center gap-2 mb-3">
-                                            <h3 class="text-xl font-bold text-brand-ink">{{ $hotel->name }}</h3>
+                                            <h3 class="text-xl font-bold text-brand-heading">{{ $hotel->name }}</h3>
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold {{ $isResort ? 'bg-sky-100 text-sky-800' : 'bg-gray-100 text-gray-700' }}">
                                                 {{ $isResort ? __('Resort') : __('Hotel') }}
                                             </span>
@@ -334,7 +334,7 @@
                 {{-- What to bring --}}
                 @if($tour->what_to_bring && count($tour->what_to_bring) > 0)
                 <div>
-                    <h2 class="text-2xl font-bold text-brand-ink mb-4">{{ __('What to bring') }}</h2>
+                    <h2 class="text-2xl font-bold text-brand-heading mb-4">{{ __('What to bring') }}</h2>
                     <div class="flex flex-wrap gap-2">
                         @foreach((array) $tour->what_to_bring as $item)
                         <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
@@ -389,9 +389,9 @@
                 <div>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
                         <div>
-                            <h2 class="text-2xl font-bold text-brand-ink">{{ __('Customer reviews') }}</h2>
+                            <h2 class="text-2xl font-bold text-brand-heading">{{ __('Customer reviews') }}</h2>
                             <p class="mt-1 text-[15px] text-gray-500">
-                                {{ __('What real customers say about') }} <strong class="font-semibold text-brand-ink">{{ $tour->title }}</strong>.
+                                {{ __('What real customers say about') }} <strong class="font-semibold text-brand-heading">{{ $tour->title }}</strong>.
                             </p>
                         </div>
                         @if($reviewCount > 0)
@@ -454,7 +454,7 @@
                                             @endfor
                                         </div>
                                         @if($review->title)
-                                            <h3 class="font-bold text-lg text-brand-ink mt-3">{{ $review->title }}</h3>
+                                            <h3 class="font-bold text-lg text-brand-heading mt-3">{{ $review->title }}</h3>
                                         @endif
                                         <div class="mt-2 text-gray-600 text-[15px] leading-relaxed">
                                             <p :class="expanded ? '' : 'line-clamp-4'">{{ $review->comment }}</p>
@@ -475,7 +475,7 @@
                             </div>
                         @else
                             <div class="rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
-                                <h3 class="text-xl font-bold text-brand-ink mb-6">{{ __('Leave a review') }}</h3>
+                                <h3 class="text-xl font-bold text-brand-heading mb-6">{{ __('Leave a review') }}</h3>
 
                                 @if(session('error'))
                                     <div class="mb-6 p-4 rounded-xl bg-red-50 text-red-700 text-sm">{{ session('error') }}</div>

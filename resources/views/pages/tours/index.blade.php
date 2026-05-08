@@ -90,7 +90,7 @@
             </ol>
         </nav>
         <div class="mt-6 md:mt-8 max-w-3xl">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-[1.1]">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-brand-heading tracking-tight leading-[1.1]">
                 {{ __('Explore our travel packages') }}
             </h1>
         </div>

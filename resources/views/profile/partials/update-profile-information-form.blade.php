@@ -4,7 +4,7 @@
 
 <section>
     <header class="mb-6">
-        <h2 class="text-lg font-semibold text-[#3f4b9a]">
+        <h2 class="text-lg font-semibold text-brand-heading">
             {{ __('Profile information') }}
         </h2>
         <p class="mt-1 text-sm text-gray-500 leading-relaxed">
@@ -35,7 +35,7 @@
                 <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
                     <p class="leading-relaxed">
                         {{ __('Your email address is unverified.') }}
-                        <button form="send-verification" type="submit" class="font-semibold text-amber-900 underline decoration-amber-700/50 hover:text-[#3f4b9a] hover:decoration-[#3f4b9a]">
+                        <button form="send-verification" type="submit" class="font-semibold text-amber-900 underline decoration-amber-700/50 hover:text-brand-ink hover:decoration-brand-ink">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>

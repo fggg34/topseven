@@ -107,7 +107,7 @@
 @if(($homepageReviews ?? collect())->isNotEmpty())
 <section class="home-testimonials-section px-4 sm:px-6 lg:px-[80px] pt-16 pb-16">
     <div class="mx-auto w-full max-w-[1400px]">
-        <h2 class="text-center text-3xl md:text-[40px] font-semibold text-[#2f2419] tracking-tight mb-7">
+        <h2 class="text-center text-3xl md:text-[40px] font-semibold text-brand-heading tracking-tight mb-7">
             {{ __('What do Top 7 Agency travellers say') }}
         </h2>
 
@@ -135,7 +135,7 @@
                         <div class="home-testimonial-slide relative min-h-[230px] md:min-h-[250px]">
                             <div class="relative z-10 px-6 md:px-10 py-6 md:py-8 flex items-center justify-center min-h-[230px] md:min-h-[250px]">
                                 <article class="w-full max-w-4xl bg-white/95 border border-[#efe7dc] shadow-[0_18px_40px_rgba(15,23,42,0.13)] px-5 md:px-10 py-5 md:py-6">
-                                    <h3 class="text-[22px] md:text-[34px] leading-tight font-medium text-[#3f2f23] mb-3">
+                                    <h3 class="text-[22px] md:text-[34px] leading-tight font-medium text-brand-heading mb-3">
                                         &ldquo;{{ \Illuminate\Support\Str::limit($title, 90) }}&rdquo;
                                     </h3>
                                     <p class="text-[15px] md:text-[17px] leading-relaxed text-[#4d3f33] mb-4">

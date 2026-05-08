@@ -18,7 +18,7 @@
         </ol>
     </nav>
 
-    <h1 class="text-2xl font-bold text-brand-ink mb-6">Të gjitha destinacionet</h1>
+    <h1 class="text-2xl font-bold text-brand-heading mb-6">Të gjitha destinacionet</h1>
 
     <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         @foreach($countries as $country)

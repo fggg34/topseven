@@ -1,5 +1,5 @@
 <x-account-layout>
-    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight mb-2">{{ __('Account settings') }}</h1>
+    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-brand-heading tracking-tight leading-tight mb-2">{{ __('Account settings') }}</h1>
     <p class="text-[15px] text-gray-500 mb-10 leading-relaxed">{{ __('Update your profile, password, or delete your account.') }}</p>
 
     <div class="space-y-0">

@@ -4,7 +4,7 @@
 
 <section>
     <header class="mb-6">
-        <h2 class="text-lg font-semibold text-[#3f4b9a]">
+        <h2 class="text-lg font-semibold text-brand-heading">
             {{ __('Update password') }}
         </h2>
         <p class="mt-1 text-sm text-gray-500 leading-relaxed">

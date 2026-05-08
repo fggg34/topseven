@@ -49,7 +49,7 @@
                     {{ $country->name }}, {{ $country->country }}
                 </a>
             </div>
-            <h1 class="text-3xl md:text-4xl font-bold text-brand-ink mb-5">{{ $highlight->title }}</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-brand-heading mb-5">{{ $highlight->title }}</h1>
             @if($highlight->description)
                 <div class="prose prose-gray max-w-none text-gray-600">
                     {!! $highlight->description !!}
@@ -72,7 +72,7 @@
         <div class="flex items-end justify-between mb-8">
             <div>
                 <p class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">Keep exploring</p>
-                <h2 class="text-2xl md:text-3xl font-bold text-brand-ink">More places to visit in {{ $country->name }}</h2>
+                <h2 class="text-2xl md:text-3xl font-bold text-brand-heading">More places to visit in {{ $country->name }}</h2>
             </div>
             <div class="flex items-center gap-2">
                 <button type="button" class="highlight-more-prev w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-lime-600 hover:border-lime-300 transition-colors">

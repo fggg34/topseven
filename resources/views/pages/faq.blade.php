@@ -57,10 +57,10 @@
         @foreach($sections as $sIdx => $section)
         <section class="mb-14 last:mb-0">
             @if(! empty($section['category_label']))
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-[#3f4b9a]/50 mb-2">{{ $section['category_label'] }}</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-brand-ink/50 mb-2">{{ $section['category_label'] }}</p>
             @endif
             @if(! empty($section['category_title']))
-                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight mb-6">{{ $section['category_title'] }}</h2>
+                <h2 class="text-2xl md:text-3xl font-serif font-semibold text-brand-heading tracking-tight leading-tight mb-6">{{ $section['category_title'] }}</h2>
             @endif
             @if(! empty($section['items']))
             <div class="space-y-3" x-data="{ open: null }">
@@ -69,9 +69,9 @@
                         <button type="button"
                             @click="open === 's{{ $sIdx }}_{{ $i }}' ? open = null : open = 's{{ $sIdx }}_{{ $i }}'"
                             class="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 text-left transition-colors hover:bg-[#f8f6f2]/80">
-                            <span class="font-semibold text-[#3f4b9a] text-[15px] sm:text-base pr-2">{{ $faq['q'] ?? '' }}</span>
+                            <span class="font-semibold text-brand-heading text-[15px] sm:text-base pr-2">{{ $faq['q'] ?? '' }}</span>
                             <span class="shrink-0 w-8 h-8 rounded-full border border-[#d1cdc4] bg-[#f8f6f2] flex items-center justify-center">
-                                <i class="fa-solid fa-chevron-down text-[10px] text-[#3f4b9a]/60 transition-transform duration-200" :class="open === 's{{ $sIdx }}_{{ $i }}' && 'rotate-180'"></i>
+                                <i class="fa-solid fa-chevron-down text-[10px] text-brand-ink/60 transition-transform duration-200" :class="open === 's{{ $sIdx }}_{{ $i }}' && 'rotate-180'"></i>
                             </span>
                         </button>
                         <div x-show="open === 's{{ $sIdx }}_{{ $i }}'" x-collapse x-cloak>
@@ -89,9 +89,9 @@
         {{-- CTA --}}
         <section class="mt-16 rounded-2xl bg-[#f8f6f2] border border-[#e6e1d8] p-8 md:p-12 text-center">
             <div class="inline-flex w-12 h-12 rounded-full bg-white border border-[#e6e1d8] items-center justify-center mb-5">
-                <i class="fa-solid fa-comment-dots text-lg text-[#3f4b9a]"></i>
+                <i class="fa-solid fa-comment-dots text-lg text-brand-ink"></i>
             </div>
-            <h2 class="text-xl md:text-2xl font-serif font-semibold text-[#3f4b9a] mb-3">{{ $ctaTitle }}</h2>
+            <h2 class="text-xl md:text-2xl font-serif font-semibold text-brand-heading mb-3">{{ $ctaTitle }}</h2>
             <p class="text-[#6a6a6a] mb-8 max-w-md mx-auto leading-relaxed">{{ $ctaDescription }}</p>
             <a href="{{ $ctaButtonUrl }}" class="inline-flex items-center justify-center rounded-full bg-[#111827] hover:bg-[#1f2937] text-white text-sm font-semibold px-8 py-3.5 transition-colors">
                 {{ $ctaButtonText }}

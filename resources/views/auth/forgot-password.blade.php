@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight mb-2">{{ __('Forgot Password') }}</h1>
+    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-brand-heading tracking-tight leading-tight mb-2">{{ __('Forgot Password') }}</h1>
     <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">
         {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
     </p>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
-            <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-[#3f4b9a] transition-colors order-2 sm:order-1">{{ __('Back to log in') }}</a>
+            <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-brand-ink transition-colors order-2 sm:order-1">{{ __('Back to log in') }}</a>
             <button type="submit" class="order-1 sm:order-2 inline-flex items-center justify-center rounded-full bg-[#111827] text-white text-sm font-semibold px-8 py-3.5 hover:bg-gray-900 transition-colors w-full sm:w-auto">
                 {{ __('Email Password Reset Link') }}
             </button>

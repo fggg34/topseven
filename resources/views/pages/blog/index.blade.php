@@ -26,12 +26,12 @@
     @if($categories->isNotEmpty())
         <div class="flex flex-wrap items-center gap-3 mb-12">
             <a href="{{ route('blog.index') }}"
-               class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ !request('category') ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-[#3f4b9a] hover:bg-[#111827] hover:text-white hover:border-[#3f4b9a]' }}">
+               class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ !request('category') ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-brand-ink hover:bg-[#111827] hover:text-white hover:border-brand-ink' }}">
                 All
             </a>
             @foreach($categories as $c)
                 <a href="{{ route('blog.index', ['category' => $c->slug]) }}"
-                   class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ request('category') === $c->slug ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-[#3f4b9a] hover:bg-[#111827] hover:text-white hover:border-[#3f4b9a]' }}">
+                   class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ request('category') === $c->slug ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-brand-ink hover:bg-[#111827] hover:text-white hover:border-brand-ink' }}">
                     {{ $c->name }}
                 </a>
             @endforeach
@@ -50,16 +50,16 @@
                         <img src="{{ $imageUrl }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                     </div>
                     <div class="pt-5">
-                        <div class="flex items-center gap-3 text-[12px] text-[#3f4b9a]/50 uppercase tracking-wider mb-3">
+                        <div class="flex items-center gap-3 text-[12px] text-brand-ink/50 uppercase tracking-wider mb-3">
                             @if($post->category)
-                                <span class="font-semibold text-[#3f4b9a]">{{ $post->category->name }}</span>
+                                <span class="font-semibold text-brand-ink">{{ $post->category->name }}</span>
                                 <span>&bull;</span>
                             @endif
                             <span>{{ ($post->published_at ?? $post->created_at)?->format('M d, Y') }}</span>
                         </div>
-                        <h3 class="text-xl font-serif text-[#3f4b9a] line-clamp-2 leading-snug group-hover:underline decoration-1 underline-offset-4">{{ $post->title }}</h3>
+                        <h3 class="text-xl font-serif text-brand-heading line-clamp-2 leading-snug group-hover:underline decoration-1 underline-offset-4">{{ $post->title }}</h3>
                         <p class="mt-3 text-[15px] text-[#6a6a6a] line-clamp-3 leading-relaxed">{{ Str::limit($post->excerpt_plain !== '' ? $post->excerpt_plain : strip_tags($post->content_html), 150) }}</p>
-                        <span class="inline-block mt-4 text-[13px] font-semibold uppercase tracking-wider text-[#3f4b9a] border-b border-[#3f4b9a]">Read article</span>
+                        <span class="inline-block mt-4 text-[13px] font-semibold uppercase tracking-wider text-brand-ink border-b border-brand-ink">Read article</span>
                     </div>
                 </a>
             </article>

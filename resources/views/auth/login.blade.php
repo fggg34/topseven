@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-[#3f4b9a] tracking-tight leading-tight mb-2">{{ __('Log in') }}</h1>
+    <h1 class="text-[28px] sm:text-[32px] font-serif font-semibold text-brand-heading tracking-tight leading-tight mb-2">{{ __('Log in') }}</h1>
    <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}" class="space-y-5">
@@ -8,20 +8,20 @@
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Email') }}</label>
             <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
-                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3f4b9a] focus:border-transparent transition" />
+                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition" />
             <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
         </div>
 
         <div>
             <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Password') }}</label>
             <input id="password" type="password" name="password" required autocomplete="current-password"
-                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3f4b9a] focus:border-transparent transition" />
+                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-[15px] text-brand-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-ink focus:border-transparent transition" />
             <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
         </div>
 
         <div class="flex items-center">
             <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-[#3f4b9a] focus:ring-[#3f4b9a]" name="remember">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-brand-ink focus:ring-brand-ink" name="remember">
                 <span class="text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
@@ -33,7 +33,7 @@
             </button>
             <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
                 @if (Route::has('password.request'))
-                    <a class="text-gray-600 hover:text-[#3f4b9a] font-medium transition-colors" href="{{ route('password.request') }}">
+                    <a class="text-gray-600 hover:text-brand-ink font-medium transition-colors" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif

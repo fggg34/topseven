@@ -10,7 +10,7 @@
 @if($cards->isNotEmpty())
 <section class="home-why-book w-full bg-gray-100 py-16 md:py-20">
     <div class="w-full max-w-none px-4 sm:px-6 lg:px-[80px]">
-        <h2 class="text-4xl sm:text-5xl md:text-[2.75rem] lg:text-6xl font-bold text-brand-ink text-left tracking-tight leading-[1.1] mb-12 md:mb-16 mx-auto">
+        <h2 class="text-4xl sm:text-5xl md:text-[2.75rem] lg:text-6xl font-bold text-brand-heading text-left tracking-tight leading-[1.1] mb-12 md:mb-16 mx-auto">
             {{ $heading }}
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
@@ -30,7 +30,7 @@
                             <div class="w-14 h-14 rounded-xl bg-gray-100 border border-gray-200/80" aria-hidden="true"></div>
                         @endif
                     </div>
-                    <h3 class="text-xl sm:text-2xl font-bold text-brand-ink mb-3 leading-snug">{{ $card->title }}</h3>
+                    <h3 class="text-xl sm:text-2xl font-bold text-brand-heading mb-3 leading-snug">{{ $card->title }}</h3>
                     <div class="text-gray-600 text-[15px] leading-relaxed flex-1 [&_p]:my-2 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0 [&_a]:font-medium [&_a]:text-brand-ink [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-2 [&_strong]:font-semibold [&_strong]:text-brand-ink">
                         {!! $card->description !!}
                     </div>
