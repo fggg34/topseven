@@ -60,7 +60,7 @@
                 <ul class="space-y-1.5 text-[15px]">
                     @foreach(($footerMenu1['items'] ?? []) as $item)
                         <li>
-                            <a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-[#3f4b9a] hover:text-[#1f2937] hover:underline">{{ $item['label'] ?? '' }}</a>
+                            <a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-brand-heading hover:text-brand-ink hover:underline transition-colors">{{ $item['label'] ?? '' }}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -71,7 +71,7 @@
                 <ul class="space-y-1.5 text-[15px]">
                     @foreach(($footerMenu2['items'] ?? []) as $item)
                         <li>
-                            <a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-[#3f4b9a] hover:text-[#1f2937] hover:underline">{{ $item['label'] ?? '' }}</a>
+                            <a href="{{ $resolveUrl($item['url'] ?? '') }}" class="text-brand-heading hover:text-brand-ink hover:underline transition-colors">{{ $item['label'] ?? '' }}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -89,19 +89,19 @@
                     @if($contactEmail)
                         <p>
                             <i class="fa-solid fa-envelope text-xs mr-1.5 text-[#7a746b]"></i>
-                            <a href="mailto:{{ $contactEmail }}" class="text-[#3f4b9a] hover:text-[#1f2937] hover:underline">{{ $contactEmail }}</a>
+                            <a href="mailto:{{ $contactEmail }}" class="text-brand-heading hover:text-brand-ink hover:underline transition-colors">{{ $contactEmail }}</a>
                         </p>
                     @endif
                     @if($contactPhone)
                         <p>
                             <i class="fa-solid fa-phone text-xs mr-1.5 text-[#7a746b]"></i>
-                            <a href="tel:{{ $contactPhone }}" class="text-[#3f4b9a] hover:text-[#1f2937] hover:underline">{{ $contactPhone }}</a>
+                            <a href="tel:{{ $contactPhone }}" class="text-brand-heading hover:text-brand-ink hover:underline transition-colors">{{ $contactPhone }}</a>
                         </p>
                     @endif
                     @if($contactAddress)
                         <p class="flex items-start gap-1.5">
                             <i class="fa-solid fa-location-dot text-xs mt-0.5 text-[#7a746b] flex-shrink-0"></i>
-                            <span class="text-[#3f4b9a]">{{ $contactAddress }}</span>
+                            <span class="text-brand-heading">{{ $contactAddress }}</span>
                         </p>
                     @endif
                 </div>
