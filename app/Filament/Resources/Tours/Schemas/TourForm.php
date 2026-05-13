@@ -167,7 +167,7 @@ class TourForm
                         Tab::make('SEO')
                             ->schema([
                                 Section::make('Search engine optimization')
-                                    ->description('Optional. Leave blank to use the tour title and short description.')
+                                    ->description('Optional overrides. When left empty, the SEO title and description are saved automatically from the tour title and short description (first save). Open Graph image uses the first image in the Images tab (by display order).')
                                     ->schema([
                                         TextInput::make('meta_title')->maxLength(60)->columnSpanFull(),
                                         Textarea::make('meta_description')->rows(3)->maxLength(500)->columnSpanFull(),

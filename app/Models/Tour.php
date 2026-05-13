@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -100,7 +101,32 @@ class Tour extends Model
                     $tour->homepage_card_date_from,
                 ];
             }
+
+            if (blank($tour->meta_title) && filled($tour->title)) {
+                $tour->meta_title = Str::limit(trim($tour->title), 60, '');
+            }
+
+            if (blank($tour->meta_description)) {
+                $plain = trim(preg_replace('/\s+/', ' ', strip_tags((string) $tour->short_description)));
+                if ($plain !== '') {
+                    $tour->meta_description = Str::limit($plain, 500, '');
+                }
+            }
         });
+    }
+
+    /**
+     * Absolute URL for Open Graph / social preview (first gallery image by sort order).
+     */
+    public function openGraphImageUrl(): ?string
+    {
+        $img = $this->images->first();
+
+        if ($img === null || blank($img->path)) {
+            return null;
+        }
+
+        return URL::to($img->url);
     }
 
     public function getSlugOptions(): SlugOptions

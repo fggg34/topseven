@@ -4,9 +4,17 @@
 @section('description', $tour->meta_description ?: Str::limit($tour->short_description, 160))
 
 @push('meta')
-@if($tour->meta_title)<meta property="og:title" content="{{ $tour->meta_title }}">@endif
-<meta property="og:description" content="{{ $tour->meta_description ?: $tour->short_description }}">
+@php
+    $ogTitle = $tour->meta_title ?: $tour->title;
+    $ogDescription = $tour->meta_description ?: $tour->short_description;
+    $ogImage = $tour->openGraphImageUrl();
+@endphp
+<meta property="og:title" content="{{ $ogTitle }}">
+<meta property="og:description" content="{{ Str::limit(strip_tags((string) $ogDescription), 300) }}">
 <meta property="og:url" content="{{ request()->url() }}">
+@if($ogImage)
+<meta property="og:image" content="{{ $ogImage }}">
+@endif
 @endpush
 
 @push('styles')
