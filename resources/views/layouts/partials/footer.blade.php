@@ -21,7 +21,7 @@
 @endphp
 
 <footer class="mt-16 bg-[#f8f6f2] text-[#222] border-t border-[#e6e1d8]">
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="w-full px-4 sm:px-6 lg:px-[80px] py-8">
         <div class="border border-[#ddd6cb] bg-[#faf8f4]">
             <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[170px]">
                 <div class="hidden lg:block lg:col-span-4 h-full bg-cover bg-center footer-newsletter-image-clip" style="background-image:url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80')"></div>
