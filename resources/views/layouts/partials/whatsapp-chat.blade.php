@@ -61,7 +61,7 @@
             </button>
         </div>
         <div class="border-b border-[#ede9e2] bg-[#faf8f4] px-4 py-3">
-            <p class="text-sm leading-snug text-[#3a3a3a]">Pyetni çfarë të doni — hapet WhatsApp me mesazhin tuaj të plotësuar.</p>
+            <p class="text-sm leading-snug text-[#3a3a3a]">Për çdo informacion apo kërkesë specifike, agjentët tanë të dedikuar do t'ju ofrojnë asistencë të personalizuar përmes WhatsApp</p>
         </div>
         <div class="p-4">
             <label for="whatsapp-chat-message" class="sr-only">Mesazhi</label>
@@ -70,7 +70,7 @@
                 x-model="message"
                 rows="4"
                 maxlength="1000"
-                class="w-full resize-none rounded-xl border border-[#e1ddd4] bg-white px-3 py-2.5 text-sm text-brand-heading placeholder:text-gray-400 focus:border-brand-light focus:outline-none focus:ring-2 focus:ring-lime-500/25"
+                class="w-full resize-none rounded-xl border border-[#e1ddd4] bg-white px-3 py-2.5 text-base text-brand-heading placeholder:text-gray-400 focus:border-brand-light focus:outline-none focus:ring-2 focus:ring-lime-500/25 sm:text-sm"
                 placeholder="P.sh. dua informacion për një paketë turistike…"
             ></textarea>
             <button
