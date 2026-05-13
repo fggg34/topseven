@@ -635,7 +635,7 @@
     </div>
 </div>
 
-{{-- Mobile enquiry bar --}}
+{{-- Mobile enquiry bar (disabled)
 <div x-data="{ visible: false }"
      x-init="let target = document.getElementById('enquiry-form'); if(target) { let obs = new IntersectionObserver(([e]) => { visible = !e.isIntersecting }, { threshold: 0 }); obs.observe(target); }"
      x-show="visible"
@@ -664,6 +664,7 @@
         </div>
     </div>
 </div>
+--}}
 
 @endsection
 
