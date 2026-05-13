@@ -56,6 +56,7 @@ class Settings extends Page
             'admin_email' => Setting::get('admin_email', ''),
             'contact_email' => Setting::get('contact_email', ''),
             'contact_phone' => Setting::get('contact_phone', ''),
+            'whatsapp_number' => Setting::get('whatsapp_number', ''),
             'contact_address' => Setting::get('contact_address', ''),
             'google_business_rating' => Setting::get('google_business_rating', ''),
             'google_business_review_count' => Setting::get('google_business_review_count', ''),
@@ -143,6 +144,11 @@ class Settings extends Page
                             ->email()
                             ->helperText('Shown on the site for visitors. Also used for notifications if admin email is empty.'),
                         \Filament\Forms\Components\TextInput::make('contact_phone')->label('Phone')->tel(),
+                        \Filament\Forms\Components\TextInput::make('whatsapp_number')
+                            ->label('WhatsApp number (chat widget)')
+                            ->tel()
+                            ->placeholder('355691234567')
+                            ->helperText('Digits only, with country code (no +). Used for the site chat bubble. If empty, the public phone number above is used after stripping spaces and symbols.'),
                         \Filament\Forms\Components\Textarea::make('contact_address')->label('Address')->rows(2),
                     ])
                     ->columns(1),

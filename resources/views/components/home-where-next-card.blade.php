@@ -29,7 +29,7 @@
         </span>
         @if($trips > 0)
             <span class="mt-2.5 inline-flex items-center rounded-full bg-white px-3 py-1 text-xs sm:text-sm font-semibold text-brand-ink tabular-nums shadow-sm">
-                {{ $trips }} {{ $trips === 1 ? 'travel package' : 'travel packages' }}
+                {{ $trips }} {{ $trips === 1 ? 'paketa turistike' : 'paketat turistike' }}
             </span>
         @endif
     </div>
