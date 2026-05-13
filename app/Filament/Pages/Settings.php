@@ -53,6 +53,7 @@ class Settings extends Page
             'site_logo_dark' => Setting::get('site_logo_dark', ''),
             'site_icon' => Setting::get('site_icon', ''),
             'footer_logo' => Setting::get('footer_logo', ''),
+            'admin_email' => Setting::get('admin_email', ''),
             'contact_email' => Setting::get('contact_email', ''),
             'contact_phone' => Setting::get('contact_phone', ''),
             'contact_address' => Setting::get('contact_address', ''),
@@ -133,7 +134,14 @@ class Settings extends Page
                     ->columns(2),
                 \Filament\Schemas\Components\Section::make('Contact')
                     ->schema([
-                        \Filament\Forms\Components\TextInput::make('contact_email')->label('Email')->email(),
+                        \Filament\Forms\Components\TextInput::make('admin_email')
+                            ->label('Admin email (notifications)')
+                            ->email()
+                            ->helperText('Contact form submissions and admin alerts (e.g. new user registration) are sent here. If empty, the public contact email below is used, then .env mail settings.'),
+                        \Filament\Forms\Components\TextInput::make('contact_email')
+                            ->label('Public contact email')
+                            ->email()
+                            ->helperText('Shown on the site for visitors. Also used for notifications if admin email is empty.'),
                         \Filament\Forms\Components\TextInput::make('contact_phone')->label('Phone')->tel(),
                         \Filament\Forms\Components\Textarea::make('contact_address')->label('Address')->rows(2),
                     ])

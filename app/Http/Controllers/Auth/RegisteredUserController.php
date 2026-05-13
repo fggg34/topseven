@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
         Mail::to($user->email)->send(new UserAccountCreatedConfirmation($user));
 
         // Notify admin of new account
-        $adminEmail = config('mail.admin_email') ?: Setting::get('contact_email');
+        $adminEmail = Setting::siteNotificationEmail();
         if ($adminEmail && $adminEmail !== $user->email) {
             Mail::to($adminEmail)->send(new AdminNewAccountNotification($user));
         }

@@ -24,4 +24,24 @@ class Setting extends Model
         static::updateOrCreate(['key' => $key], ['value' => $raw]);
         Cache::forget('setting_' . $key);
     }
+
+    /**
+     * Inbox for site-driven mail (contact form, admin alerts, etc.).
+     * Priority: Settings admin email → public contact email → MAIL_ADMIN_EMAIL / config → MAIL_FROM_ADDRESS.
+     */
+    public static function siteNotificationEmail(): string
+    {
+        foreach ([
+            trim((string) self::get('admin_email', '')),
+            trim((string) self::get('contact_email', '')),
+            trim((string) config('mail.admin_email', '')),
+            trim((string) config('mail.from.address', '')),
+        ] as $email) {
+            if ($email !== '') {
+                return $email;
+            }
+        }
+
+        return '';
+    }
 }

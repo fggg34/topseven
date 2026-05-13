@@ -24,7 +24,11 @@ class ContactController extends Controller
             'message' => 'required|string|max:5000',
         ]);
 
-        $to = Setting::get('contact_email', config('mail.from.address'));
+        $to = Setting::siteNotificationEmail();
+
+        if ($to === '') {
+            throw ValidationException::withMessages(['email' => ['Contact form is not configured. Please try again later.']]);
+        }
 
         $phone = trim((string) $validated['phone']);
 
