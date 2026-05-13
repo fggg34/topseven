@@ -41,7 +41,7 @@ class TourEnquiryController extends Controller
         $msg = $msg !== '' ? $msg : '—';
 
         $body = implode("\n", [
-            'New tour enquiry (also saved in admin).',
+            'New tour enquiry.',
             '',
             'Tour: '.$tour->title,
             'Tour URL: '.$tourUrl,
