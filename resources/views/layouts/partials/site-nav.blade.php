@@ -121,7 +121,7 @@
             <a href="{{ route('home') }}" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 flex items-center max-w-[min(52vw,200px)] md:max-w-none">
                 @if($headerLogoPath)
                     <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($headerLogoPath) }}" alt="{{ $siteName }}"
-                         class="h-9 md:h-10 lg:h-[3.5rem] w-auto object-contain {{ $headerOverlay && $siteLogo !== '' ? 'brightness-0 invert' : '' }}" />
+                         class="h-12 md:h-10 lg:h-[3.5rem] w-auto object-contain {{ $headerOverlay && $siteLogo !== '' ? 'brightness-0 invert' : '' }}" />
                 @else
                     <span class="text-2xl md:text-3xl lg:text-4xl font-black tracking-wider uppercase {{ $headerOverlay ? 'text-white' : 'text-brand-ink' }}">{{ $siteName }}</span>
                 @endif
@@ -191,7 +191,7 @@
         <div class="flex items-center gap-3 px-4 py-4 border-b border-[#e6e1d8] bg-white">
             <a href="{{ route('home') }}" @click="mobileOpen = false" class="flex items-center gap-2 min-w-0 flex-1">
                 @if($mobileDrawerLogoPath)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($mobileDrawerLogoPath) }}" alt="" class="h-8 w-auto object-contain shrink-0" />
+                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($mobileDrawerLogoPath) }}" alt="" class="h-12 w-auto object-contain shrink-0" />
                 @endif
             </a>
             <button @click="mobileOpen = false" type="button" class="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full text-[#6a6a6a] hover:bg-[#f8f6f2] hover:text-brand-ink transition-colors" aria-label="{{ __('Close menu') }}">
@@ -257,18 +257,18 @@
 
             <div>
                 <p class="text-sm font-semibold uppercase tracking-wider text-brand-ink/45 mb-2">{{ __('Account') }}</p>
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <div class="flex flex-col gap-2 w-full">
                     @auth
-                        <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-base font-medium text-brand-ink hover:underline inline-flex items-center gap-2">
-                            <x-icons.user-circled class="w-5 h-5 shrink-0 text-[#6a6a6a]" /> {{ __('My account') }}
+                        <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="inline-flex items-center justify-center gap-2 w-full rounded-full bg-brand-ink text-white text-base font-semibold py-3 px-4 hover:bg-[#354287] transition-colors">
+                            <x-icons.user-circled class="w-5 h-5 shrink-0 text-white/90" /> {{ __('My account') }}
                         </a>
-                        <form method="POST" action="{{ route('logout') }}" class="inline">@csrf
-                            <button type="submit" class="text-base text-[#6a6a6a] hover:text-red-600 transition-colors">{{ __('Log out') }}</button>
+                        <form method="POST" action="{{ route('logout') }}" class="w-full">@csrf
+                            <button type="submit" class="w-full rounded-full border border-[#e6e1d8] bg-white text-base font-semibold text-brand-ink py-3 px-4 hover:bg-[#f8f6f2] hover:border-red-200 hover:text-red-600 transition-colors">{{ __('Log out') }}</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-base font-medium text-brand-ink hover:underline">{{ __('Log in') }}</a>
+                        <a href="{{ route('login') }}" @click="mobileOpen = false" class="inline-flex items-center justify-center w-full rounded-full bg-brand-ink text-white text-base font-semibold py-3 px-4 hover:bg-[#354287] transition-colors">{{ __('Log in') }}</a>
                         @if(Route::has('register'))
-                            <a href="{{ route('register') }}" @click="mobileOpen = false" class="text-base font-medium text-lime-700 hover:underline">{{ __('Register') }}</a>
+                            <a href="{{ route('register') }}" @click="mobileOpen = false" class="inline-flex items-center justify-center w-full rounded-full border-2 border-lime-700 bg-white text-lime-700 text-base font-semibold py-3 px-4 hover:bg-lime-50 transition-colors">{{ __('Register') }}</a>
                         @endif
                     @endauth
                 </div>
