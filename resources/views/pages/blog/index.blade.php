@@ -26,12 +26,12 @@
     @if($categories->isNotEmpty())
         <div class="flex flex-wrap items-center gap-3 mb-12">
             <a href="{{ route('blog.index') }}"
-               class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ !request('category') ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-brand-ink hover:bg-[#111827] hover:text-white hover:border-brand-ink' }}">
+               class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ !request('category') ? 'bg-[#323c7b] text-white' : 'bg-transparent border border-[#d1cdc4] text-brand-ink hover:bg-[#323c7b] hover:text-white hover:border-brand-ink' }}">
                 All
             </a>
             @foreach($categories as $c)
                 <a href="{{ route('blog.index', ['category' => $c->slug]) }}"
-                   class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ request('category') === $c->slug ? 'bg-[#111827] text-white' : 'bg-transparent border border-[#d1cdc4] text-brand-ink hover:bg-[#111827] hover:text-white hover:border-brand-ink' }}">
+                   class="px-5 py-2.5 text-sm font-semibold tracking-wider uppercase transition-colors {{ request('category') === $c->slug ? 'bg-[#323c7b] text-white' : 'bg-transparent border border-[#d1cdc4] text-brand-ink hover:bg-[#323c7b] hover:text-white hover:border-brand-ink' }}">
                     {{ $c->name }}
                 </a>
             @endforeach

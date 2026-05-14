@@ -193,7 +193,6 @@
                 @if($mobileDrawerLogoPath)
                     <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($mobileDrawerLogoPath) }}" alt="" class="h-8 w-auto object-contain shrink-0" />
                 @endif
-                <span class="text-sm font-semibold text-brand-heading truncate">{{ $siteName }}</span>
             </a>
             <button @click="mobileOpen = false" type="button" class="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full text-[#6a6a6a] hover:bg-[#f8f6f2] hover:text-brand-ink transition-colors" aria-label="{{ __('Close menu') }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -257,19 +256,19 @@
             @endif
 
             <div>
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-brand-ink/45 mb-2">{{ __('Account') }}</p>
+                <p class="text-sm font-semibold uppercase tracking-wider text-brand-ink/45 mb-2">{{ __('Account') }}</p>
                 <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
                     @auth
-                        <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-sm font-medium text-brand-ink hover:underline inline-flex items-center gap-2">
-                            <x-icons.user-circled class="w-4 h-4 shrink-0 text-[#6a6a6a]" /> {{ __('My account') }}
+                        <a href="{{ route('dashboard') }}" @click="mobileOpen = false" class="text-base font-medium text-brand-ink hover:underline inline-flex items-center gap-2">
+                            <x-icons.user-circled class="w-5 h-5 shrink-0 text-[#6a6a6a]" /> {{ __('My account') }}
                         </a>
                         <form method="POST" action="{{ route('logout') }}" class="inline">@csrf
-                            <button type="submit" class="text-sm text-[#6a6a6a] hover:text-red-600 transition-colors">{{ __('Log out') }}</button>
+                            <button type="submit" class="text-base text-[#6a6a6a] hover:text-red-600 transition-colors">{{ __('Log out') }}</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-sm font-medium text-brand-ink hover:underline">{{ __('Log in') }}</a>
+                        <a href="{{ route('login') }}" @click="mobileOpen = false" class="text-base font-medium text-brand-ink hover:underline">{{ __('Log in') }}</a>
                         @if(Route::has('register'))
-                            <a href="{{ route('register') }}" @click="mobileOpen = false" class="text-sm font-medium text-lime-700 hover:underline">{{ __('Register') }}</a>
+                            <a href="{{ route('register') }}" @click="mobileOpen = false" class="text-base font-medium text-lime-700 hover:underline">{{ __('Register') }}</a>
                         @endif
                     @endauth
                 </div>

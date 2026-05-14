@@ -87,7 +87,7 @@
             <button type="button" class="home-flash-sale-prev w-11 h-11 rounded-full border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center transition-colors hover:bg-gray-200 disabled:opacity-40 disabled:pointer-events-none" aria-label="Previous">
                 <i class="fa-solid fa-arrow-left text-sm"></i>
             </button>
-            <button type="button" class="home-flash-sale-next w-11 h-11 rounded-full bg-black text-white flex items-center justify-center transition-colors hover:bg-gray-900 disabled:opacity-40 disabled:pointer-events-none" aria-label="Next">
+            <button type="button" class="home-flash-sale-next w-11 h-11 rounded-full bg-[#323c7b] text-white flex items-center justify-center transition-colors hover:bg-[#282d6a] disabled:opacity-40 disabled:pointer-events-none" aria-label="Next">
                 <i class="fa-solid fa-arrow-right text-sm"></i>
             </button>
         </div>

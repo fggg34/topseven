@@ -159,7 +159,7 @@
                 <img src="{{ $expectImage2Url }}" alt="Our destinations" class="w-full h-full object-cover" style="aspect-ratio: 1/1; min-height: 200px;">
             </div>
             @if(!empty($stats))
-            <div class="col-span-12 md:col-span-7 rounded-[24px] overflow-hidden bg-gray-900 flex items-center justify-center px-8 py-10" style="min-height: 200px;">
+            <div class="col-span-12 md:col-span-7 rounded-[24px] overflow-hidden bg-gray-900 flex flex-col items-center justify-center gap-7 px-8 py-10" style="min-height: 200px;">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center w-full">
                     @foreach($stats as $stat)
                     <div>
@@ -172,6 +172,22 @@
                     </div>
                     @endforeach
                 </div>
+                <a href="https://share.google/1rO2a5U8ZTYLNwlFB" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-3 bg-white rounded-full pl-2 pr-5 py-1.5 border border-white/10 shadow-sm hover:shadow-md transition-shadow"
+                   aria-label="{{ __('See our Google reviews') }}">
+                    <div class="flex -space-x-2">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#5e35b1] text-white text-xs font-semibold ring-2 ring-white">J</span>
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#e64a19] text-white text-xs font-semibold ring-2 ring-white">S</span>
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#43a047] text-white text-xs font-semibold ring-2 ring-white">k</span>
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#00897b] text-white text-xs font-semibold ring-2 ring-white">G</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm whitespace-nowrap">
+                        <i class="fa-solid fa-star text-[#f5b400]"></i>
+                        <span class="font-semibold text-gray-900">5.0 Google</span>
+                        <span class="text-gray-300" aria-hidden="true">|</span>
+                        <span class="text-gray-600">4 {{ __('reviews') }}</span>
+                    </div>
+                </a>
             </div>
             @endif
         </div>
